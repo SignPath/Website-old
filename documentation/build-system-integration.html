@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Build system integration</title>
+  <style type="text/css">
+    pre.inline { display: inline; padding:0px; }
+  </style>
+</head>
+<body>
+  <h1>Build system integration</h1>
+  <!-- TODO: table-of-contents or submenu -->
+  <h2>Abstract</h2>
+  <p>This section describes how SignPath can be integrated into automated builds using continuous integration software. You can use the PowerShell module provided by SignPath, or directly call the Web API to submit signing requests.</p>
+  <!-- TODO: nice-to-have: the following paragraph in some kind of "info" note -->
+  <p>All necessary IDs can be found on the signing policy details page, including a sample call for the PowerShell module.</p>
+  <h2>Authorization</h2>
+  <p>Before accessing the API, you have to create a CI User in the User section of the SignPath application. Make sure to keep the access token in a secure location.</p>
+  <h2>PowerShell</h2>
+  <p>SignPath can be integrated in your automated build process by using our API. For convenience, we provide a PowerShell module that can be used from within your build/deploy chain. The module can be downloaded here: <a href="https://app.signpath.io/API/v1/Tools/SignPath.psm1">https://app.signpath.io/API/v1/Tools/SignPath.psm1</a>.
+  <p>A signing request can be created by calling one of the following following commands via PowerShell:</p>
+  <pre class="line-numbers"><code class="language-powershell">Import-Module .\SignPath.psm1
+  
+# submits a signing request and returns a SigningRequestId 
+# without waiting for the signing request to be done
+Submit-SigningRequest
+    -CIUserToken &lt;CI_USER_TOKEN&gt;
+    -OrganizationId &lt;YOUR_ORGANIZATION_ID&gt;
+    -CertificateConfigurationId &lt;CERTIFICATE_CONFIGURATION_ID&gt;
+    -InputArtifactPath &lt;PATH_TO_INPUT_ARTIFACT&gt;
+  
+# downloads a signed artifact
+Get-SignedArtifact
+    -CIUserToken &lt;CI_USER_TOKEN&gt;
+    -OrganizationId &lt;YOUR_ORGANIZATION_ID&gt;
+    -SigningRequestId &lt;SIGNING_REQUEST_ID&gt;
+    -OutputArtifactPath &lt;PATH_TO_OUTPUT_ARTIFACT&gt;
+  
+# submits a signing request and blocks until it is done
+Submit-SigningRequest
+    -CIUserToken &lt;CI_USER_TOKEN&gt;
+    -OrganizationId &lt;YOUR_ORGANIZATION_ID&gt;
+    -CertificateConfigurationId &lt;CERTIFICATE_CONFIGURATION_ID&gt;
+    -InputArtifactPath &lt;PATH_TO_INPUT_ARTIFACT&gt;
+    -OutputArtifactPath &lt;PATH_TO_OUTPUT_ARTIFACT&gt;
+    -WaitForCompletion</code></pre>
+  <h2>HTTP REST API</h2>
+  <p>In case the PowerShell module is not sufficient, you can communicate directly with our API by calling our public HTTP REST endpoints.</p>
+  <h3>Authorization</h3>
+  <p>The automatically created CI User token can be used to interact with the API by setting the respective HTTP Header:
+  <pre>Authorization: Bearer &lt;CI_USER_TOKEN&gt;</pre>
+  <h3>Submitting a Signing Request</h3>
+  <p>You can create a Signing Request by calling the API, providing the following arguments:</p>
+  <ul>
+    <li><pre class="inline">&lt;SIGNING_POLICY_ID&gt;</pre> - the signing policy for which you want to create the Signing Request.</li>
+    <li><pre class="inline">&lt;ORGANIZATION_ID&gt;</pre> - the Id of your organization</li>
+  </ul>
+  <p>The server expects the HTTP POST request to be of the type multipart/form-data (denoted by the -F switch in curl).</p>
+  <pre><code class="language-powershell">curl
+    -H "Authorization: Bearer &lt;CI_USER_TOKEN&gt;" \
+    -F "SigningPolicyId=&lt;SIGNING_POLICY_ID&gt; \
+    -F Artifact=@&lt;PATH_TO_ARTIFACT&gt; \
+    -F "Description=called by curl" \
+    https://app.signpath.io/API/v1/&lt;ORGANIZATION_ID&gt;/SigningRequests</code></pre>
+  <p>If the creation is successful, the API returns status code 201. Additionally, a HTTP Response Header Location is returned with the URL of the created entity.</p>
+  <h3>Checking the Status of a Signing Request</h3>
+  <p>The current status of a SigningRequest can be retrieved by calling the API and providing the following arguments:</p>
+  <ul>
+    <li><pre class="inline">&lt;URL_OF_THE_SIGNING_REQUEST&gt;</pre> - the URL is returned in the Location header of the HTTP response when a SigningRequest is created (e.g. to <pre class="inline">https://app.signpath.io/API/v1/a05be341-8a85-4c06-828a-710459e325ab/SigningRequests/a15e4d4f-7e03-4b15-9e2e-f3d8daeeaa75</pre>)</li>
+  </ul>
+  <pre><code class="language-powershell">curl
+    -H "Authorization: Bearer &lt;CI_USER_TOKEN&gt;" \
+    &lt;URL_OF_THE_SIGNING_REQUEST&gt;</code></pre>
+  <p>The HTTP GET request will then return the status of the Signing Request in JSON format:</p>
+  <pre class="line-numbers"><code class="language-javascript">{
+    "status":"Completed",
+    "description":"called by curl",
+    "projectId":"edd545ef-e113-48ba-aba7-de2d59ea2f26",
+    "projectName":"SignPath Test Project",
+    "signingPolicyId":"9ebd30b0-ef6b-4e46-a248-103516bc36fc",
+    "certificateConfigurationName":"Test",
+    "uploadedArtifactLink":"https://app.signpath.io/API/v1/a05be341-8a85-4c06-828a-710459e325ab/SigningRequests/a15e4d4f-7e03-4b15-9e2e-f3d8daeeaa75/UploadedArtifact",
+    "signedArtifactLink":"https://app.signpath.io/API/v1/a05be341-8a85-4c06-828a-710459e325ab/SigningRequests/a15e4d4f-7e03-4b15-9e2e-f3d8daeeaa75/SignedArtifact"
+}</code></pre>
+  <h3>Downloading the signed artifact</h3>
+  <p>Once the Signing Request has been successfully completed, the status response contains a signedArtifactLink field with a link to the signed artifact file. It can easily be retrieved by issuing the following command:</p>
+  <ul>
+    <li><pre class="inline">&lt;PATH_TO_DOWNLOADED_ARTIFACT&gt;</pre> - the path where the signed artifact should be stored</li>
+    <li><pre class="inline">&lt;SIGNED_ARTIFACT_LINK&gt;</pre> - link retrieved from status request</li>
+  </ul>
+  <pre><code class="language-powershell">curl
+    -H "Authorization: Bearer &lt;CI_USER_TOKEN&gt;" \
+    -o &lt;PATH_TO_DOWNLOADED_ARTIFACT&gt; \
+    &lt;SIGNED_ARTIFACT_LINK&gt;</code></pre>
+</body>
+</html>

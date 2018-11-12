@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Creating an artifact configuration</title>
+  <style type="text/css">
+    pre.inline { display: inline; padding:0px; }
+  </style>
+</head>
+<body>
+  <h1>Creating an artifact configuration</h1>
+  <!-- TODO: table-of-contents or submenu -->
+  <h2>Abstract</h2>
+  <p>The artifact configuration describes the structure of the artifacts you want to sign. For simple artifacts, you can use predefined configurations to get started quickly. For signing several artifacts together, and for more complex artifacts, specify the structure of your artifact and provide signing directives using XML.</p>
+  <p>Tips:</p>
+  <ul>
+    <li><a href="https://app.signpath.io/web/artifact-configuration/v1.xsd">Download the schema file</a> and use a schema-aware XML editor, such as Microsoft Visual Studio, to create your artifact configuration.</li>
+    <li>If you don't know the internal structure of your artifact, extract container files to your disk first.</li>
+  </ul>
+  <h2>Deep signing</h2>
+  <p>In case you have more complex, nested artifacts, you might want to not only sign the container itself (for instance, an MSI installer package), but also all files that are shipped within the container (e.g. .exe and .dll files within the MSI installer). Therefore, every container format can contain multiple other file or directory elements to be signed. Each of those will be extracted, signed, and then put back into the container file during the signing process. In order for SignPath to find the right file, all inner elements need a path attribute.</p>
+  <h2>File elements</h2>
+  <p>Every XML description is wrapped in an root element, containing exactly one file element, which specifies the type of artifact. Within container files and directories, file elements can be specified for deep signing.</p>
+  <table id="signing-file-elements">
+    <thead>
+      <tr>
+        <th>Element</th>
+        <th>Container format</th>
+        <th>Signing directive</th>
+        <th>Extensions</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><pre class="inline">&lt;pe-file&gt;</pre></td>
+        <td>No</td>
+        <td><pre class="inline">&lt;authenticode-sign&gt;</pre></td>
+        <td>.acm, .ax, .cpl, .dll, .drv, .efi, .exe, .fon, .mui, .ocx, .scr, .sys, .tsp</td>
+        <td><a href="https://en.wikipedia.org/wiki/Portable_Executable" target="_blank" rel="noopener">Microsoft Portable Executable</a> files: EXE, DLL, and some other executable file formats</td>
+      </tr>
+      <tr>
+        <td><pre class="inline">&lt;powershell-file&gt;</pre></td>
+        <td>No</td>
+        <td><pre class="inline">&lt;authenticode-sign&gt;</pre></td>
+        <td>.ps1, .psm1, psd1, .psdc1, .ps1xml</td>
+        <td>PowerShell scripts or modules</td>
+      </tr>
+      <tr>
+        <td><pre class="inline">&lt;zip-file&gt;</pre></td>
+        <td>Yes</td>
+        <td>(none)</td>
+        <td>.zip</td>
+        <td>ZIP archives (can't be signed)</td>
+      </tr>
+      <tr>
+        <td><pre class="inline">&lt;msi-file&gt;</pre></td>
+        <td>Yes</td>
+        <td><pre class="inline">&lt;authenticode-sign&gt;</pre></td>
+        <td>.msi, .msm, .msp</td>
+        <td>Microsoft installer files</td>
+      </tr>
+      <tr>
+        <td><pre class="inline">&lt;cab-file&gt;</pre></td>
+        <td>Yes</td>
+        <td><pre class="inline">&lt;authenticode-sign&gt;</pre></td>
+        <td>.cab</td>
+        <td>Windows cabinet files</td>
+      </tr>
+      <tr>
+        <td><pre class="inline">&lt;appx-file&gt;</pre></td>
+        <td>Yes</td>
+        <td><pre class="inline">&lt;authenticode-sign&gt;</pre></td>
+        <td>.appx, .appxbundle</td>
+        <td>App packages for Microsoft Store/Universal Windows Platform (Deep signing is not yet supported)</td>
+      </tr>
+      <tr>
+        <td><pre class="inline">&lt;opc-file&gt;</pre></td>
+        <td>Yes</td>
+        <td><pre class="inline">&lt;opc-sign&gt;</pre></td>
+        <td>.vsix, .xps, ...</td>
+        <td><a href="https://en.wikipedia.org/wiki/Open_Packaging_Conventions" target="_blank" rel="noopener">Open Packaging Conventions</a> (OPC) files. Supported formats include:
+          <ul>
+            <li>Visual Studio Extensions (VSIX)</li>
+            <li>Open XML Paper Specification (OpenXPS)</li>
+            <li>Office Open XML files (documents, presentations and workbooks)</li>
+            <li>Note that while OPC siging can be applied to all OPC formats, many specific formats do not use signing or require a different signing format</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><pre class="inline">&lt;nupkg-file&gt;</pre></td>
+        <td>Yes</td>
+        <td><pre class="inline">&lt;nuget-sign&gt;</pre></td>
+        <td>.nupkg</td>
+        <td>NuGet packages</td>
+      </tr>
+      <tr>
+        <td><pre class="inline">&lt;directory&gt;</pre></td>
+        <td>Yes</td>
+        <td><pre class="inline">&lt;clickonce-sign&gt;</pre></td>
+        <td></td>
+        <td>See next section</td>
+      </tr>
+    </tbody>
+  </table>
+  <ul>
+    <li>The simplest artifact configuration only contains a single file element and a signing directive. Consider using a predefined artifact configuration.</li>
+    <li>If you want to sign multiple artifacts in one step, you need to package them into a ZIP archive before processing.</li>
+    <li>If you want to deep-sign container files, you need to specify their internal structure.</li>
+    <li>You can combine signing multiple artifacts with deep signing.</li>
+  </ul>
+  <h3>Examples</h3>
+  <h4>Predefined configuration for single EXE file</h4>
+  <pre class="line-numbers"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;artifact-configuration
+    xmlns="http://signpath.io/artifact-configuration/v1"&gt;
+  &lt;pe-file&gt;
+    &lt;authenticode-sign /&gt;
+  &lt;/pe-file&gt;
+&lt;/artifact-configuration&gt;</code></pre>
+  <h4>Multiple artifacts can be signed in a single step by packing them into a ZIP container</h4>
+  <pre class="line-numbers"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;artifact-configuration
+    xmlns="http://signpath.io/artifact-configuration/v1"&gt;
+  &lt;zip-file&gt;
+    &lt;pe-file path="app.exe"&gt;
+      &lt;authenticode-sign /&gt;
+    &lt;/pe-file&gt;
+    &lt;powershell-file path="setup.ps1"&gt;
+      &lt;authenticode-sign /&gt;
+    &lt;/powershell-file&gt;
+  &lt;/zip-file&gt;
+&lt;/artifact-configuration&gt;</code></pre>
+  <h4>Deep signing of an MSI installer</h4>
+  <pre class="line-numbers"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;artifact-configuration
+    xmlns="http://signpath.io/artifact-configuration/v1"&gt;
+  &lt;msi-file&gt;
+    &lt;directory path="libs"&gt;
+      &lt;pe-file path="common.dll"&gt;
+        &lt;authenticode-sign /&gt;
+      &lt;/pe-file&gt;
+    &lt;/directory&gt;
+    &lt;pe-file path="main.exe"&gt;
+      &lt;authenticode-sign /&gt;
+    &lt;/pe-file&gt;
+    &lt;authenticode-sign /&gt;
+  &lt;/msi-file&gt;
+&lt;/artifact-configuration&gt;</code></pre>
+  <h2>&lt;directory&gt; element</h2>
+  <p>All supported container formats have an internal directory structure. You can see this structure if you extract a container to a local disk.</p>
+  <p>Directory elements specify a directory in a container file, or a subdirectory within a directory. You can use directory elements for ClickOnce signing and structuring your configuration.</p>
+  <h3>Example</h3>
+  <h4>Structuring with a directory element</h4>
+  <pre class="line-numbers"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1"&gt;
+  &lt;zip-file&gt;
+    &lt;directory path="environments/*" max-occurs="3"&gt;
+      &lt;pe-file path="*.dll" min-occurs="5" max-occurs="5"&gt;
+        &lt;authenticode-sign /&gt;
+      &lt;/pe-file&gt;
+    &lt;/directory&gt;
+  &lt;/zip-file&gt;
+&lt;/artifact-configuration&gt;</code></pre>
+  <h3>ClickOnce signing</h3>
+  <p>Since ClickOnce signing is a signing method for directories, not for files, you need to specify a directory element for this method.</p>
+  <pre class="line-numbers"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1"&gt;
+  &lt;zip-file&gt;
+    &lt;directory path="."&gt;
+      &lt;clickonce-sign /&gt;
+    &lt;/directory&gt;
+  &lt;/zip-file&gt;
+&lt;/artifact-configuration&gt;</code></pre>
+  <h2>File and directory sets</h2>
+  <p>Complex structures can be expressed by enumerating multiple files or directories using one of the following file or directory set elements:</p>
+  <ul>
+    <li><pre class="inline">&lt;directory-set&gt;</pre></li>
+    <li><pre class="inline">&lt;pe-file-set&gt;</pre></li>
+    <li><pre class="inline">&lt;zip-file-set&gt;</pre></li>
+    <li><pre class="inline">&lt;msi-file-set&gt;</pre></li>
+    <li><pre class="inline">&lt;cab-file-set&gt;</pre></li>
+    <li><pre class="inline">&lt;opc-file-set&gt;</pre></li>
+    <li><pre class="inline">&lt;nupkg-file-set&gt;</pre></li>
+  </ul>
+  <p>Each set element contains</p>
+  <ul>
+    <li>a list of <pre class="inline">&lt;include&gt;</pre> elements specifying which items will be processed</li>
+    <li>a <pre class="inline">&lt;for-each&gt;</pre> element that will be applied to all <pre class="inline">&lt;include&gt;</pre> elements of the set</li>
+  </ul>
+  <p>For example, the following XML describes an MSI installer package containing several nested EXE and DLL files to be signed:</p>
+  <h4>MSI file with complex structure</h4>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <pre class="line-numbers"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1"&gt;
+  &lt;msi-file&gt;
+    &lt;directory-set&gt;
+      &lt;include path="Component_1" /&gt;
+      &lt;include path="Component_2" /&gt;
+      &lt;include path="Component_3" /&gt;
+        &lt;for-each&gt;
+          &lt;pe-file-set&gt;
+            &lt;include path="main.exe" /&gt;
+            &lt;include path ="resources\*.resource.dll" max-occurs="unbounded" /&gt;
+            &lt;for-each&gt;
+              &lt;authenticode-sign /&gt;
+            &lt;/for-each&gt;
+         &lt;/pe-file-set&gt;
+       &lt;/for-each&gt;
+    &lt;/directory-set&gt;
+    &lt;authenticode-sign /&gt; &lt;!-- finally sign the MSI file --&gt;
+  &lt;/msi-file&gt;
+&lt;/artifact-configuration&gt;</code></pre>
+        </td>
+        <td>Example of a directory structure that would match this configuration:
+          <ul>
+            <li>MyApp.msi
+              <ul>
+                <li>Component_1/
+                  <ul>
+                    <li>main.exe</li>
+                    <li>resources/
+                      <ul>
+                        <li>de.resource.dll</li>
+                        <li>en.resource.dll</li>
+                        <li>fr.resource.dll</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>Component_2/
+                  <ul>
+                    <li>main.exe</li>
+                    <li>resources/
+                      <ul>
+                        <li>en.resource.dll</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>Component_3/
+                  <ul>
+                    <li>main.exe</li>
+                    <li>resources/
+                      <ul>
+                        <li>de.resource.dll</li>
+                        <li>en.resource.dll</li>
+                        <li>fr.resource.dll</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p>Like in the example above, every path attribute can contain the following wildcard patterns:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Wildcard</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><pre class="inline">*</pre></td>
+        <td>Matches any number of any character (including none, excluding the directory separator)</td>
+      </tr>
+      <tr>
+        <td><pre class="inline">?</pre></td>
+        <td>Matches any single character</td>
+      </tr>
+      <tr>
+        <td><pre class="inline">[abc]</pre></td>
+        <td>Matches one character given in the bracket</td>
+      </tr>
+      <tr>
+        <td><pre class="inline">[a-z]</pre></td>
+        <td>Matches one character from the range given in the bracket</td>
+      </tr>
+      <tr>
+        <td><pre class="inline">[!abc]</pre></td>
+        <td>Matches one character that is not given in the bracket</td>
+      </tr>
+      <tr>
+        <td><pre class="inline">[!a-z]</pre></td>
+        <td>Matches one character that is not from the range given in the bracket</td>
+      </tr>
+      <tr>
+        <td><pre class="inline">**</pre></td>
+        <td>Matches any number of path / directory segments. When used, they must be the only contents of the dedicated segment.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>If wildcards are used, optional <pre class="inline">max-occurs</pre> and <pre class="inline">min-occurs</pre> parameters can be specified to limit the number of files which are allowed to match the wildcard expression. Both default to <pre class="inline">1</pre>. (You can also use <pre class="inline">min-occurs="0"</pre> for optional elements even without wildcards.)</p>
+  <h2>Signing methods</h2>
+  <p>File and directory elements can contain signing directives. The signing directives must use signing methods that are available for the parent element. For file and directory sets, specify the signing directive in the element.</p>
+  <p>Examples:</p>
+  <ul>
+    <li><pre class="inline">&lt;nupkg-file&gt;</pre> supports <pre class="inline">&lt;nuget-signing/&gt;</pre></li>
+    <li><pre class="inline">&lt;nupkg-file-set&gt;</pre> supports <pre class="inline">&lt;nupkg-signing/&gt;</pre> within the <pre class="inline">&lt;for-each&gt;</pre> element</li>
+  </ul>
+  <h2>Extracting artifact packages</h2>
+  <p>You can use the following tools in order to manually extract files from your artifacts. From the extracted file structure, you can then easily create a matching artifact configuration.</p>
+
+  <p>We recommend that you apply these tools to all contained files recursively and create a very specific artifact configuration.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>File type</th>
+        <th>Recommended tools</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ZIP, CAB</td>
+        <td>Extract using tools like WinZip or 7-Zip or Windows Explorer.</td>
+      </tr>
+      <tr>
+        <td>VSIX, NUPKG</td>
+        <td>These are just special ZIP archives. Either change the extension to .ZIP or use a tool like 7-Zip to directly extract their contents.</td>
+      </tr>
+      <tr>
+        <td>MSI</td>
+        <td>Use the Windows tool msiexec.exe to perform an administrative install. Note that this might execute parts of the MSI file, so only use this for trusted files.
+          <pre>msiexec /a filename.msi TARGETDIR=c:\full-path</pre>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
