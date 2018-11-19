@@ -1,4 +1,4 @@
-![SignPath.io](https://app.signpath.io/Web/images/logo.svg)
+![SignPath.io](https://about.signpath.io/wp-content/uploads/sites/5/2018/03/SignPath-GmbH.svg)
 
 # This is the documentation and background info displayed on about.signpath.io
 
