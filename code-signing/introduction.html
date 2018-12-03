@@ -75,7 +75,7 @@
   <p>For testing purposes, certificates are often created ad-hoc, without use of a CA. These certificates are self-signed, i.e. they are signed with their own private key. Self-signed certificates must be trusted explicitly by the user’s system, or they will not be accepted</p>
   <h2>Certificate Chains</h2>
   <p>A typical certificate is issued by an intermediate certificate. The intermediate certificate is in turn issued by the root certificate. The sum of all these certificates is called a certificate chain. A typical certificate chain looks like this:</p>
-  <img src="./certificate-chains-abstract.png" alt="Certificate chain sample" height="106" width="370" />
+  <img src="/wp-content/uploads/images/certificate-chains-abstract.png" alt="Certificate chain sample" height="106" width="370" />
   <p>Let’s examine this in detail:</p>
   <ul>
     <li>The <em>CA root certificate</em> is self-signed. It is installed on the client and therefore trusted.</li>
@@ -93,7 +93,7 @@
     </li>
   </ul>
   <p>For instance, the actual certificate chain of Mozilla’s Firefox (firefox.exe) looks like this:</p>
-  <img src="./certificate-chains-concrete.png" alt="Firefox certificate chain sample" height="106" width="475" /> 
+  <img src="/wp-content/uploads/images/certificate-chains-concrete.png" alt="Firefox certificate chain sample" height="106" width="475" /> 
   <p>In order to verify the legitimacy of a signature, a client needs to know the entire certificate chain. Therefore, certificate files usually contain not only the certificate, but also every certificate in its chain of parents.</p>
   <!-- TODO: nice-to-have: the following header and paragraph would go into an expandable container -->
   <h3>Technical background</h3>
