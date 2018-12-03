@@ -191,11 +191,7 @@
   </ul>
   <p>For example, the following XML describes an MSI installer package containing several nested EXE and DLL files to be signed:</p>
   <h4>MSI file with complex structure</h4>
-  <table>
-    <tbody>
-      <tr>
-        <td>
-          <pre class="line-numbers"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+  <pre class="line-numbers"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8" ?&gt;
 &lt;artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1"&gt;
   &lt;msi-file&gt;
     &lt;directory-set&gt;
@@ -205,7 +201,7 @@
         &lt;for-each&gt;
           &lt;pe-file-set&gt;
             &lt;include path="main.exe" /&gt;
-            &lt;include path ="resources\*.resource.dll" max-occurs="unbounded" /&gt;
+            &lt;include path="resources\*.resource.dll" max-occurs="unbounded" /&gt;
             &lt;for-each&gt;
               &lt;authenticode-sign /&gt;
             &lt;/for-each&gt;
@@ -215,52 +211,47 @@
     &lt;authenticode-sign /&gt; &lt;!-- finally sign the MSI file --&gt;
   &lt;/msi-file&gt;
 &lt;/artifact-configuration&gt;</code></pre>
-        </td>
-        <td>Example of a directory structure that would match this configuration:
+  <p>Example of a directory structure that would match this configuration:</p>
+  <ul>
+    <li>MyApp.msi
+      <ul>
+        <li>Component_1/
           <ul>
-            <li>MyApp.msi
+            <li>main.exe</li>
+            <li>resources/
               <ul>
-                <li>Component_1/
-                  <ul>
-                    <li>main.exe</li>
-                    <li>resources/
-                      <ul>
-                        <li>de.resource.dll</li>
-                        <li>en.resource.dll</li>
-                        <li>fr.resource.dll</li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li>Component_2/
-                  <ul>
-                    <li>main.exe</li>
-                    <li>resources/
-                      <ul>
-                        <li>en.resource.dll</li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li>Component_3/
-                  <ul>
-                    <li>main.exe</li>
-                    <li>resources/
-                      <ul>
-                        <li>de.resource.dll</li>
-                        <li>en.resource.dll</li>
-                        <li>fr.resource.dll</li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
+                <li>de.resource.dll</li>
+                <li>en.resource.dll</li>
+                <li>fr.resource.dll</li>
               </ul>
             </li>
           </ul>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        </li>
+        <li>Component_2/
+          <ul>
+            <li>main.exe</li>
+            <li>resources/
+              <ul>
+                <li>en.resource.dll</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Component_3/
+          <ul>
+            <li>main.exe</li>
+            <li>resources/
+              <ul>
+                <li>de.resource.dll</li>
+                <li>en.resource.dll</li>
+                <li>fr.resource.dll</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
   <p>Like in the example above, every path attribute can contain the following wildcard patterns:</p>
   <table>
     <thead>
