@@ -30,7 +30,7 @@
         <td>The user is warned not to start the program</td>
       </tr>
       <tr>
-        <td>The program has a valid signature, but the certificate has little or not reputation</td>
+        <td>The program has a valid signature, but the certificate has little or no reputation</td>
         <td>The name of the software publisher is displayed, and the user is prompted to proceed or abort</td>
       </tr>
       <tr>
@@ -60,7 +60,7 @@
   <h2>Private keys</h2>
   <p>The basic concept of public-key cryptography is that keys are always generated in pairs: a public key and a private key. The private key is only known to its owner, while the public key is, well, public. Signing works like this: The signer, let’s call her Alice, uses her secret private key to sign a file. The receiver, Bob, knows Alice’s public key. When he receives a file signed by Alice, he can use this public key to verify that the file was signed by Alice, and that it has not been modified since. Private and public keys are therefore created together, but only the public key is exposed via the certificate and the private key is kept in a secure location, for instance a key store on SignPath.io.</p>
   <!-- TODO: nice-to-have: the following header and paragraphs would go into an expandable container -->
-  <h3>Hardware security moduls (HSM)</h3>
+  <h3>Hardware security modules (HSM)</h3>
   <p>The private key of a certificate must be properly protected. Theft of private keys is the main attack vector for code signing, thereby compromising both users and publishers. Since it’s not possible to effectively protect private keys in files or certificate stores managed by Windows, it is widely recommended that hardware security modules (HSMs) are used for code signing. For Extended Validation certificates, it is even required that keys are managed in HSMs meeting the requirements of FIPS 140-2 level 2.</p>
   <p>A HSM is a device that stores secret keys and performs cryptographic operations using these keys. When used properly, the HSM will generate the key itself, and will never expose it to any user or any other device. So when you use a HSM for signing, the HSM will not give the key to the signing software. Rather, the signing software will send the data (the digest) to the HSM and ask for a signature.</p>
   <h2>Certificate Authorities (CAs)</h2>
