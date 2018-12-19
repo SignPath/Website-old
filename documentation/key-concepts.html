@@ -7,7 +7,7 @@
 <body>
   <h1>Key concepts</h1>
   <!-- TODO: table-of-contents or submenu -->
-  <h2>Identify the artifacts you want to sign together</h2>
+  <h2 id="projects">Identify the artifacts you want to sign together</h2>
   <p>In SignPath, you define a project for each artifact, or a set of artifacts that should be signed in a single step. Typically, there is one set of artifacts per software product, development team or project. If you use continuous integration (CI) tools, the artifacts will be the output of a single build configuration, or a part of it. Or maybe you have several build configurations that create different versions of structurally identical artifacts – those can still be represented by a single SignPath project. (If you don’t use CI, we highly recommend starting now. A reproducible build process is a most basic ingredient for safe code signing.)</p>
   <p>At the core of each SignPath project is an artifact configuration. It describes the file type of your artifact and a corresponding code signing method (e.g. an EXE file signed with Authenticode). You can also sign multiple files or complex nested artifacts, e.g.</p>
   <ul>
@@ -18,7 +18,7 @@
   <!-- TODO: link needs to be updated -->
   <p>For complex nested artifacts, creating the artifact configuration is a bit more involved. You need to create an XML file that describes the artifact, with all its nested elements, and the signing actions you want performed on these files. See <a href="https://signpath-io.int.rubicon-it.com/home/creating-an-artifact-configuration/">Creating an artifact configuration</a>.</p>
   <p>Note that a tight configuration of your artifact reduces the risk of unwanted signatures. Add constraints liberally.</p>
-  <h2>Create signing policies for each project</h2>
+  <h2 id="signing-policies">Create signing policies for each project</h2>
   <p>The same project is usually signed for different purposes, most commonly test- and release-signing. Define signing policies for each project as required.</p>
   <table>
     <thead>
