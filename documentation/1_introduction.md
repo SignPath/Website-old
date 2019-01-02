@@ -23,12 +23,16 @@ See also: [Distribution of roles](#distribution-of-roles)
       <th>Description</th>
     </tr>
   </thead>
+
   <tbody>
     <tr>
       <td>Create an organization</td>
       <td>Administrator</td>
-      <td>Register for a free trial (paid subscriptions coming soon)</td>
-    </tr>
+      <td>
+
+Register for a free trial or paid subscriptions ![TODO](../todo.png)
+
+</td></tr>
     <tr>
       <td>Create or import certificates</td>
       <td>Administrator</td>
@@ -44,8 +48,7 @@ Notes:
 * You may choose to get different certificates for each product, customer, etc.
 * You can also import existing certificates. You will be warned that this is potentially insecure.
 
-</td>
-    </tr>
+</td></tr>
     <tr>
       <td>Create user accounts</td>
       <td>Administrator</td>
@@ -57,8 +60,7 @@ Set up your team:
 * Create CI user accounts to integrate SignPath in your automated builds
 * Assign permissions by adding users to singing policies
 
-</td>
-    </tr>
+</td></tr>
     <tr>
       <td>Create projects</td>
       <td>Development</td>
@@ -81,8 +83,7 @@ For each project
 * create at least a test-signing and a release-signing policy
 * assign a certificate and user permissions to each signing policy
 
-</td>
-    </tr>
+</td></tr>
     <tr>
       <td>Integrate into CI builds</td>
       <td>Development</td>
@@ -99,8 +100,7 @@ Use our PowerShell module or call our API for automatically submitting signing r
 
 When everything is working, consider revoking existing unsafe certificates via your CA. (Signatures of properly time stamped code will still be valid.)
 
-</td>
-    </tr>
+</td></tr>
   </tbody>
 </table>
 
@@ -134,87 +134,6 @@ For signing policies that require approval, each approver will receive an e-mail
 
 Administrators will be notified about important events. They can also use the Web application to see a full activity audit for each entity, including users, certificates, projects, signing policies and signing requests.
 
-# Key concepts
-
-The major entities in SignPath are **projects**, **certificates** and **users**. They are all part of your **organization**.
-
-Each **project** consists of
-
-* an **artifact configuration** that defines how an artifact is structured, and which parts should be signed as well as the signing methods
-* one or more **signing policies** (typically *test-signing* and *release-signing*) that declare the rules for signing and specify a **certificate**
-
-When an artifact needs to be signed, a **signing request** for a specific **project** and **signing policy** is created.
-
-This UML class diagram shows the fundamental relationships:
-![Key concepts UML](key-concepts.png)
-
-## Projects
-
-In SignPath, you define a project for each artifact, or a set of artifacts that should be signed in a single step. Typically, there is one set of artifacts per software product, development team or project. If you use continuous integration (CI) tools, the artifacts will be the output of a single build configuration, or a part of it. Or maybe you have several build configurations that create different versions of structurally identical artifacts – those can still be represented by a single SignPath project. (If you don’t use CI, we highly recommend starting now. A reproducible build process is a most basic ingredient for safe code signing.)
-
-At the core of each SignPath project is an artifact configuration. It describes the file type of your artifact and a corresponding code signing method (e.g. an EXE file signed with Authenticode). You can also sign multiple files or complex nested artifacts, e.g.
-
-* a ZIP archive containing several artifacts that need Authenticode signing
-* a CAB file containing EXE and DLL files, all of which should be signed with Authenticode
-* an MSI installer containing an Office add-in, which in turn contains DLLs – the MSI file and the DLLs should be signed using Authenticode, while the Office add-in has a ClickOnce manifest that requires manifest signing
-
-For complex nested artifacts, creating the artifact configuration is a bit more involved. You need to create an XML file that describes the artifact, with all its nested elements, and the signing actions you want performed on these files. See [creating an artifact configuration][artifact configuration].
-
-Note that a tight configuration of your artifact reduces the risk of unwanted signatures. Add constraints liberally.
-
-## Signing policies
-
-The same project is usually signed for different purposes, most commonly test- and release-signing. Define signing policies for each project as required.
-<table style="table-layout: auto;">
-<thead>
-  <tr>
-    <th style="width: 10%;">Signing Policy</th>
-    <th style="width: 20%;">Purpose</th>
-    <th style="width: 20%;">Certificate requirements</th>
-    <th style="width: 20%;">Signing requirements</th>
-    <th style="width: 30%;">Remarks</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td>Test-signing</td>
-    <td>
-
-* Signing software for internal and external testing
-* Testing signing configurations
-
-</td><td>
-
-* Distribute certificate only to testing devices
-* Usually a self-signed certificate
-
-</td>
-    <td>Only permitted submitters (people or CI pipelines)</td>
-    <td>Since certificate is only valid in test environments and builds are frequent, manual approval is usually not required.</td>
-  </tr>
-  <tr>
-    <td>Release-signing</td>
-    <td>
-
-Signing software for
-
-* distribution to customers and users
-* installation on production environments
-
-</td><td>
-
-* Purchased from a public CA
-* Issued by an in-house CA if only used internally
-
-</td>
-    <td>Usually requires manual approval for each build</td>
-    <td>Release certificates are an attractive target. Be sure to review each signing request carefully before approval and don’t approve unexpected releases. Also, CI integration will help to make the entire build process more traceable.</td>
-  </tr>
-</tbody>
-</table>
-
-You might need more signing policies. For example, you might want to introduce an approval process for some submitters, but not for others. Or you might use different certificates for various kinds of builds. Define any number of signing policies to meet your organization’s requirements.
-
-[key concepts]: #key-concepts
+[key concepts]: 2_key_concepts.md.html
 [artifact configuration]: 3_artifact_configuration.md.html
 [build system integration]: 4_build_integration.md.html

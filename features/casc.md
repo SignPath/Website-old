@@ -47,10 +47,8 @@ This page outlines how SignPath ensures that these recommendations are fulfilled
 | CASC recommendation details                                                                              | Compliance    | Remarks |
 | -------------------------------------------------------------------------------------------------------- | ------------- | ------- |
 | Cryptographic hardware does not allow export of the private key to software where it could be attacked   | **Automatic** | SignPath always creates HSM-based keys as *non-exportable*.
-| Use a FIPS 140 Level 2-certified product (or better)                                                     | **Automatic** | SignPath.io uses SafeNet Luna Network HSMs. They are [validated][luna fips] for FIPS 140-1 and FIPS 140-2 Level 3, and certified for Common Criteria (ISO/IEC15408).
+| Use a FIPS 140 Level 2-certified product (or better)                                                     | **Automatic** | SignPath.io uses SafeNet Luna Network HSMs [validated][luna fips] for FIPS 140-1 and FIPS 140-2 Level 3, and certified for Common Criteria (ISO/IEC15408).
 | Use an EV code signing certificate which requires the private key to be generated and stored in hardware | **Automatic** | SignPath will create a certificate signing request (CSR) from your HSM key. Use this CSR to purchase a certificate from any Certificate Authority. While this is required only for EV certificates, SignPath ensures the same security for normal (OV) certificates.
-
-[luna fips]: https://data-protection-updates.gemalto.com/2018/07/24/safenet-luna-hsm-7-now-fips-140-2-level-3-validated/
 
 [3]: #3-time-stamp-code
 
@@ -76,10 +74,10 @@ This page outlines how SignPath ensures that these recommendations are fulfilled
 
 | CASC recommendation details                                                                             | Compliance    | Remarks |
 | ------------------------------------------------------------------------------------------------------- | ------------- | ------- |
-| Test-signing private keys and certificates requires less security access controls than production code signing private keys and certificates | **Automatic** | Signing policies have different permissions and approval requirements.
+| Test-signing private keys and certificates requires less security access controls than production code signing private keys and certificates | **Automatic** | Signing policies for test-signing and release-signing have different permissions and approval requirements.
 | Test-signing certificates can be self-signed or come from an internal test CA                           | **Guidance**  | Create a self-signed certificate from the setup wizard, or create a CSR for an in-house CA.
-| Test certificates must chain to a completely different root certificate than the root certificate that is used to sign publicly released products; this precaution helps ensure that test certificates are trusted only within the intended test environment | **Guidance**  | SignPath offers advice in the certificate administration console.
-| Establish a separate test code signing infrastructure to test-sign pre-release builds of software       | **Guidance**  | SignPath.io allows you to use the dedicated credentials and build agents for each signing policy. However, we recommend to share the essential build configuration in order to avoid confusion and configuration errors.
+| Test certificates must chain to a completely different root certificate than the root certificate that is used to sign publicly released products; this precaution helps ensure that test certificates are trusted only within the intended test environment | **Guidance**  | SignPath offers advice in the certificate administration console. ![TODO](../todo.png)
+| Establish a separate test code signing infrastructure to test-sign pre-release builds of software       | **Guidance**  | SignPath.io allows you to use the dedicated credentials and build agents for each signing policy. We recommend to share the essential build configuration in order to avoid confusion and configuration errors.
 
 [5]: #5-authenticate-code-to-be-signed
 
@@ -106,8 +104,8 @@ This page outlines how SignPath ensures that these recommendations are fulfilled
 | CASC recommendation details                                               | Compliance    | Remarks |
 | ------------------------------------------------------------------------- | ------------- | ------- |
 | Code signing does not confirm the safety or quality of the code; it confirms the publisher and whether or not the code has been changed | **n/a** | *(informational)*
-| Take care when incorporating code from other sources                      | **Guidance**  | See our [guidelines][3rd party components] for including third-party components.
-| Implement virus-scanning to help improve the quality of the released code | **Automatic** | *See main topic*
+| Take care when incorporating code from other sources                      | **Guidance**  | See our [guidelines][3rd party components] for including third-party components. ![TODO](../todo.png)
+| Implement virus-scanning to help improve the quality of the released code | **Automatic** | *See above*
 
 [7]: #7-do-not-over-use-any-one-key-distribute-risk-with-multiple-certificates
 
@@ -141,3 +139,4 @@ Since test-signing for pre-releases is usually checked less rigorously, it often
 
 [3rd party components]: TODO
 [signing policies]: ../documentation/1_introduction.md.html#signing-policies
+[luna fips]: https://data-protection-updates.gemalto.com/2018/07/24/safenet-luna-hsm-7-now-fips-140-2-level-3-validated/
