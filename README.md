@@ -5,7 +5,7 @@
 The main sections are
 
 * SignPath.io features
-* Code signing 
+* Code signing
   * General information
   * Code signing for Windows (Authenticode, ClickOnce, OPC/VSIX, NuGet)
 * SignPath product documentation

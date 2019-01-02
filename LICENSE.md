@@ -1,6 +1,8 @@
+<!-- markdownlint-disable -->
+
 SignPath documentation (c) by [SignPath Gmbh](https://signpath.io/).
 
-This documentation is provided under the conditions of the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0] (https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
+This documentation is provided under the conditions of the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
 
 # Attribution-NonCommercial-ShareAlike 4.0 International
 

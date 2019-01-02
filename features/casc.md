@@ -121,13 +121,13 @@ Buying multiple EV certificates can be costly. On the other hand, non-EV certifi
 SignPath.io recommends that you consider buying separate certificates for major product lines, teams or customers. However, you can have a perfectly secure code signing process with a single release certificate.  
 !!!
 
-<!-- TODO this should be separate guidance -->
-Since test-signing for pre-releases is usually checked less rigorously, it often makes sense to issue separate test certificates for different teams and deploy those certificates only on machines that belong to this team. This is especially true if you distribute test certificates to customers for installation on their test machines.
-
-* This might have an adverse effect on security if you don't have good control over these test certificates.
-  * Aim for automatic deployment and undeployment based on some directory (Windows *Group Policy Objects* are a good candidate).
-  * It is more secure to have an in-house CA issue test certificates than to use self-signed certificates, because only a CA can revoke certificates in case of a security incident.
-* There is no value in separating test certificates pre-release builds are generally deployed across the organization. 
+> ![TODO](../todo.png) **This should be separate guidance**
+> Since test-signing for pre-releases is usually checked less rigorously, it often makes sense to issue separate test certificates for different teams and deploy those certificates only on machines that belong to this team. This is especially true if you distribute test certificates to customers for installation on their test machines.
+>
+> * This might have an adverse effect on security if you don't have good control over these test certificates.
+>   * Aim for automatic deployment and undeployment based on some directory (Windows *Group Policy Objects* are a good candidate).
+>   * It is more secure to have an in-house CA issue test certificates than to use self-signed certificates, because only a CA can revoke certificates in case of a security incident.
+> * There is no value in separating test certificates pre-release builds are generally deployed across the organization.
 
 <br>
 
