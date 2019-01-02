@@ -1,8 +1,8 @@
 **Title:** Build system integration - SignPath.io
 
-@[toc]
-
 # Build system integration
+
+@[toc]
 
 ## Abstract
 
@@ -14,7 +14,11 @@ All necessary IDs can be found on the signing policy details page, including a c
 
 ## Authorization
 
-Before accessing the API, you have to create a CI User in the User section of the SignPath application. Make sure to keep the access token in a secure location.
+Before accessing the API, you have to create a CI User in the User section of the SignPath application.
+
+The API token is displayed when a new CI user is created. (If you lose the API key, you will need to generate a new one.)
+
+Make sure to keep the access token in a secure location. Most Continuous Integration (CI) systems provides a mechanism to store secrets, which is usually the best place to keep API tokens. If you use several distinct systems for API access, we recommend that you create individual CI User accounts in SignPath.
 
 ## PowerShell
 
@@ -53,17 +57,16 @@ Submit-SigningRequest
 
 In case the PowerShell module is not sufficient, you can communicate directly with our API by calling our public HTTP REST endpoints.
 
-### Base URL and authorization
+### Base URL and authentication
 
-In order to call SignPath.io REST APIs, you need:
+SignPath.io uses bearer authentication.
 
-* an organization ID 
-* the API token of a CI user
-
-| Common values                   |     |
+| Common API arguments            |     |
 | ------------------------------- | --- |
 | Base URL                        | `https://app.signpath.io/API/v1/`OrganizationId
 | Authorization HTTP header field | `Authorization: Bearer <token>`
+
+You need to provide these values for every single API request.
 
 ### Submit a signing request
 
@@ -71,7 +74,7 @@ In order to call SignPath.io REST APIs, you need:
 | ------------------ | ---- |
 | URL                | `/SigningRequests`
 | Method             | POST
-| Format             | multipart/form-data
+| Encoding            | multipart/form-data
 | `SigningPolicyId`  | Signing policy for which you want to create the signing request
 | `Artifact`         | Artifact file
 | `Description`      | Optional description for your signing request (e.g. version number)
@@ -86,13 +89,13 @@ curl -H "Authorization: Bearer $CI_USER_TOKEN" \
      https://app.signpath.io/API/v1/$ORGANIZATION_ID/SigningRequests
 ```
 
-**Succcessful result:** HTTP status code `201`. A HTTP `Location` response-header field is returned with the URL of the created entity.
+**Success result:** HTTP status code `201`. A HTTP `Location` response-header field is returned with the URL of the created entity.
 
 ### Check the status of a signing request
 
 | Synopsis   |      |
 | ---------- | ---- |
-| URL        | `/SigningRequests/`id <br> (`Location` response-header field from `SigningRequest)
+| URL        | `/SigningRequests/`id <br> (`Location` response-header field from `/SigningRequests`)
 | Method     | GET
 | Parameters | none
 
@@ -103,7 +106,7 @@ curl -H "Authorization: Bearer $CI_USER_TOKEN" \
      https://app.signpath.io/API/v1/$ORGANIZATION_ID/SigningRequest/$SIGNING_REQUEST_ID
 ```
 
-**Successful result:** HTTP status code `200`. Status of the signing request in JSON format:
+**Success result:** HTTP status code `200`. Status of the signing request in JSON format:
 
 ```json
 {
@@ -138,4 +141,4 @@ curl -H "Authorization: Bearer $CI_USER_TOKEN" \
      https://app.signpath.io/API/v1/$ORGANIZATION_ID/SigningRequest/$SIGNING_REQUEST_ID/SignedArtifact
 ```
 
-**Successful result:** HTTP status code `200`. Returns the binary content of the signed artifact.
+**Success result:** HTTP status code `200`. Returns the binary content of the signed artifact.

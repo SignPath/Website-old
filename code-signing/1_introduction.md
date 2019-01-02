@@ -6,7 +6,7 @@
 
 ## Purpose
 
-Installing and updating software is arguably the most vulerable activity from a security perspective. While anti-malware software can mitigate some well-known risks, it can never provide full protection. Since even a single successful attack is enough to take over a user account, a computer or even a network, it is imperative that only software from trusted sources is installed on user devices and servers.
+Installing and updating software is arguably the most vulnerable activity from a security perspective. While anti-malware software can mitigate some well-known risks, it can never provide full protection. Since even a single successful attack is enough to take over a user account, a computer or even a network, it is imperative that only software from trusted sources is installed on user devices and servers.
 
 Code signing is used to indicate and verify the publisher of software programs and make sure the software has not been modified after publishing.
 
@@ -22,7 +22,7 @@ On a higher level, the objective of code signing is to provide evidence that sof
 
 * **Trust:** Organizations and persons must undergo an identification process with a certificate authority, so one could assume *a smaller likelihood of criminal intent*. Using the information about the publisher’s identity, users can make *educated decisions* about whether to install and execute a specific program, and system administrators can define *security policies* that will be enforced, allowing only trusted programs to execute or gain elevated permissions.
 * **Virus prevention:** Cryptographic signatures can guarantee that no alteration, such as a virus infection, has taken place *after* the publisher has signed it.
-* **Update safety:** Through certifcates, updates can be verified to be published by the original publisher.
+* **Update safety:** Through certificates, updates can be verified to be published by the original publisher.
 * **Persistence:** Modern code signing techniques deliver the signature with the software, so it can be verified at any time independently from the delivery mechanism.
 
 ## Implementation
@@ -35,7 +35,7 @@ Today, code signatures are considered by most operating systems, web browsers, d
 
 For instance:
 
-* Before Windows executes a downloaded file, it looks for a signature and validates it. If the file has a valid signature, Windows SmartScreen will assert the file's reputation based on the certificate. 
+* Before Windows executes a downloaded file, it looks for a signature and validates it. If the file has a valid signature, Windows SmartScreen will assert the file's reputation based on the certificate.
 * When a program tries to modify a user's system, Windows User Account Control (UAC) will display a warning that informs the user about the software's publisher.
 
 Other platforms have different methods for signing and verification, some of them are also listed in this guide.

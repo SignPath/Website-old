@@ -47,7 +47,7 @@ Public keys are linked to identities via certificates by a public key infrastruc
 
 ## Certificates
 
-Public-key certificates are the corner stones of any public-key infrastructure. A certificate binds a the identity of the private key's owner to the public key. It is signed by a Certificate Authority in order to allow verification of this binding.
+Public-key certificates are the corner stones of any public-key infrastructure. A certificate binds the identity of the private key's owner to the public key. It is signed by a Certificate Authority in order to allow verification of this binding.
 
 The most used certificate type is X.509, a certificate standard that is used for HTTPS (SSL/TLS client and server certificates), code signing, and other uses such as email (S/MIME) and PDF signing.
 
@@ -145,7 +145,7 @@ For testing purposes, certificates are often created ad-hoc, without use of a CA
 
 ## Certificate chains
 
-A typical certificate is issued by an intermediate certificate. The intermediate certificate is in turn issued by the root certificate. The sum of all these certificates is called a certificate chain. 
+A typical certificate is issued by an intermediate certificate. The intermediate certificate is in turn issued by the root certificate. The sum of all these certificates is called a certificate chain.
 
 A typical certificate chain looks like this:
 
@@ -307,7 +307,7 @@ The most commonly used variant today is SHA-256, which is short for SHA-2 with a
 
 !!! warning ![Warning](../warning.png) Always use SHA-2 Time Stamp Authorities
 
-Note that since time stamps are signatures too, they also need a hash algorithm. Many CAs provide SHA-1 and SHA-2, but SHA-1 is still the default in many scenarios.
+Since time stamps are signatures too, they also need a hash algorithm. Many CAs provide SHA-1 and SHA-2, but SHA-1 is still the default in many scenarios.
 
-Since time stamps are valid for many years, it's all the more important to use SHA-2 TSAs. Consult your CAs documentation for the correct URLs.
+Since time stamps are valid for many years, it's all the more important to use SHA-2 TSAs. Consult your CA's documentation for the correct SHA-2 URLs.
 !!!

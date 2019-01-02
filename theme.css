@@ -37,6 +37,7 @@ caption {
 }
 
 p {
+    margin-block-start: 0.5em;
     margin-block-end: 0.5em;
 }
 
@@ -57,6 +58,10 @@ td ul {
 td li {
     padding: 0;
     padding-bottom: 0.3em;
+}
+
+td p {
+    margin-block-start: 0;
 }
 
 code {
@@ -89,17 +94,33 @@ a:hover {
     text-decoration: underline;
 }
 
+blockquote {
+    border: 1px black solid;
+    background-color: #F8F8F8;
+    margin: 0;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+}
 
-.markdownit-TOC li {
+
+ul.markdownIt-TOC li {
     padding-block-start: 0;
     padding-block-end: 0;
 }
 
-.markdownit-TOC li a {
+ul.markdownIt-TOC, ul.markdownIt-TOC ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-left: 1.4em;
+}
+
+.markdownIt-TOC li a {
     color: #505050;
 }
 
-ul.markdownit-TOC > li > a {
+ul.markdownIt-TOC > li > a {
     font-size: 1.1em;
     color: #0081b4;
 }
@@ -138,7 +159,7 @@ p.admonition-title img {
     padding-right: 5px;
     padding-top: 0px;
     position: relative;
-    top: 0.5rem;
+    top: 10px;
 }
 
 a:link.markdownit-Anchor, a:visited.markdownit-Anchor  {
@@ -154,6 +175,7 @@ div.sidebar {
     height: 100%;
     background-color: #EFFBFF; 
     position: fixed!important; 
+	z-index: 1;
 }
 
 div.sidebar h1 {

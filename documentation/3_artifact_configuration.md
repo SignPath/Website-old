@@ -1,8 +1,8 @@
 **Title:** Artifact configuration - SignPath.io
 
-@[toc]
-
 # Creating an artifact configuration
+
+@[toc]
 
 ## Abstract
 
@@ -10,7 +10,7 @@ The artifact configuration describes the structure of the artifacts you want to 
 
 !!! info ![Information](../info.png)Tips:
 
-* **Basic artifact configurations can be generated from sample artifacts.** However, this is feature is not yet integrated in the online application. Until then, feel free to ask our support for help at [support@singpath.io](mailto:support@signpath.io?subject=Request%20for%20artifact%20configuration) (please attach your sample artifact).
+* **Basic artifact configurations can be generated from sample artifacts.** However, this is feature is not yet integrated in the online application. Until then, feel free to ask our support for help at [support@singpath.io](mailto:support@signpath.io?subject=Request%20for%20artifact%20configuration). Please attach your sample artifact.
 * Alternatively, if you don't know the internal structure of your artifact, [extract container files](#extracting-artifact-packages) to your disk first.
 * Use a schema-aware XML editor, such as Microsoft Visual Studio, to edit your artifact configuration. (Some tools may require you to download the [schema](https://app.signpath.io/web/artifact-configuration/v1.xsd)).
 
@@ -24,7 +24,9 @@ In case you have more complex, nested artifacts, you might want to not only sign
 
 Every XML description is wrapped in an `<artifact-configuration>` root element which contains exactly one file element. This file element specifies the type of artifact and signing method.
 
-Container-format elements may contain other files for deep signing.
+Container-format elements may contain other file elements for deep signing.
+
+### File element types and signing directives
 
 <table id="signing-file-elements">
 <thead>
@@ -103,7 +105,7 @@ Container-format elements may contain other files for deep signing.
 </tbody>
 </table>
 
-Signing multiple artifacts
+### Signing multiple artifacts
 
 * If you want to sign multiple independent artifacts in one step, you need to package them into a ZIP archive before processing.
 * You can combine signing multiple artifacts with deep signing.
@@ -132,6 +134,8 @@ Directory elements specify a directory in a container file, or a subdirectory wi
 
 ## Signing methods
 
+<!-- markdownlint-disable MD026 no trailing punctuation -->
+
 Specify signing directives in file and directory elements. See [file elements](#file-elements) for available methods per element type.
 
 For file and directory sets, specify the signing directive in the `<for-each>` element.
@@ -150,7 +154,7 @@ Using `<authenticode-sign>` is equivalent to using Microsoft's `SignTool.exe`.
 
 ClickOnce signing, also called 'manifest signing', is a method used for ClickOnce applications and Microsoft Office Add-ins.
 
-ClickOnce signing applies to directories, not to individudal files. Therefore, you need to specify a `<directory>` element for this method. If you want to sign files in the root directory of a container, specify `path="."`.
+ClickOnce signing applies to directories, not to individual files. Therefore, you need to specify a `<directory>` element for this method. If you want to sign files in the root directory of a container, specify `path="."`.
 
 ```xml
 <artifact-configuration>
@@ -168,77 +172,24 @@ Using `<clickonce-sign>` is equivalent to using Microsoft's `mage.exe`.
 
 NuGet package signing is currently being introduced to the [NuGet Gallery](https://www.nuget.org/).
 
+Although the NuGet Package format is based on OPC (see next section), it uses its own specific signing format.
+
 Using `<nuget-sign>` is equivalent to using Microsoft's `nuget` `sign` command.
 
 ### &lt;opc-sign&gt;
 
-[Open Packaging Conventions](https://en.wikipedia.org/wiki/Open_Packaging_Conventions) (OPC) have a specific signature format. Since the OPC format is used for many things including Office documents, it is not strictly a code signing format. However, code signing is a requirement for Visual Studio Extensions (VSIX).
+The [Open Packaging Conventions](https://en.wikipedia.org/wiki/Open_Packaging_Conventions) (OPC) specification has its own signature format. Since OPC is the foundation for several file formats, it is not strictly a code signing format. However, code signing is used for Visual Studio Extensions (VSIX).
 
 Other OPC formats include:
 
 * Open XML Paper Specification (OpenXPS)
 * Office Open XML files (Microsoft Office)
 
-Note that while OPC signing can be applied to all OPC formats, many specific formats do not use signing or require a different signing format
+Note that while OPC signing can be applied to all OPC formats, specific applications and formats do not necessarily use or verify signatures, or even require a different signing format (case in point: NuGet packages).
 
 Using `<opc-sign>` for Visual Studio Extensions is equivalent to using Microsoft's `VSIXSignTool.exe`.
 
-## Examples
-
-!!! info ![Information](../info.png) Examples are shortened
-For the sake of clarity, all samples omit the XML prolog and the namespace declaration. A full artifact configuration looks like this:
-
-```xml
-<?xml version="1.0" encoding="utf-8" ?>
-<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
-  <!-- ... -->
-</artifact-configuration>
-```
-
-!!!
-
-#### Predefined configuration for single EXE file
-
-```xml
-<artifact-configuration>
-  <pe-file>
-    <authenticode-sign/>
-  </pe-file>
-</artifact-configuration>
-```
-
-#### Multiple artifacts can be signed in a single step by packing them into a ZIP container
-
-```xml
-<artifact-configuration>
-  <zip-file>
-    <pe-file path="app.exe">
-      <authenticode-sign/>
-    </pe-file>
-    <powershell-file path="setup.ps1">
-      <authenticode-sign/>
-    </powershell-file>
-  </zip-file>
-</artifact-configuration>
-```
-
-#### Deep signing of an MSI installer
-
-```xml
-<artifact-configuration>
-  <msi-file>
-    <directory path="libs">
-      <pe-file path="common.dll">
-        <authenticode-sign/>
-      </pe-file>
-    </directory>
-    <pe-file path="main.exe">
-      <authenticode-sign/>
-    </pe-file>
-    <authenticode-sign/>
-  </msi-file>
-</artifact-configuration>
-```
+<!-- markdownlint-enable MD026 no trailing punctuation -->
 
 ## Using wildcards
 
@@ -270,14 +221,13 @@ If multiple files or directories should be handled in the same way, you can enum
 
 Each set element contains:
 
-* a list of `<include>` elements specifying which items will be processed
-* a `<for-each>` element that will be applied to all `<include>` elements of the set
+* an `<include>` element for each file (or pattern) to be processed
+* a `<for-each>` element that will be applied to all included elements of the set
 
 A set's `<for-each>` element can include the same child elements as the corresponding simple file or directory element:
 
 * `<pe-file>` supports `<authenticode-signing/>`
-* `<pe-file-set>` therefore supports `<authenticode-signing/>` within the `<for-each>` element
-
+* therefore `<pe-file-set>` supports `<authenticode-signing/>` within the `<for-each>` element
 
 Sets are especially useful if your artifacts contain repeating nested structures.
 
@@ -314,29 +264,89 @@ Sets are especially useful if your artifacts contain repeating nested structures
 
 </td> </tr> </tbody> </table>
 
-### Complex MSI file example
+## Examples
 
-The following XML describes an MSI installer package containing several nested EXE and DLL files to be signed:
+!!! info ![Information](../info.png) Examples are shortened
+For the sake of clarity, all samples omit the XML prolog and the namespace declaration. A full artifact configuration looks like this:
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
+  <!-- ... -->
+</artifact-configuration>
+```
+
+!!!
+
+### Predefined configuration for single EXE file
+
+```xml
+<artifact-configuration>
+  <pe-file>
+    <authenticode-sign/>
+  </pe-file>
+</artifact-configuration>
+```
+
+### Signing multiple artifacts in a ZIP container
+
+You can sign multiple unrelated artifacts by packing them into a single ZIP file.
+
+```xml
+<artifact-configuration>
+  <zip-file>
+    <pe-file path="app.exe">
+      <authenticode-sign/>
+    </pe-file>
+    <powershell-file path="setup.ps1">
+      <authenticode-sign/>
+    </powershell-file>
+  </zip-file>
+</artifact-configuration>
+```
+
+### Deep-signing of an MSI installer
+
+This will sign the PE files `libs/common.dll` and `main.exe`, then re-package their MSI container and sign it too.
+
+```xml
+<artifact-configuration>
+  <msi-file>
+    <directory path="libs">
+      <pe-file path="common.dll">
+        <authenticode-sign/>
+      </pe-file>
+    </directory>
+    <pe-file path="main.exe">
+      <authenticode-sign/>
+    </pe-file>
+    <authenticode-sign/>
+  </msi-file>
+</artifact-configuration>
+```
+
+### Signing similar directories within an MSI file
+
+This artifact configuration describes an MSI installer package containing several components. These components have a similar structure and are therefore defined as a `<directory-set>`. Each component contains a `main.exe` and zero or more resource DLLs.
+
+```xml
+<artifact-configuration>
   <msi-file>
     <directory-set>
       <include path="component1" />
       <include path="component2" />
       <include path="component3" />
-        <for-each>
-          <pe-file-set>
-            <include path="main.exe" />
-            <include path="resources\*.resource.dll" min-matches="0" max-matches="unbounded" />
-            <for-each>
-              <authenticode-sign/>
-            </for-each>
-          </pe-file-set>
-        </for-each>
+      <for-each>
+        <pe-file-set>
+          <include path="main.exe" />
+          <include path="resources\*.resource.dll" min-matches="0" max-matches="unbounded" />
+          <for-each>
+            <authenticode-sign/>
+          </for-each>
+        </pe-file-set>
+      </for-each>
     </directory-set>
-    <authenticode-sign/> 
+    <authenticode-sign/>
   </msi-file>
 </artifact-configuration>
 ```
@@ -365,6 +375,6 @@ We recommend that you apply these tools to all contained files recursively and c
 
 | File type       | Recommended tools |
 | --------------- | ----------------- |
-| ZIP, CAB        | Extract using tools like WinZip or 7-Zip or Windows Explorer.
-| VSIX, NUPKG     | These are just special ZIP archives. Either change the extension to .ZIP or use a tool like 7-Zip to directly extract their contents.
-| MSI             | Use the Windows tool msiexec.exe to perform an administrative install. Note that this might execute parts of the MSI file, so only use this for trusted files.<br> `msiexec /a filename.msi TARGETDIR=c:\full-path`
+| .zip, .cab      | Extract using tools like WinZip or 7-Zip or Windows Explorer.
+| .vsix, .nupkg   | These are just special ZIP archives. Either change the extension to .ZIP or use a tool like 7-Zip to directly extract their contents.
+| .msi            | Use the Windows tool msiexec.exe to perform an administrative install. Note that this might execute parts of the MSI file, so only use this for trusted files.<br> `msiexec /a filename.msi TARGETDIR=c:\full-path`

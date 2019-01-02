@@ -1,78 +1,19 @@
 **Title:** Introduction - SignPath.io
 
+# Introduction to SignPath.io
+
 @[toc]
 
-# Documentation <!-- TODO: table-of-contents or submenu -->
-
-SignPath aims to turn code signing into a controlled and repeatable process that aligns the needs of both development teams and InfoSec people.
-
-While practices, tools and services for code signing usually focus on certificate management, there are also important process requirements. There are many recommendations, but they are hard and expensive to implement. SignPath addresses code signing from a process perspective. Our topmost priority is to make it easy to set up a code signing process that just works for development teams and is secure and auditable at the same time.
-
-There is often a conflict of interests: development teams need to be responsive and productive and want InfoSec to get out of the way. On the other hand, InfoSec is responsible for minimizing the considerable risk associated with code signing and therefore need to get control over the process.
-
-<!-- TODO: nice-to-have: a table is not the ideal form to represent this information, maybe two divs that break on smaller screens are better --->
-
-<table>
-  <thead>
-    <tr>
-      <th>Developer priorities</th>
-      <th>InfoSec priorities</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-
-* *Sign code so it will work for end-users*
-  * Installation of downloaded files
-  * App store submissions
-  * DevOps: Use application control/whitelisting on dedicated servers
-* *Simplicity*
-  * Sign multiple artifacts in one final step
-  * Including nested artifacts (e.g. programs contained in installers)
-  * Tool support, clear error messages
-* *Agility*
-  * Minimize overhead per release
-  * Support release processes and branching models
-* *Continuous integration (CI)*
-  * Simple integration with CI tools and services
-  * No messing with complicated tools, dongles, certificate stores
-  * Fully automated builds
-
-</td><td>
-
-* *Sign code so execution policies can be installed*
-  * Windows: WDAC Code Integrity or AppLocker
-  * Third party whitelisting products
-* *Control certificate issuance and renewal*
-  * Get certificates from commercial or in-house Certificate Authorities
-  * Monitor validity periods
-* *Private key security*
-  * Secure HSM key generation and storage
-  * Create certificate signing requests
-  * Prevent direct access to HSM
-* *Ensure reliable signing methods*
-  * Only use secure algorithms and ciphers, strong keys
-  * Always use time stamps
-* *Constrain certificate usage for products and projects*
-  * Restrictions based on content
-* *Enforce signing process through policies*  
-  * Focus on policy definition, automate enforcement for individual signing requests
-  * Define test- and release-signing policies per product/project
-  * CA-issued certificates require stricter policies and monitoring than test certificates
-  * Assign user roles for submission and approval
-* *Full auditing and notifications*
-  * Audit data must retain to release process
-  * Detect unusual activities
-
-</td>
-    </tr>
-  </tbody>
-</table>
-
-SignPath provides a simple model that meets the requirements of both parties. It's easy to set up and does not interfere with development processes, while at the same time providing full control for the InfoSec team.
-
 ## Setting up SignPath
+
+The following table separates steps between two roles:
+
+* **Administrator**: has control over your SignPath organization, but does not necessarily know how the development team works.
+* **Development**: people who know the details of your development process, but don't necessarily have administrative privileges in SignPath.
+
+See also: [Distribution of roles](#distribution-of-roles)
+
+### Steps
 
 <table>
   <thead>
@@ -85,12 +26,12 @@ SignPath provides a simple model that meets the requirements of both parties. It
   <tbody>
     <tr>
       <td>Create an organization</td>
-      <td>InfoSec</td>
+      <td>Administrator</td>
       <td>Register for a free trial (paid subscriptions coming soon)</td>
     </tr>
     <tr>
       <td>Create or import certificates</td>
-      <td>InfoSec</td>
+      <td>Administrator</td>
       <td>
 
 You will need at least two certificates:
@@ -107,7 +48,7 @@ Notes:
     </tr>
     <tr>
       <td>Create user accounts</td>
-      <td>InfoSec</td>
+      <td>Administrator</td>
       <td>
 
 Set up your team:
@@ -126,13 +67,13 @@ Set up your team:
 Identify projects that need to be signed, restrict their content and define which elements need signing.
 
 * Multiple files can be signed in a single step (includes deep signing of nested artifacts)
-* The [artifact configuration](creating-an-artifact-configuration/) may be maintained by the development team and submitted to SignPath administrators when they change.
+* The [artifact configuration] may be maintained by the development team and submitted to SignPath administrators when it changes.
 
 </td>
     </tr>
     <tr>
       <td>Create signing policies</td>
-      <td>InfoSec</td>
+      <td>Administrator</td>
       <td>
 
 For each project
@@ -148,12 +89,12 @@ For each project
       <!-- TODO: the link needs to be updated -->
       <td>
 
-Use our PowerShell module or call our API for automatically submitting signing requests to SignPath. See [build system integration](build-system-integration/).
+Use our PowerShell module or call our API for automatically submitting signing requests to SignPath. See [build system integration].
 </td>
     </tr>
     <tr>
       <td>Disable old certificates</td>
-      <td>InfoSec</td>
+      <td>Administrator</td>
       <td>
 
 When everything is working, consider revoking existing unsafe certificates via your CA. (Signatures of properly time stamped code will still be valid.)
@@ -163,13 +104,17 @@ When everything is working, consider revoking existing unsafe certificates via y
   </tbody>
 </table>
 
-<!-- TODO: the link needs to be updated -->
-See [key concepts](key-concepts/) for details about projects and signing policies.
-Note that currently, all setup steps have to be performed using the Administrator role. This role might be assigned to InfoSec staff only, or shared with dedicated people from the development teams. If you aim for the highest security, we recommend giving this role only to InfoSec people and have them working directly with the development teams.
+See [key concepts] for details about *projects* and *signing policies*.
+
+## Distribution of roles
+
+SignPath is designed to make sure that people in charge of security have full control over code signing. Therefore, it makes sense to assign the role of *organization administrator* to security persons, such as InfoSec officers. It is also possible to assign administrative privileges to people in the development team. This can be on a permanent basis, or only temporarily to speed up initial setup. You can go with a model where every change has to be implemented by a dedicated administrator, or you can decentralize administration and have InfoSec review change audit logs regularly. Use the model that works best for your organization.
+
+If you aim for the highest security, we recommend assigning the administrator role only to InfoSec staff and have them working directly with the development teams.
 
 ## Using SignPath
 
-### Signing
+### Signing code
 
 There are two ways for submitting signing requests:
 
@@ -181,15 +126,27 @@ There are two ways for submitting signing requests:
 
 In any case, you will receive e-mail notifications for your request and be able to monitor them in the Web application.
 
-### Approval
+### Approving signing requests
 
-For signing policies that require approval, each approver will receive an e-mail notification whenever an approval is requested. They can also review signing request waiting for their approval in the Web application.
+For signing policies that require approval, each approver will receive an e-mail notification whenever an approval is requested. Approvers will also see signing request waiting for their approval in the application dashboard.
 
 ### Administration
 
-Administrator will be notified about important events. They can also use the Web application to see a full activity audit for each entity, including users, certificates, projects and policies, and signing requests.
+Administrators will be notified about important events. They can also use the Web application to see a full activity audit for each entity, including users, certificates, projects, signing policies and signing requests.
 
 # Key concepts
+
+The major entities in SignPath are **projects**, **certificates** and **users**. They are all part of your **organization**.
+
+Each **project** consists of
+
+* an **artifact configuration** that defines how an artifact is structured, and which parts should be signed as well as the signing methods
+* one or more **signing policies** (typically *test-signing* and *release-signing*) that declare the rules for signing and specify a **certificate**
+
+When an artifact needs to be signed, a **signing request** for a specific **project** and **signing policy** is created.
+
+This UML class diagram shows the fundamental relationships:
+![Key concepts UML](key-concepts.png)
 
 ## Projects
 
@@ -201,7 +158,7 @@ At the core of each SignPath project is an artifact configuration. It describes 
 * a CAB file containing EXE and DLL files, all of which should be signed with Authenticode
 * an MSI installer containing an Office add-in, which in turn contains DLLs – the MSI file and the DLLs should be signed using Authenticode, while the Office add-in has a ClickOnce manifest that requires manifest signing
 
-For complex nested artifacts, creating the artifact configuration is a bit more involved. You need to create an XML file that describes the artifact, with all its nested elements, and the signing actions you want performed on these files. See [creating an artifact configuration](creating-an-artifact-configuration/).
+For complex nested artifacts, creating the artifact configuration is a bit more involved. You need to create an XML file that describes the artifact, with all its nested elements, and the signing actions you want performed on these files. See [creating an artifact configuration][artifact configuration].
 
 Note that a tight configuration of your artifact reduces the risk of unwanted signatures. Add constraints liberally.
 
@@ -232,16 +189,17 @@ The same project is usually signed for different purposes, most commonly test- a
 * Usually a self-signed certificate
 
 </td>
-    <td>Limited to certain submitters (persons or CI)</td>
-    <td>Since the scope of the certificate is very limited and builds are frequent, manual approval is usually not required.</td>
+    <td>Only permitted submitters (people or CI pipelines)</td>
+    <td>Since certificate is only valid in test environments and builds are frequent, manual approval is usually not required.</td>
   </tr>
   <tr>
     <td>Release-signing</td>
     <td>
+
 Signing software for
 
-* Distribution to customers and users
-* Installation on production environments
+* distribution to customers and users
+* installation on production environments
 
 </td><td>
 
@@ -256,3 +214,7 @@ Signing software for
 </table>
 
 You might need more signing policies. For example, you might want to introduce an approval process for some submitters, but not for others. Or you might use different certificates for various kinds of builds. Define any number of signing policies to meet your organization’s requirements.
+
+[key concepts]: #key-concepts
+[artifact configuration]: 3_artifact_configuration.md.html
+[build system integration]: 4_build_integration.md.html

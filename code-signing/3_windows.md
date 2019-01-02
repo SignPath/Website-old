@@ -94,7 +94,7 @@ The current implementation of Authenticode and SignTool.exe has two weaknesses:
 * Whether a HSM supports SHA-2 code signing is an important consideration when buying a HSM. You should ask specifically for support of SHA-256 in Microsoft Authenticode. We also recommend that you consider the complexity of creating certificates via CSRs and accessing them before choosing a HSM.
 * Some complex key management systems have a FIPS-certified HSM at their core as part of a larger physical or virtual system. In this case, the FIPS certification might not encompass the entire system. You should ask specifically if FIPS certification is provided for the entire use case of generating keys and CSRs, as well as creating signatures.
 
-## Miscelaneous
+## Miscellaneous
 
 ### Hardware security modules (HSM)
 
