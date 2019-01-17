@@ -85,6 +85,9 @@ h3 {
     font-weight: normal;
     font-size: 1.5em;
 }
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1em;
+}
 
 a:link {
     text-decoration: none;
@@ -162,24 +165,38 @@ p.admonition-title img {
     top: 10px;
 }
 
-a:link.markdownit-Anchor, a:visited.markdownit-Anchor  {
+h1 > a.markdownIt-Anchor {
+    display: none;
+}
+a:link.markdownIt-Anchor, a:visited.markdownIt-Anchor  {
+    display: none;
     color: lightgrey;
 }
 
-a:hover.markdownit-Anchor {
+h2:hover > a.markdownIt-Anchor,
+h3:hover > a.markdownIt-Anchor {
+    display: inline;
     color: #00b1e6;
 }
 
 div.sidebar {
     width: 10rem; 
     height: 100%;
+    padding: .3em;
     background-color: #EFFBFF; 
-    position: fixed!important; 
-	z-index: 1;
+    position: fixed!important;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    border-right: .2em solid white;
 }
 
 div.sidebar h1 {
     font-size: 1.2em;
+}
+
+div.sidebar a:any-link {
+    color: black;
 }
 
 div.sidebar ul {

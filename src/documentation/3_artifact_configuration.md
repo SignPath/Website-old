@@ -10,7 +10,7 @@ The artifact configuration describes the structure of the artifacts you want to 
 
 !!! info ![Information](info.png)Tips:
 
-* **Basic artifact configurations can be generated from sample artifacts.** However, this is feature is not yet integrated in the online application. Until then, feel free to ask our support for help at [support@singpath.io](mailto:support@signpath.io?subject=Request%20for%20artifact%20configuration). Please attach your sample artifact.
+* **Basic artifact configurations can be generated from sample artifacts.** However, this is feature is not yet integrated in the online application. Until then, feel free to ask our support for help at [support@singpath.io](mailto:support@signpath.io?subject=Request%20for%20artifact%20configuration). Please attach your sample artifact. ![TODO](../todo.png)
 * Alternatively, if you don't know the internal structure of your artifact, [extract container files](#extracting-artifact-packages) to your disk first.
 * Use a schema-aware XML editor, such as Microsoft Visual Studio, to edit your artifact configuration. (Some tools may require you to download the [schema](https://app.signpath.io/web/artifact-configuration/v1.xsd)).
 
@@ -79,7 +79,10 @@ Container-format elements may contain other file elements for deep signing.
     <td>Yes</td>
     <td><code>&lt;authenticode-sign&gt;</code></td>
     <td>.appx, .appxbundle</td>
-    <td>App packages for Microsoft Store/Universal Windows Platform (deep signing is not yet supported)</td>
+    <td>App packages for Microsoft Store/Universal Windows Platform
+
+Deep signing is not yet supported. ![TODO](../todo.png)
+  </td>
   </tr>
   <tr>
     <td><code>&lt;opc-file&gt;</code></td>
@@ -105,32 +108,64 @@ Container-format elements may contain other file elements for deep signing.
 </tbody>
 </table>
 
+### File element examples
+
+#### Signing an MSI package
+
+```xml
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
+  <msi-file>
+    <authenticode-sign/>
+  </msi-file>
+</artifact-configuration>
+```
+
+See [Examples] for more complex artifact configurations.
+
 ### Signing multiple artifacts
 
-* If you want to sign multiple independent artifacts in one step, you need to package them into a ZIP archive before processing.
-* You can combine signing multiple artifacts with deep signing.
+If you want to sign multiple independent artifacts in one step, you need to package them into a ZIP archive before processing.
+
+You can combine signing multiple artifacts with deep signing.
 
 ## &lt;directory&gt; element
 
 All supported container formats have an internal directory structure. You can see this structure if you extract a container to a local disk.
 
-Directory elements specify a directory in a container file, or a subdirectory within a directory. You can use `<directory>` elements for ClickOnce signing and structuring your configuration.
+You can either specify these directories in the ```path``` attribute of each file element, or nest these file elements  within ```<directory>``` elements.
 
-### Directory example
+`<directory>` elements are also used for [ClickOnce signing].
 
-#### Structuring with a directory element
+### &lt;directory&gt; example
+
+<table>
+  <thead>
+    <th>The following fragment</th>
+    <th>is equivalent to</th>
+  </thead>
+  <tbody> <tr> <td>
 
 ```xml
-<artifact-configuration>
-  <zip-file>
-    <directory path="bin">
-      <pe-file path="program.exe">
-        <authenticode-sign/>
-      </pe-file>
-    </directory>
-  </zip-file>
-</artifact-configuration>
+<zip-file>
+  <pe-file path="bin/program.exe">
+    <authenticode-sign/>
+  </pe-file>
+</zip-file>
 ```
+
+</td> <td>
+
+```xml
+<zip-file>
+  <directory path="bin">
+    <pe-file path="program.exe">
+      <authenticode-sign/>
+    </pe-file>
+  </directory>
+</zip-file>
+```
+
+</td> </tr> </tbody> </table>
 
 ## Signing methods
 
@@ -145,10 +180,12 @@ For file and directory sets, specify the signing directive in the `<for-each>` e
 Microsoft Authenticode is the primary signing method on the Windows platform. Authenticode is a versatile and extensible mechanism that works for many different file types:
 
 * [Portable Executable](https://en.wikipedia.org/wiki/Portable_Executable) (PE) files: EXE, DLL, and some other executable file formats including device drivers
-* Installation formats: AppX, MSI, CAB, App-V and the upcoming MSIX
+* Installation formats: AppX, MSI, CAB, App-V ![TODO](../todo.png) and the upcoming MSIX ![TODO](../todo.png)
 * PowerShell scripts and modules
 
 Using `<authenticode-sign>` is equivalent to using Microsoft's `SignTool.exe`.
+
+[ClickOnce signing]: #clickonce-sign
 
 ### &lt;clickonce-sign&gt;
 
@@ -157,7 +194,7 @@ ClickOnce signing, also called 'manifest signing', is a method used for ClickOnc
 ClickOnce signing applies to directories, not to individual files. Therefore, you need to specify a `<directory>` element for this method. If you want to sign files in the root directory of a container, specify `path="."`.
 
 ```xml
-<artifact-configuration>
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
   <zip-file>
     <directory path=".">
       <clickonce-sign/>
@@ -236,7 +273,7 @@ Sets are especially useful if your artifacts contain repeating nested structures
 <table>
   <thead>
     <th>The following fragment</th>
-    <th>is identical to</th>
+    <th>is equivalent to</th>
   </thead>
   <tbody> <tr> <td>
 
@@ -264,10 +301,12 @@ Sets are especially useful if your artifacts contain repeating nested structures
 
 </td> </tr> </tbody> </table>
 
+[Examples]: #examples
+
 ## Examples
 
-!!! info ![Information](info.png) Examples are shortened
-For the sake of clarity, all samples omit the XML prolog and the namespace declaration. A full artifact configuration looks like this:
+!!! info ![Information](/info.png) Examples are shortened
+For the sake of clarity, all examples omit the XML prolog. A complete artifact configuration looks like this:
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -278,10 +317,12 @@ For the sake of clarity, all samples omit the XML prolog and the namespace decla
 
 !!!
 
-### Predefined configuration for single EXE file
+### Predefined configuration for single Portable Executable file
+
+This configuration works for all PE files.
 
 ```xml
-<artifact-configuration>
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
   <pe-file>
     <authenticode-sign/>
   </pe-file>
@@ -293,7 +334,7 @@ For the sake of clarity, all samples omit the XML prolog and the namespace decla
 You can sign multiple unrelated artifacts by packing them into a single ZIP file.
 
 ```xml
-<artifact-configuration>
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
   <zip-file>
     <pe-file path="app.exe">
       <authenticode-sign/>
@@ -305,12 +346,12 @@ You can sign multiple unrelated artifacts by packing them into a single ZIP file
 </artifact-configuration>
 ```
 
-### Deep-signing of an MSI installer
+### Deep-signing an MSI installer
 
 This will sign the PE files `libs/common.dll` and `main.exe`, then re-package their MSI container and sign it too.
 
 ```xml
-<artifact-configuration>
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
   <msi-file>
     <directory path="libs">
       <pe-file path="common.dll">
@@ -330,7 +371,7 @@ This will sign the PE files `libs/common.dll` and `main.exe`, then re-package th
 This artifact configuration describes an MSI installer package containing several components. These components have a similar structure and are therefore defined as a `<directory-set>`. Each component contains a `main.exe` and zero or more resource DLLs.
 
 ```xml
-<artifact-configuration>
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
   <msi-file>
     <directory-set>
       <include path="component1" />
