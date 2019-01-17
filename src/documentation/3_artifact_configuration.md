@@ -8,7 +8,7 @@
 
 The artifact configuration describes the structure of the artifacts you want to sign. For simple artifacts, you can use predefined configurations to get started quickly. For signing several artifacts together, and for more complex artifacts, specify the structure of your artifact and provide signing directives using XML.
 
-!!! info ![Information](../info.png)Tips:
+!!! info ![Information](info.png)Tips:
 
 * **Basic artifact configurations can be generated from sample artifacts.** However, this is feature is not yet integrated in the online application. Until then, feel free to ask our support for help at [support@singpath.io](mailto:support@signpath.io?subject=Request%20for%20artifact%20configuration). Please attach your sample artifact.
 * Alternatively, if you don't know the internal structure of your artifact, [extract container files](#extracting-artifact-packages) to your disk first.
@@ -266,7 +266,7 @@ Sets are especially useful if your artifacts contain repeating nested structures
 
 ## Examples
 
-!!! info ![Information](../info.png) Examples are shortened
+!!! info ![Information](info.png) Examples are shortened
 For the sake of clarity, all samples omit the XML prolog and the namespace declaration. A full artifact configuration looks like this:
 
 ```xml

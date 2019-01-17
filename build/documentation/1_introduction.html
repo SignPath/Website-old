@@ -1,0 +1,135 @@
+<html><head></head><body>
+
+
+
+
+  <meta charset="utf-8">
+  <title>TODO</title>
+
+
+<h1 id="introduction-to-signpathio">Introduction to SignPath.io</h1>
+<p></p><ul class="markdownIt-TOC">
+<li><a href="#setting-up-signpath">Setting up SignPath</a>
+<ul>
+<li><a href="#steps">Steps</a></li>
+</ul>
+</li>
+<li><a href="#distribution-of-roles">Distribution of roles</a></li>
+<li><a href="#using-signpath">Using SignPath</a>
+<ul>
+<li><a href="#signing-code">Signing code</a></li>
+<li><a href="#approving-signing-requests">Approving signing requests</a></li>
+<li><a href="#administration">Administration</a></li>
+</ul>
+</li>
+</ul>
+<p></p>
+<h2 id="setting-up-signpath">Setting up SignPath</h2>
+<p>The following table separates steps between two roles:</p>
+<ul>
+<li><strong>Administrator</strong>: has control over your SignPath organization, but does not necessarily know how the development team works.</li>
+<li><strong>Development</strong>: people who know the details of your development process, but don't necessarily have administrative privileges in SignPath.</li>
+</ul>
+<p>See also: <a href="#distribution-of-roles">Distribution of roles</a></p>
+<h3 id="steps">Steps</h3>
+<p><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Responsible</th>
+<th>Description</th>
+</tr>
+</thead></p>
+<p><tbody>
+<tr>
+<td>Create an organization</td>
+<td>Administrator</td>
+<td></p>
+<p>Register for a free trial or paid subscriptions <img src="https://about.signpath.io/wp-content/uploads/images/todo.png" alt="TODO"></p>
+<p></td></tr>
+<tr>
+<td>Create or import certificates</td>
+<td>Administrator</td>
+<td></p>
+<p>You will need at least two certificates:</p>
+<ul>
+<li>For test signing: create self-signed certificates.</li>
+<li>For release signing: create Certificate Signing Requests (CSRs) and get certificates from a commercial Certificate Authority (CA) or an in-house CA.</li>
+</ul>
+<p>Notes:</p>
+<ul>
+<li>You may choose to get different certificates for each product, customer, etc.</li>
+<li>You can also import existing certificates. You will be warned that this is potentially insecure.</li>
+</ul>
+<p></td></tr>
+<tr>
+<td>Create user accounts</td>
+<td>Administrator</td>
+<td></p>
+<p>Set up your team:</p>
+<ul>
+<li>Invite other users to your organization</li>
+<li>Create CI user accounts to integrate SignPath in your automated builds</li>
+<li>Assign permissions by adding users to singing policies</li>
+</ul>
+<p></td></tr>
+<tr>
+<td>Create projects</td>
+<td>Development</td>
+<td></p>
+<p>Identify projects that need to be signed, restrict their content and define which elements need signing.</p>
+<ul>
+<li>Multiple files can be signed in a single step (includes deep signing of nested artifacts)</li>
+<li>The <a href="3_artifact_configuration.md.html">artifact configuration</a> may be maintained by the development team and submitted to SignPath administrators when it changes.</li>
+</ul>
+<p></td>
+</tr>
+<tr>
+<td>Create signing policies</td>
+<td>Administrator</td>
+<td></p>
+<p>For each project</p>
+<ul>
+<li>create at least a test-signing and a release-signing policy</li>
+<li>assign a certificate and user permissions to each signing policy</li>
+</ul>
+<p></td></tr>
+<tr>
+<td>Integrate into CI builds</td>
+<td>Development</td>
+<!-- TODO: the link needs to be updated -->
+<td></p>
+<p>Use our PowerShell module or call our API for automatically submitting signing requests to SignPath. See <a href="4_build_integration.md.html">build system integration</a>.
+</td>
+</tr>
+<tr>
+<td>Disable old certificates</td>
+<td>Administrator</td>
+<td></p>
+<p>When everything is working, consider revoking existing unsafe certificates via your CA. (Signatures of properly time stamped code will still be valid.)</p>
+<p></td></tr>
+</tbody>
+</table></p>
+<p>See <a href="2_key_concepts.md.html">key concepts</a> for details about <em>projects</em> and <em>signing policies</em>.</p>
+<h2 id="distribution-of-roles">Distribution of roles</h2>
+<p>SignPath is designed to make sure that people in charge of security have full control over code signing. Therefore, it makes sense to assign the role of <em>organization administrator</em> to security persons, such as InfoSec officers. It is also possible to assign administrative privileges to people in the development team. This can be on a permanent basis, or only temporarily to speed up initial setup. You can go with a model where every change has to be implemented by a dedicated administrator, or you can decentralize administration and have InfoSec review change audit logs regularly. Use the model that works best for your organization.</p>
+<p>If you aim for the highest security, we recommend assigning the administrator role only to InfoSec staff and have them working directly with the development teams.</p>
+<h2 id="using-signpath">Using SignPath</h2>
+<h3 id="signing-code">Signing code</h3>
+<p>There are two ways for submitting signing requests:</p>
+<ul>
+<li>Use the Web application to submit artifacts for signing
+<ul>
+<li>Go to the application dashboard</li>
+<li>Select a project and signing policy</li>
+<li>Upload a file</li>
+</ul>
+</li>
+<li>Use the PowerShell module or call our API</li>
+</ul>
+<p>In any case, you will receive e-mail notifications for your request and be able to monitor them in the Web application.</p>
+<h3 id="approving-signing-requests">Approving signing requests</h3>
+<p>For signing policies that require approval, each approver will receive an e-mail notification whenever an approval is requested. Approvers will also see signing request waiting for their approval in the application dashboard.</p>
+<h3 id="administration">Administration</h3>
+<p>Administrators will be notified about important events. They can also use the Web application to see a full activity audit for each entity, including users, certificates, projects, signing policies and signing requests.</p>
+</body></html>

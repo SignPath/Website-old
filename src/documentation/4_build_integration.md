@@ -8,7 +8,7 @@
 
 This section describes how SignPath can be integrated into automated builds using continuous integration software. You can use the PowerShell module provided by SignPath, or directly call the Web API to submit signing requests.
 
-!!! info ![Information](../info.png) Locating ID values
+!!! info ![Information](info.png) Locating ID values
 All necessary IDs can be found on the signing policy details page, including a code snippet that calls the PowerShell module.
 !!!
 

@@ -1,4 +1,4 @@
-﻿**Title:** Introduction - SignPath.io code signing guide</title>
+﻿**Title:** Introduction - SignPath.io code signing guide
 
 # Introduction to code signing
 
