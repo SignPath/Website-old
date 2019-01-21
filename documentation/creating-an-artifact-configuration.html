@@ -308,10 +308,10 @@
   <pre class="line-numbers"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8" ?&gt;
 &lt;artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1"&gt;
   &lt;msi-file&gt;
-    &lt;-- requires all pe-files to have the respective attributes set --&gt;
+    &lt;!-- requires all pe-files to have the respective attributes set --&gt;
     &lt;pe-file-set productName="YourProductName" productVersion="1.0.0.0"&gt; 
       &lt;include path="main.exe" /&gt;
-      &lt;-- overrides the value of the parent pe-file-set --&gt;
+      &lt;!-- overrides the value of the parent pe-file-set --&gt;
       &lt;include path="resources\*.resource.dll" max-occurs="unbounded" productVersion="1.0.1.0" /&gt;
       &lt;for-each&gt;
         &lt;authenticode-sign /&gt;
