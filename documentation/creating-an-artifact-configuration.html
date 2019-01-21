@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Creating an artifact configuration</title>
-  <style type="text/css">
+  <style>
     pre.inline { display: inline; padding:0px; }
   </style>
 </head>
@@ -291,7 +291,8 @@
       </tr>
     </tbody>
   </table>
-  <p>If wildcards are used, optional <pre class="inline">max-occurs</pre> and <pre class="inline">min-occurs</pre> parameters can be specified to limit the number of files which are allowed to match the wildcard expression. Both default to <pre class="inline">1</pre>. (You can also use <pre class="inline">min-occurs="0"</pre> for optional elements even without wildcards.)</p>
+  <br>
+  <div>If wildcards are used, optional <pre class="inline">max-occurs</pre> and <pre class="inline">min-occurs</pre> parameters can be specified to limit the number of files which are allowed to match the wildcard expression. Both default to <pre class="inline">1</pre>. (You can also use <pre class="inline">min-occurs="0"</pre> for optional elements even without wildcards.)</div>
   <h2>Signing methods</h2>
   <p>File and directory elements can contain signing directives. The signing directives must use signing methods that are available for the parent element. For file and directory sets, specify the signing directive in the element.</p>
   <p>Examples:</p>
@@ -299,6 +300,26 @@
     <li><pre class="inline">&lt;nupkg-file&gt;</pre> supports <pre class="inline">&lt;nuget-signing/&gt;</pre></li>
     <li><pre class="inline">&lt;nupkg-file-set&gt;</pre> supports <pre class="inline">&lt;nupkg-signing/&gt;</pre> within the <pre class="inline">&lt;for-each&gt;</pre> element</li>
   </ul>
+  <h2>File attribute restrictions</h2>
+  <div>
+    For Microsoft Portable Executable (PE) files, the existence of their Product Name / Product Version header attributes can be enforced by setting the <pre class="inline">productName</pre> and <pre class="inline">productVersion</pre> attributes on the <pre class="inline">&lt;pe-file&gt;</pre>, <pre class="inline">&lt;pe-file-set&gt;</pre> and including <pre class="inline">&lt;include&gt;</pre> elements. The value of the <pre class="inline">&lt;include&gt;</pre> overrides any value set on the <pre class="inline">&lt;pe-file-set&gt;</pre> element.
+  </div>
+  <h3>Example</h3>
+  <pre class="line-numbers"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1"&gt;
+  &lt;msi-file&gt;
+    &lt;-- requires all pe-files to have the respective attributes set --&gt;
+    &lt;pe-file-set productName="YourProductName" productVersion="1.0.0.0"&gt; 
+      &lt;include path="main.exe" /&gt;
+      &lt;-- overrides the value of the parent pe-file-set --&gt;
+      &lt;include path="resources\*.resource.dll" max-occurs="unbounded" productVersion="1.0.1.0" /&gt;
+      &lt;for-each&gt;
+        &lt;authenticode-sign /&gt;
+      &lt;/for-each&gt;
+    &lt;/pe-file-set&gt;
+    &lt;authenticode-sign /&gt; &lt;!-- finally sign the MSI file --&gt;
+  &lt;/msi-file&gt;
+&lt;/artifact-configuration&gt;</code></pre>
   <h2>Extracting artifact packages</h2>
   <p>You can use the following tools in order to manually extract files from your artifacts. From the extracted file structure, you can then easily create a matching artifact configuration.</p>
 
