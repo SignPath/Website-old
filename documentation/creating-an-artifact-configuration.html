@@ -300,7 +300,7 @@
     <li><pre class="inline">&lt;nupkg-file&gt;</pre> supports <pre class="inline">&lt;nuget-signing/&gt;</pre></li>
     <li><pre class="inline">&lt;nupkg-file-set&gt;</pre> supports <pre class="inline">&lt;nupkg-signing/&gt;</pre> within the <pre class="inline">&lt;for-each&gt;</pre> element</li>
   </ul>
-  <h2>File attribute restrictions</h2>
+  <h2 id="file-attribute-restrictions">File attribute restrictions</h2>
   <div>
     For Microsoft Portable Executable (PE) files, the existence of their Product Name / Product Version header attributes can be enforced by setting the <pre class="inline">productName</pre> and <pre class="inline">productVersion</pre> attributes on the <pre class="inline">&lt;pe-file&gt;</pre>, <pre class="inline">&lt;pe-file-set&gt;</pre> and including <pre class="inline">&lt;include&gt;</pre> elements. The value of the <pre class="inline">&lt;include&gt;</pre> overrides any value set on the <pre class="inline">&lt;pe-file-set&gt;</pre> element.
   </div>
