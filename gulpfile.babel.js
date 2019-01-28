@@ -2,7 +2,7 @@ import gulp from 'gulp'
 import gutil from 'gulp-util'
 import tap from 'gulp-tap'
 import gap from 'gulp-append-prepend'
-import replaceImg from 'gulp-replace-image-src'
+import rewriteImgPath from 'gulp-rewrite-image-path'
 import replace from 'gulp-replace'
 import MarkdownIt from 'markdown-it'
 import mdImSize from 'markdown-it-imsize'
@@ -11,8 +11,8 @@ import mdTocAndAnchor from 'markdown-it-toc-and-anchor'
 
 const MARKDOWN_GLOB = 'src/**/*.md'
 
-let md = new MarkdownIt()
-  .use(mdImSize, { autofill: true })
+let md = new MarkdownIt({ html: true })
+  .use(mdImSize, { autofill: true, html: true, typographer: true })
   .use(mdAdmonition)
   .use(mdTocAndAnchor, { tocFirstLevel: 2, tocLastLevel: 3, anchorLink: false })
 
@@ -28,10 +28,7 @@ function build() {
     .pipe(tap(_markdownToHtml))
     .pipe(gap.prependFile('src/header.html'))
     .pipe(gap.prependFile('src/footer.html'))
-    .pipe(replaceImg({
-      prependSrc : 'https://about.signpath.io/wp-content/uploads/images/',
-      keepOrigin : false
-    }))
+    .pipe(rewriteImgPath({ path: 'https://about.signpath.io/wp-content/uploads/images/' }))
     .pipe(gulp.dest('build'));
 }
 
@@ -40,10 +37,7 @@ function buildLocal() {
     .pipe(tap(_markdownToHtml))
     .pipe(gap.prependFile('src/local/header.html'))
     .pipe(gap.prependFile('src/local/footer.html'))
-    .pipe(replaceImg({
-      prependSrc : '../../src/images/',
-      keepOrigin : false
-    }))
+    .pipe(rewriteImgPath({ path: '../../src/images/' }))
     .pipe(gulp.dest('buildLocal'))
 }
 

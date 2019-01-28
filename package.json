@@ -37,6 +37,7 @@
     "markdown-it-toc-and-anchor": "^4.2.0"
   },
   "dependencies": {
+    "gulp-rewrite-image-path": "0.0.4",
     "remove": "^0.1.5"
   }
 }
