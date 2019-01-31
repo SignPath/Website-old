@@ -22,12 +22,12 @@ Make sure to keep the access token in a secure location. Most Continuous Integra
 
 ## PowerShell
 
-SignPath can be integrated in your automated build process by using our API. For convenience, we provide a PowerShell module that can be used from within your build/deploy chain. The module can be downloaded from [signpath.io](https://app.signpath.io/API/v1/Tools/SignPath.psm1).
+SignPath can be integrated in your automated build process by using our API. For convenience, we provide a PowerShell module that can be used from within your build/deploy chain. The module can be downloaded from [PSGallery](https://www.powershellgallery.com/packages/SignPath/1.0.1).
 
 Signing requests can be created by calling the following commands via PowerShell:
 
 ```powershell
-Import-Module .\SignPath.psm1
+Install-Module -Name SignPath
 
 # Submit a signing request and get a signing request ID without waiting for completion ...
 $signingRequestID = Submit-SigningRequest

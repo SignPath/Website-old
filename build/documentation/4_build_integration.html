@@ -1,14 +1,15 @@
-<html><head></head><body>
 
 
-
-
+<!DOCTYPE html>
+<html>
+<head>
   <meta charset="utf-8">
   <title>TODO</title>
-
-
+</head>
+<body>
+<p><strong>Title:</strong> Build system integration - SignPath.io</p>
 <h1 id="build-system-integration">Build system integration</h1>
-<p></p><ul class="markdownIt-TOC">
+<p><ul class="markdownIt-TOC">
 <li><a href="#abstract">Abstract</a></li>
 <li><a href="#authorization">Authorization</a></li>
 <li><a href="#powershell">PowerShell</a></li>
@@ -21,11 +22,11 @@
 </ul>
 </li>
 </ul>
-<p></p>
+</p>
 <h2 id="abstract">Abstract</h2>
 <p>This section describes how SignPath can be integrated into automated builds using continuous integration software. You can use the PowerShell module provided by SignPath, or directly call the Web API to submit signing requests.</p>
 <div class="admonition info">
-<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/images/info.png" alt="Information"> Locating ID values</p>
+<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/images//info.png" alt="Information"> Locating ID values</p>
 <p>All necessary IDs can be found on the signing policy details page, including a code snippet that calls the PowerShell module.</p>
 </div>
 <h2 id="authorization">Authorization</h2>
@@ -33,9 +34,9 @@
 <p>The API token is displayed when a new CI user is created. (If you lose the API key, you will need to generate a new one.)</p>
 <p>Make sure to keep the access token in a secure location. Most Continuous Integration (CI) systems provides a mechanism to store secrets, which is usually the best place to keep API tokens. If you use several distinct systems for API access, we recommend that you create individual CI User accounts in SignPath.</p>
 <h2 id="powershell">PowerShell</h2>
-<p>SignPath can be integrated in your automated build process by using our API. For convenience, we provide a PowerShell module that can be used from within your build/deploy chain. The module can be downloaded from <a href="https://app.signpath.io/API/v1/Tools/SignPath.psm1">signpath.io</a>.</p>
+<p>SignPath can be integrated in your automated build process by using our API. For convenience, we provide a PowerShell module that can be used from within your build/deploy chain. The module can be downloaded from <a href="https://www.powershellgallery.com/packages/SignPath/1.0.1">PSGallery</a>.</p>
 <p>Signing requests can be created by calling the following commands via PowerShell:</p>
-<pre><code class="language-powershell">Import-Module .\SignPath.psm1
+<pre><code class="language-powershell">Install-Module -Name SignPath
 
 # Submit a signing request and get a signing request ID without waiting for completion ...
 $signingRequestID = Submit-SigningRequest
@@ -78,7 +79,7 @@ Submit-SigningRequest
 </tr>
 <tr>
 <td>Authorization HTTP header field</td>
-<td><code>Authorization: Bearer <token></code></td>
+<td><code>Authorization: Bearer &lt;token&gt;</code></td>
 </tr>
 </tbody>
 </table>
@@ -119,10 +120,10 @@ Submit-SigningRequest
 </tbody>
 </table>
 <p><strong>Example:</strong></p>
-<pre><code class="language-bash">curl -H "Authorization: Bearer $CI_USER_TOKEN" \
-     -F "SigningPolicyId=$SIGNING_POLICY_ID" \
-     -F "Artifact=@$PATH_TO_ARTIFACT" \
-     -F "Description=$DESCRIPTION" \  
+<pre><code class="language-bash">curl -H &quot;Authorization: Bearer $CI_USER_TOKEN&quot; \
+     -F &quot;SigningPolicyId=$SIGNING_POLICY_ID&quot; \
+     -F &quot;Artifact=@$PATH_TO_ARTIFACT&quot; \
+     -F &quot;Description=$DESCRIPTION&quot; \  
      https://app.signpath.io/API/v1/$ORGANIZATION_ID/SigningRequests
 </code></pre>
 <p><strong>Success result:</strong> HTTP status code <code>201</code>. A HTTP <code>Location</code> response-header field is returned with the URL of the created entity.</p>
@@ -150,19 +151,19 @@ Submit-SigningRequest
 </tbody>
 </table>
 <p><strong>Example:</strong></p>
-<pre><code class="language-bash">curl -H "Authorization: Bearer $CI_USER_TOKEN" \
+<pre><code class="language-bash">curl -H &quot;Authorization: Bearer $CI_USER_TOKEN&quot; \
      https://app.signpath.io/API/v1/$ORGANIZATION_ID/SigningRequest/$SIGNING_REQUEST_ID
 </code></pre>
 <p><strong>Success result:</strong> HTTP status code <code>200</code>. Status of the signing request in JSON format:</p>
 <pre><code class="language-json">{
-  "status":"Completed",
-  "description":"called by curl",
-  "projectId":"edd545ef-e113-48ba-aba7-de2d59ea2f26",
-  "projectName":"SignPath Test Project",
-  "signingPolicyId":"9ebd30b0-ef6b-4e46-a248-103516bc36fc",
-  "signingPolicyName":"test-signing",
-  "uploadedArtifactLink":"https://app.signpath.io/API/v1/a05be341-8a85-4c06-828a-710459e325ab/SigningRequests/a15e4d4f-7e03-4b15-9e2e-f3d8daeeaa75/UploadedArtifact",
-  "signedArtifactLink":"https://app.signpath.io/API/v1/a05be341-8a85-4c06-828a-710459e325ab/SigningRequests/a15e4d4f-7e03-4b15-9e2e-f3d8daeeaa75/SignedArtifact"
+  &quot;status&quot;:&quot;Completed&quot;,
+  &quot;description&quot;:&quot;called by curl&quot;,
+  &quot;projectId&quot;:&quot;edd545ef-e113-48ba-aba7-de2d59ea2f26&quot;,
+  &quot;projectName&quot;:&quot;SignPath Test Project&quot;,
+  &quot;signingPolicyId&quot;:&quot;9ebd30b0-ef6b-4e46-a248-103516bc36fc&quot;,
+  &quot;signingPolicyName&quot;:&quot;test-signing&quot;,
+  &quot;uploadedArtifactLink&quot;:&quot;https://app.signpath.io/API/v1/a05be341-8a85-4c06-828a-710459e325ab/SigningRequests/a15e4d4f-7e03-4b15-9e2e-f3d8daeeaa75/UploadedArtifact&quot;,
+  &quot;signedArtifactLink&quot;:&quot;https://app.signpath.io/API/v1/a05be341-8a85-4c06-828a-710459e325ab/SigningRequests/a15e4d4f-7e03-4b15-9e2e-f3d8daeeaa75/SignedArtifact&quot;
 }
 </code></pre>
 <p><strong>Possible <code>status</code> values:</strong> <code>WaitingForApproval</code>, <code>QueuedForProcessing</code>, <code>Processing</code>, <code>Completed</code>, <code>Failed</code>, <code>Denied</code>, <code>Canceled</code></p>
@@ -191,7 +192,7 @@ Submit-SigningRequest
 </tbody>
 </table>
 <p><strong>Example:</strong></p>
-<pre><code class="language-bash">curl -H "Authorization: Bearer $CI_USER_TOKEN" \
+<pre><code class="language-bash">curl -H &quot;Authorization: Bearer $CI_USER_TOKEN&quot; \
      -o $LOCAL_PATH_TO_DOWNLOADED_ARTIFACT \
      https://app.signpath.io/API/v1/$ORGANIZATION_ID/SigningRequest/$SIGNING_REQUEST_ID/SignedArtifact
 </code></pre>
