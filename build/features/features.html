@@ -1,14 +1,15 @@
-<html><head></head><body>
 
 
-
-
+<!DOCTYPE html>
+<html>
+<head>
   <meta charset="utf-8">
   <title>TODO</title>
-
-
+</head>
+<body>
+<p><strong>Title:</strong> Features - SignPath.io</p>
 <h1 id="signpathio-features">SignPath.io Features</h1>
-<p></p><ul class="markdownIt-TOC">
+<p><ul class="markdownIt-TOC">
 <li><a href="#benefits">Benefits</a>
 <ul>
 <li><a href="#risk-landscape">Risk landscape</a></li>
@@ -22,7 +23,7 @@
 </ul>
 </li>
 </ul>
-<p></p>
+</p>
 <h2 id="benefits">Benefits</h2>
 <p>With SignPath, it is easy to set up a secure and repeatable code signing process.</p>
 <p>Benefits include:</p>
@@ -50,7 +51,7 @@
 <p>SignPath aims to turn code signing into a controlled and repeatable process that aligns the needs of both development teams and InfoSec people.</p>
 <p>While practices, tools and services for code signing usually focus on certificate management, there are also important process requirements. There are many recommendations, but they are hard and expensive to implement. SignPath addresses code signing from a process perspective. Our topmost priority is to make it easy to set up a code signing process that just works for development teams and is secure and auditable at the same time.</p>
 <p>There is often a conflict of interests: development teams need to be responsive and productive and want InfoSec to get out of the way. On the other hand, InfoSec is responsible for minimizing the considerable risk associated with code signing and therefore need to get control over the process.</p>
-<p><!-- markdownlint-disable MD036 no emphasis as heading --></p>
+<!-- markdownlint-disable MD036 no emphasis as heading -->
 <h2 id="alignment-of-development-and-infosec-objectives">Alignment of development and InfoSec objectives</h2>
 <p>Development teams and InfoSec people often have diverging objectives:</p>
 <ul>
@@ -61,31 +62,31 @@
 <p><strong>Simplicity is security!</strong> Obscure process will be disregarded by teams under pressure. Even when executed in good faith, repetitive and tiresome manual processes are prone to errors caused by inattentiveness.</p>
 <p>SignPath provides a simple model that meets the requirements of all parties including  corporate stakeholders. It's easy to set up and does not interfere with development processes, in fact it makes automation of code signing really simple. At the same time it provides full control for the InfoSec team at a policy level.</p>
 <h3 id="developer-goals">Developer goals</h3>
-<p><table><thead><tr>
-<th>Goals</th>
-<th>SignPath features</th>
+<table><thead><tr>
+  <th>Goals</th>
+  <th>SignPath features</th>
 </tr></thead><tbody>
-<tr><td></p>
+<tr><td>
 <p><strong>Signed code works for users</strong></p>
 <ul>
 <li>Installation of downloaded files without warnings.</li>
 <li>Correct publisher name displayed during installation time.</li>
 <li>DevOps: Use application control/whitelisting.</li>
 </ul>
-<p></td><td></p>
+</td><td>
 <p><strong>Automatic verification</strong></p>
 <ul>
-<li>Verification of certificates, signatures, time stamps and manifest identities ensures that code signing has the intended effects for your users. No surprises at installation time. <img src="https://about.signpath.io/wp-content/uploads/images/..%5Ctodo.png" alt="TODO"></li>
-<li>Warning if artifacts contain unsigned files. <img src="https://about.signpath.io/wp-content/uploads/images/..%5Ctodo.png" alt="TODO"></li>
+<li>Verification of certificates, signatures, time stamps and manifest identities ensures that code signing has the intended effects for your users. No surprises at installation time. <img src="https://about.signpath.io/wp-content/uploads/images//..%5Ctodo.png" alt="TODO"></li>
+<li>Warning if artifacts contain unsigned files. <img src="https://about.signpath.io/wp-content/uploads/images//..%5Ctodo.png" alt="TODO"></li>
 </ul>
-<p></td></tr><tr><td></p>
+</td></tr><tr><td>
 <p><strong>Simplicity</strong></p>
 <ul>
 <li>No code signing know-how required.</li>
 <li>Treat signing as a final or post-build step.</li>
 <li>Get clear error messages.</li>
 </ul>
-<p></td><td></p>
+</td><td>
 <p><strong>Rely upon secure defaults</strong></p>
 <ul>
 <li>Comprehensive documentation for code signing and SignPath available for those who want to dig deep.</li>
@@ -93,92 +94,92 @@
 <li>Deep signing allows you to put code signing at the end or your build process, or past it.</li>
 <li>When something goes wrong, developer tools do not always specify the exact reason. SignPath will accompany generic API error messages with likely reasons and advice.</li>
 </ul>
-<p></td></tr><tr><td></p>
+</td></tr><tr><td>
 <p><strong>Agility</strong></p>
 <ul>
 <li>Minimize overhead per release.</li>
 <li>Support release processes and branching models.</li>
 </ul>
-<p></td><td></p>
+</td><td>
 <p><strong>Projects and signing policies</strong></p>
 <ul>
 <li>For each project, specify artifact contents and signing policies once, then automate signing.</li>
 <li>Evolve artifact configurations as your project changes.</li>
-<li>When branches start to drift apart, simply match your branching model in SignPath. <img src="https://about.signpath.io/wp-content/uploads/images/..%5Ctodo.png" alt="TODO"></li>
+<li>When branches start to drift apart, simply match your branching model in SignPath. <img src="https://about.signpath.io/wp-content/uploads/images//..%5Ctodo.png" alt="TODO"></li>
 </ul>
-<p></td></tr><tr><td></p>
+</td></tr><tr><td>
 <p><strong>Continuous integration and delivery (CI/CD)</strong></p>
 <ul>
 <li>Simple integration with CI tools and services.</li>
 <li>No messing with complicated tools, USB tokens, certificate stores, vendor CSPs.</li>
 <li>Fully automated builds.</li>
 </ul>
-<p></td><td></p>
+</td><td>
 <p><strong>Build system integration</strong></p>
 <ul>
 <li>Call SignPath from build scripts using our PowerShell script or simple REST APIs.</li>
 <li>Use synchronous or asynchronous mode (for delayed approvals).</li>
 <li>No failed builds: SignPath.io service downtimes are within timeout limits.</li>
 </ul>
-<p></td><td></tbody></table></p>
+</td><td></td></tr></tbody></table>
 <h3 id="infosec-goals">InfoSec goals</h3>
-<p><table><thead><tr>
-<th>Goals</th>
-<th>SignPath features</th>
+<table><thead><tr>
+  <th>Goals</th>
+  <th>SignPath features</th>
 </tr></thead><tbody>
-<tr><td></p>
+<tr><td>
 <p><strong>Sign code so code execution policies can be installed</strong></p>
 <ul>
 <li>Use with Windows WDAC Code Integrity Policies, AppLocker or third party whitelisting products.</li>
 <li>Every executable file, including DLLs, needs to be signed for whitelisting.</li>
 <li>Cannot fall back to individual file hashes (administration nightmare).</li>
 </ul>
-<p></td><td></p>
+</td><td>
 <p><strong>Deep signing</strong></p>
 <ul>
 <li>With SignPath deep signing, development teams and contractors can easily sign all files in a package.</li>
-<li>For packages with incomplete signing, use SignPath to deep-sign packages based on their own signature. <img src="https://about.signpath.io/wp-content/uploads/images/..%5Ctodo.png" alt="TODO"></li>
+<li>For packages with incomplete signing, use SignPath to deep-sign packages based on their own signature. <img src="https://about.signpath.io/wp-content/uploads/images//..%5Ctodo.png" alt="TODO"></li>
 </ul>
-<p></td></tr>
-<tr><td></p>
+</td></tr>
+<tr><td>
 <p><strong>Control certificate issuance and renewal</strong></p>
 <ul>
 <li>Get certificates from commercial or in-house Certificate Authorities.</li>
 <li>Monitor validity periods.</li>
 </ul>
-<p></td><td></p>
+</td><td>
 <p><strong>Certificate management</strong></p>
 <ul>
 <li>Easily create Certificate Signing Requests (CSRs) for secure certificate purchase or in-house issuance.</li>
 <li>Import existing certificates.</li>
 <li>Create self-signed certificates for test-signing.</li>
-<li>Get notified before certificates expire. <img src="https://about.signpath.io/wp-content/uploads/images/..%5Ctodo.png" alt="TODO"></li>
+<li>Get notified before certificates expire. <img src="https://about.signpath.io/wp-content/uploads/images//..%5Ctodo.png" alt="TODO"></li>
 <li>Renew certificates.</li>
 </ul>
-<p></td></tr>
-<tr><td></p>
+</td></tr>
+<tr><td>
 <p><strong>Private key security</strong></p>
 <ul>
 <li>Secure HSM key generation and key storage.</li>
 <li>Prevent direct access to HSM.</li>
 <li>Ensure that signing is authorized.</li>
 </ul>
-<p></td><td></p>
+</td><td>
 <p><strong>HSM key storage and signing requests</strong></p>
 <ul>
 <li>SignPath.io uses SafeNet Luna Network HSMs <a href="https://data-protection-updates.gemalto.com/2018/07/24/safenet-luna-hsm-7-now-fips-140-2-level-3-validated/">validated</a> for FIPS 140-1 and FIPS 140-2 Level 3, and certified for Common Criteria (ISO/IEC15408).</li>
 <li>SignPath always creates HSM-based keys as <em>non-exportable</em>, they cannot be read or copied from HSM storage even with physical administrative access.</li>
-<li>Access to HSMs is limited to dedicated servers. These servers are several tiers from the Web server farm and do not participate in synchronous transactions. <img src="https://about.signpath.io/wp-content/uploads/images/..%5Ctodo.png" alt="TODO"> <!-- currently access is required in order to read certain HSM key properties --></li>
+<li>Access to HSMs is limited to dedicated servers. These servers are several tiers from the Web server farm and do not participate in synchronous transactions. <img src="https://about.signpath.io/wp-content/uploads/images//..%5Ctodo.png" alt="TODO"> <!-- currently access is required in order to read certain HSM key properties --></li>
 <li>Only authorized (and approved) signing requests will be processed by servers with access to HSMs.</li>
 </ul>
-<p></td></tr>
-<tr><td></p>
+</td></tr>
+<tr><td>
 <p><strong>Ensure reliable signing methods</strong></p>
 <ul>
 <li>Only use secure algorithms and ciphers, strong keys</li>
 <li>Always use time stamps</li>
 </ul>
-<p></td><td></p>
+</td><td>
 <p><strong>No insecure or outdated methods</strong></p>
 <ul>
 <li>Certificates created or requested by SignPath use SHA-256 hash digests and 2048 bit RSA keys</li>
@@ -187,45 +188,45 @@
 </ul>
 <p><strong>Reliable time stamp authority</strong></p>
 <ul>
-<li>No more depending on free but unreliable public time stamp servers - SignPath.io uses a paid time stamp authority. <img src="https://about.signpath.io/wp-content/uploads/images/..%5Ctodo.png" alt="TODO"></li>
+<li>No more depending on free but unreliable public time stamp servers - SignPath.io uses a paid time stamp authority. <img src="https://about.signpath.io/wp-content/uploads/images//..%5Ctodo.png" alt="TODO"></li>
 <li>SignPath signatures are always time stamped, regardless of methods and certificates.</li>
 </ul>
-<p></td></tr>
-<tr><td></p>
+</td></tr>
+<tr><td>
 <p><strong>Constrain certificate usage for products and projects</strong></p>
 <ul>
 <li>Restrictions based on content.</li>
 </ul>
-<p></td><td></p>
+</td><td>
 <p><strong>Artifact configurations</strong></p>
 <ul>
 <li>Signing requests are restricted to the content specified in the project's artifact configuration.</li>
 <li>Unexpected files are not signed.</li>
-<li>If containers (e.g. installation packages) contain unexpected executable files, signing will be denied or approvers will be warned (depending on configuration). <img src="https://about.signpath.io/wp-content/uploads/images/todo.png" alt="TODO"></li>
+<li>If containers (e.g. installation packages) contain unexpected executable files, signing will be denied or approvers will be warned (depending on configuration). <img src="https://about.signpath.io/wp-content/uploads/images//../todo.png" alt="TODO"></li>
 </ul>
-<p></td></tr>
-<tr><td></p>
+</td></tr>
+<tr><td>
 <p><strong>Enforce signing process through policies</strong></p>
 <ul>
 <li>CA-issued certificates require stricter policies and monitoring than test certificates.</li>
 <li>Assign user roles for submission and approval.</li>
 </ul>
-<p></td><td></p>
+</td><td>
 <p><strong>Define projects with artifact configurations and signing policies</strong></p>
 <ul>
 <li>Administrators control signing process by defining policies.</li>
 <li>Approval and automation can be decentralized.</li>
 <li>Define test- and release-signing policies per product/project.</li>
 </ul>
-<p></td></tr>
-<tr><td></p>
+</td></tr>
+<tr><td>
 <p><strong>Full auditing and notifications</strong></p>
 <ul>
 <li>Keep track of all administrative activities as well as signing submissions and aprovals.</li>
 <li>Audit data must be relatable to develpment and release processes.</li>
 <li>Log every private key usage, but don't get lost in noise.</li>
 </ul>
-<p></td><td></p>
+</td><td>
 <p><strong>Append-only data storage</strong></p>
 <ul>
 <li>SignPath.io uses <a href="https://martinfowler.com/eaaDev/EventSourcing.html">event sourcing</a>, an append-only data architecture for applications.</li>
@@ -235,11 +236,11 @@
 <p><strong>Mulit-level logging and correlation</strong></p>
 <ul>
 <li>Audit logs are maintained on HSM and application levels.</li>
-<li>Audit logs can be downloaded for routine or random sample inspections, and for forensic evaluation. <img src="https://about.signpath.io/wp-content/uploads/images/..%5Ctodo.png" alt="TODO"></li>
-<li>Tooling for log correlation allows to verify that every private key usage can be accounted for by an authorized signing request. <img src="https://about.signpath.io/wp-content/uploads/images/..%5Ctodo.png" alt="TODO"></li>
+<li>Audit logs can be downloaded for routine or random sample inspections, and for forensic evaluation. <img src="https://about.signpath.io/wp-content/uploads/images//..%5Ctodo.png" alt="TODO"></li>
+<li>Tooling for log correlation allows to verify that every private key usage can be accounted for by an authorized signing request. <img src="https://about.signpath.io/wp-content/uploads/images//..%5Ctodo.png" alt="TODO"></li>
 <li>Single-request deep signing ensures that multiple key usages can be traced to a single signing request (build, release, approval).</li>
 </ul>
-<p></td></tr>
-</tbody></table></p>
-<p><!-- markdownlint-enable MD036 --></p>
+</td></tr>
+</tbody></table>
+<!-- markdownlint-enable MD036 -->
 </body></html>

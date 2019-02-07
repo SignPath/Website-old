@@ -1,14 +1,15 @@
-<html><head></head><body>
 
 
-
-
+<!DOCTYPE html>
+<html>
+<head>
   <meta charset="utf-8">
   <title>TODO</title>
-
-
+</head>
+<body>
+<p><strong>Title:</strong> Windows platform - SignPath.io code signing guide</p>
 <h1 id="code-signing-on-the-windows-platform">Code signing on the Windows platform</h1>
-<p></p><ul class="markdownIt-TOC">
+<p><ul class="markdownIt-TOC">
 <li><a href="#signing-methods">Signing methods</a></li>
 <li><a href="#applications">Applications</a>
 <ul>
@@ -42,7 +43,7 @@
 </ul>
 </li>
 </ul>
-<p></p>
+</p>
 <h2 id="signing-methods">Signing methods</h2>
 <p>The primary code signing mechanism of Windows is Authenticode. It is used to sign executables and libraries as well as installers, packages, device drivers, and PowerShell scripts. Additionally, some programs use code signing to validate add-ins on installation. They use specific package formats, such as ClickOnce (Microsoft Office) or Open Packaging Convention (Microsoft Visual Studio), and therefore require specific tools for code signing. Every program has its own rules for displaying and enforcing code signing.</p>
 <p>A new member of the code signing family is NuGet, a platform for distribution of program libraries to software developers. NuGet is currently introducing optional code signing with its own tool set. Code signing will be verified by the NuGet Gallery (<a href="https://www.nuget.org">nuget.org</a>) and displayed prominently online as well as in Visual Studio.</p>

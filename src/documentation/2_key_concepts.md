@@ -18,7 +18,7 @@ This UML class diagram shows the fundamental relationships:
 
 ## Projects
 
-In SignPath, you define a project for each artifact, or set of artifacts that should be signed in a single step.
+Define a project for each artifact, or for each set of artifacts that should be signed in a single step.
 
 Typically, there is one set of artifacts per software product, development team or project. If you use continuous integration (CI) tools, the artifacts will be the output of a single build configuration, or a subset of that output. Or maybe you have several build configurations that create different versions of structurally identical artifacts – those can still be represented by a single SignPath project.
 
