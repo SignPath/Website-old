@@ -34,9 +34,9 @@
 <p>The API token is displayed when a new CI user is created. (If you lose the API key, you will need to generate a new one.)</p>
 <p>Make sure to keep the access token in a secure location. Most Continuous Integration (CI) systems provides a mechanism to store secrets, which is usually the best place to keep API tokens. If you use several distinct systems for API access, we recommend that you create individual CI User accounts in SignPath.</p>
 <h2 id="powershell">PowerShell</h2>
-<p>SignPath can be integrated in your automated build process by using our API. For convenience, we provide a PowerShell module that can be used from within your build/deploy chain. The module can be downloaded from <a href="https://app.signpath.io/API/v1/Tools/SignPath.psm1">signpath.io</a>.</p>
+<p>SignPath can be integrated in your automated build process by using our API. For convenience, we provide a PowerShell module that can be used from within your build/deploy chain. The module can be downloaded from <a href="https://www.powershellgallery.com/packages/SignPath/1.0.1">PSGallery</a>.</p>
 <p>Signing requests can be created by calling the following commands via PowerShell:</p>
-<pre><code class="language-powershell">Import-Module .\SignPath.psm1
+<pre><code class="language-powershell">Install-Module -Name SignPath
 
 # Submit a signing request and get a signing request ID without waiting for completion ...
 $signingRequestID = Submit-SigningRequest
