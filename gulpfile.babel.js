@@ -24,11 +24,11 @@ function _markdownToHtml(file) {
 
 function build() {
   return gulp.src(MARKDOWN_GLOB)
-    .pipe(replace(/\*\*Title:\*\*.*\n/g, ''))
+    .pipe(replace(/\*\*Title\:\*\*.*/g, ''))
     .pipe(tap(_markdownToHtml))
     .pipe(gap.prependFile('src/header.html'))
     .pipe(gap.prependFile('src/footer.html'))
-    .pipe(rewriteImgPath({ path: 'https://about.signpath.io/wp-content/uploads/images/' }))
+    .pipe(rewriteImgPath({ path: 'https://about.signpath.io/wp-content/uploads/images' }))
     .pipe(gulp.dest('build'));
 }
 
@@ -37,7 +37,7 @@ function buildLocal() {
     .pipe(tap(_markdownToHtml))
     .pipe(gap.prependFile('src/local/header.html'))
     .pipe(gap.prependFile('src/local/footer.html'))
-    .pipe(rewriteImgPath({ path: '../../src/images/' }))
+    .pipe(rewriteImgPath({ path: '../../src/images' }))
     .pipe(gulp.dest('buildLocal'))
 }
 
