@@ -28,7 +28,7 @@ function build() {
     .pipe(tap(_markdownToHtml))
     .pipe(gap.prependFile('src/header.html'))
     .pipe(gap.prependFile('src/footer.html'))
-    .pipe(rewriteImgPath({ path: 'https://about.signpath.io/wp-content/uploads/images' }))
+    .pipe(rewriteImgPath({ path: 'https://about.signpath.io/wp-content/uploads' }))
     .pipe(gulp.dest('build'));
 }
 
