@@ -26,7 +26,7 @@
 Submit-SigningRequest
     -CIUserToken &lt;CI_USER_TOKEN&gt;
     -OrganizationId &lt;YOUR_ORGANIZATION_ID&gt;
-    -CertificateConfigurationId &lt;CERTIFICATE_CONFIGURATION_ID&gt;
+    -SigningPolicyId &lt;SIGNING_POLICY_ID&gt;
     -InputArtifactPath &lt;PATH_TO_INPUT_ARTIFACT&gt;
   
 # downloads a signed artifact
@@ -40,7 +40,7 @@ Get-SignedArtifact
 Submit-SigningRequest
     -CIUserToken &lt;CI_USER_TOKEN&gt;
     -OrganizationId &lt;YOUR_ORGANIZATION_ID&gt;
-    -CertificateConfigurationId &lt;CERTIFICATE_CONFIGURATION_ID&gt;
+    -SigningPolicyId &lt;SIGNING_POLICY_ID&gt;
     -InputArtifactPath &lt;PATH_TO_INPUT_ARTIFACT&gt;
     -OutputArtifactPath &lt;PATH_TO_OUTPUT_ARTIFACT&gt;
     -WaitForCompletion</code></pre>
