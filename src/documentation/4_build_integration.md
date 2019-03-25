@@ -33,7 +33,7 @@ Install-Module -Name SignPath
 $signingRequestID = Submit-SigningRequest
     -CIUserToken $CI_USER_TOKEN
     -OrganizationId $YOUR_ORGANIZATION_ID
-    -CertificateConfigurationId $CERTIFICATE_CONFIGURATION_ID
+    -SigningPolicyId $SIGNING_POLICY_ID
     -InputArtifactPath $PATH_TO_INPUT_ARTIFACT
 
 # ... and download the signed artifact later.
@@ -47,7 +47,7 @@ Get-SignedArtifact
 Submit-SigningRequest
     -CIUserToken $CI_USER_TOKEN
     -OrganizationId $YOUR_ORGANIZATION_ID
-    -CertificateConfigurationId $CERTIFICATE_CONFIGURATION_ID
+    -SigningPolicyId $SIGNING_POLICY_ID
     -InputArtifactPath $PATH_TO_INPUT_ARTIFACT
     -OutputArtifactPath $PATH_TO_OUTPUT_ARTIFACT
     -WaitForCompletion
