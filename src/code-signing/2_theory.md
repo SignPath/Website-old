@@ -200,10 +200,10 @@ Also, signatures would become invalid if a certificates is revoked later, even i
 
 Note: While the latter occurs less often, it would indirectly create a security problem: having a large number of legitimately signed binaries without time stamps would strongly discourage revocation of compromised certificates.
 
-Certificate authorities that issue code signing certificates must also offer free a time stamping service. However, they usually apply quotas to individual client IP addresses and do not guarantee service availability, which sometimes leads to problems in automated code signing scenarios.
+Certificate authorities that issue code signing certificates must also offer a free time stamping service. However, they usually apply quotas to individual client IP addresses and do not guarantee service availability, which sometimes leads to problems in automated code signing scenarios.
 
 !!! warning ![Warning](warning.png) Always time-stamp your signatures
-If your code is signed without time stamp, all signatures will immediately become invalid if you have to revoke your certificate. This can cause considerable trouble, especially if you need to re-build and re-distribute older releases. Since this might even keep people from revoking compromised certificates, it is also a security risk.
+If your code is signed without a time stamp, all signatures will immediately become invalid if you have to revoke your certificate. This can cause considerable trouble, especially if you need to re-build and re-distribute older releases. Since this might even keep people from revoking compromised certificates, it is also a security risk.
 
 Note that the same is true for invalid time stamps as well as for weak time stamps that will eventually be rejected by client software, such as SHA-1.
 !!!

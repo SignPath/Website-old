@@ -217,10 +217,10 @@
 <p>Each code signing certificate has a validity period of usually one to three years. Without timestamps, all signatures would be invalid after this period. Time stamps extend each signatures signature validity to that of the time stamp certificate, which is usually at least another 10 years from the time of signing.</p>
 <p>Also, signatures would become invalid if a certificates is revoked later, even if the certificate is still considered valid for the time of signing.</p>
 <p>Note: While the latter occurs less often, it would indirectly create a security problem: having a large number of legitimately signed binaries without time stamps would strongly discourage revocation of compromised certificates.</p>
-<p>Certificate authorities that issue code signing certificates must also offer free a time stamping service. However, they usually apply quotas to individual client IP addresses and do not guarantee service availability, which sometimes leads to problems in automated code signing scenarios.</p>
+<p>Certificate authorities that issue code signing certificates must also offer a free time stamping service. However, they usually apply quotas to individual client IP addresses and do not guarantee service availability, which sometimes leads to problems in automated code signing scenarios.</p>
 <div class="admonition warning">
 <p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/warning.png" alt="Warning"> Always time-stamp your signatures</p>
-<p>If your code is signed without time stamp, all signatures will immediately become invalid if you have to revoke your certificate. This can cause considerable trouble, especially if you need to re-build and re-distribute older releases. Since this might even keep people from revoking compromised certificates, it is also a security risk.</p>
+<p>If your code is signed without a time stamp, all signatures will immediately become invalid if you have to revoke your certificate. This can cause considerable trouble, especially if you need to re-build and re-distribute older releases. Since this might even keep people from revoking compromised certificates, it is also a security risk.</p>
 <p>Note that the same is true for invalid time stamps as well as for weak time stamps that will eventually be rejected by client software, such as SHA-1.</p>
 </div>
 <h3 id="time-stamp-assertions">Time stamp assertions</h3>

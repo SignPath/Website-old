@@ -30,7 +30,7 @@ See also: [Distribution of roles](#distribution-of-roles)
       <td>Administrator</td>
       <td>
 
-Register for a free trial or paid subscriptions ![TODO](todo.png)
+Register for a free trial or paid subscription ![TODO](todo.png)
 
 </td></tr>
     <tr>
@@ -40,13 +40,13 @@ Register for a free trial or paid subscriptions ![TODO](todo.png)
 
 You will need at least two certificates:
 
-* For test signing: create self-signed certificates.
-* For release signing: create Certificate Signing Requests (CSRs) and get certificates from a commercial Certificate Authority (CA) or an in-house CA.
+* For test signing: create self-signed certificates
+* For release signing: create Certificate Signing Requests (CSRs) and get certificates from a commercial Certificate Authority (CA) or an in-house CA
 
 Notes:
 
 * You may choose to get different certificates for each product, customer, etc.
-* You can also import existing certificates. You will be warned that this is potentially insecure.
+* You can also import existing certificates. You will be warned that this is potentially insecure
 
 </td></tr>
     <tr>
@@ -69,7 +69,7 @@ Set up your team:
 Identify projects that need to be signed, restrict their content and define which elements need signing.
 
 * Multiple files can be signed in a single step (includes deep signing of nested artifacts)
-* The [artifact configuration] may be maintained by the development team and submitted to SignPath administrators when it changes.
+* The [artifact configuration] may be maintained by the development team and submitted to SignPath administrators when it changes
 
 </td>
     </tr>
@@ -80,8 +80,8 @@ Identify projects that need to be signed, restrict their content and define whic
 
 For each project
   
-* create at least a test-signing and a release-signing policy
-* assign a certificate and user permissions to each signing policy
+* Create at least a test-signing and a release-signing policy
+* Assign a certificate and user permissions to each signing policy
 
 </td></tr>
     <tr>

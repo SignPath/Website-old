@@ -37,7 +37,7 @@
 <li>a CAB file containing EXE and DLL files, all of which should be signed with Authenticode</li>
 <li>an MSI installer containing an Office add-in, which in turn contains DLLs – the MSI file and the DLLs should be signed using Authenticode, while the Office add-in has a ClickOnce manifest that requires manifest signing</li>
 </ul>
-<p>For complex nested artifacts, creating the artifact configuration is a bit more involved. You need to create an XML file that describes the artifact, with all its nested elements, and the signing actions you want performed on these files. See <a href="3_artifact_configuration.md.html">creating an artifact configuration</a>.</p>
+<p>For complex nested artifacts, creating the artifact configuration is a bit more involved. You need to create an XML file that describes the artifact, with all its nested elements, and the signing actions you want performed on these files. See <a href="/documentation/artifact-configuration">creating an artifact configuration</a>.</p>
 <p>Note that a tight configuration of your artifact reduces the risk of unwanted signatures. Add constraints liberally.</p>
 <h2 id="signing-policies">Signing policies</h2>
 <p>The same project is usually signed for different purposes, most commonly test- and release-signing. Define signing policies for each project as required.</p>

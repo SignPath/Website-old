@@ -8,6 +8,8 @@ import MarkdownIt from 'markdown-it'
 import mdImSize from 'markdown-it-imsize'
 import mdAdmonition from 'markdown-it-admonition'
 import mdTocAndAnchor from 'markdown-it-toc-and-anchor'
+import productionLinks from './src/productionLinks.js'
+import path from 'path'
 
 const MARKDOWN_GLOB = 'src/**/*.md'
 
@@ -25,6 +27,14 @@ function _markdownToHtml(file) {
 function build() {
   return gulp.src(MARKDOWN_GLOB)
     .pipe(replace(/\*\*Title\:\*\*.*/g, ''))
+    .pipe(replace(/\[(.*)\]\: (.*.md.html)/g, function(match, key, file) {
+      let dest = path.normalize(path.join(path.dirname(this.file.relative), file)).replace(/\\/g, '/');
+      if (dest in productionLinks) {
+        return `[${key}]: ${productionLinks[dest]}`;
+      } else {
+        throw Error(`No production link found for "${dest}" in src/productionLinks.js - please update`);
+      }
+    }))
     .pipe(tap(_markdownToHtml))
     .pipe(gap.prependFile('src/header.html'))
     .pipe(gap.prependFile('src/footer.html'))

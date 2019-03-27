@@ -120,7 +120,3 @@ There are two ways to gain reputation:
 
 * A certificate is encountered several times in the wild, and no malign usage was reported. (The data is collected from Windows users by Microsoft’s SmartScreen program.)
 * Extended Validation (EV) certificates have full reputation right from the beginning
-
-### Windows User Account Control (UAC)
-
-TBD
