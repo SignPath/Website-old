@@ -301,6 +301,29 @@ Sets are especially useful if your artifacts contain repeating nested structures
 
 </td> </tr> </tbody> </table>
 
+## File attribute restrictions
+
+For Microsoft Portable Executable (PE) files, the existence of their Product Name / Product Version header attributes can be enforced by setting the <code>productName</code> and <code>productVersion</code> attributes on the <code>&lt;pe-file&gt;</code>, <code>&lt;pe-file-set&gt;</code> and including <code>&lt;include&gt;</code> elements. The value of the <code>&lt;include&gt;</code> overrides any value set on the <code>&lt;pe-file-set&gt;</code> element.
+
+### File attribute restriction example
+
+```xml
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
+  <msi-file>
+    <!-- requires all pe-files to have the respective attributes set -->
+    <pe-file-set productName="YourProductName" productVersion="1.0.0.0"> 
+      <include path="main.exe" />
+      <!-- overrides the value of the parent pe-file-set -->
+      <include path="resources*.resource.dll" max-occurs="unbounded" productVersion="1.0.1.0" />
+      <for-each>
+        <authenticode-sign />
+      </for-each>
+    </pe-file-set>
+    <authenticode-sign /> <!-- finally sign the MSI file -->
+  </msi-file>
+</artifact-configuration>
+```
+
 [Examples]: #examples
 
 ## Examples

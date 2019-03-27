@@ -37,6 +37,11 @@
 <li><a href="#file-set-example">File set example</a></li>
 </ul>
 </li>
+<li><a href="#file-attribute-restrictions">File attribute restrictions</a>
+<ul>
+<li><a href="#file-attribute-restriction-example">File attribute restriction example</a></li>
+</ul>
+</li>
 <li><a href="#examples">Examples</a>
 <ul>
 <li><a href="#predefined-configuration-for-single-portable-executable-file">Predefined configuration for single Portable Executable file</a></li>
@@ -307,6 +312,24 @@
 &lt;/pe-file&gt;
 </code></pre>
 </td> </tr> </tbody> </table>
+<h2 id="file-attribute-restrictions">File attribute restrictions</h2>
+<p>For Microsoft Portable Executable (PE) files, the existence of their Product Name / Product Version header attributes can be enforced by setting the <code>productName</code> and <code>productVersion</code> attributes on the <code>&lt;pe-file&gt;</code>, <code>&lt;pe-file-set&gt;</code> and including <code>&lt;include&gt;</code> elements. The value of the <code>&lt;include&gt;</code> overrides any value set on the <code>&lt;pe-file-set&gt;</code> element.</p>
+<h3 id="file-attribute-restriction-example">File attribute restriction example</h3>
+<pre><code class="language-xml">&lt;artifact-configuration xmlns=&quot;http://signpath.io/artifact-configuration/v1&quot;&gt;
+  &lt;msi-file&gt;
+    &lt;!-- requires all pe-files to have the respective attributes set --&gt;
+    &lt;pe-file-set productName=&quot;YourProductName&quot; productVersion=&quot;1.0.0.0&quot;&gt; 
+      &lt;include path=&quot;main.exe&quot; /&gt;
+      &lt;!-- overrides the value of the parent pe-file-set --&gt;
+      &lt;include path=&quot;resources*.resource.dll&quot; max-occurs=&quot;unbounded&quot; productVersion=&quot;1.0.1.0&quot; /&gt;
+      &lt;for-each&gt;
+        &lt;authenticode-sign /&gt;
+      &lt;/for-each&gt;
+    &lt;/pe-file-set&gt;
+    &lt;authenticode-sign /&gt; &lt;!-- finally sign the MSI file --&gt;
+  &lt;/msi-file&gt;
+&lt;/artifact-configuration&gt;
+</code></pre>
 <h2 id="examples">Examples</h2>
 <div class="admonition info">
 <p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads//info.png" alt="Information"> Examples are shortened</p>

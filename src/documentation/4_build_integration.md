@@ -6,7 +6,7 @@
 
 ## Abstract
 
-This section describes how SignPath can be integrated into automated builds using continuous integration software. You can use the PowerShell module provided by SignPath, or directly call the Web API to submit signing requests.
+This section describes how SignPath can be integrated into automated builds using continuous integration software. You can use the PowerShell module provided by SignPath, directly call the Web API to submit signing requests, or integrate SignPath as part of your AppVeyor build step.
 
 !!! info ![Information](info.png) Locating ID values
 All necessary IDs can be found on the signing policy details page, including a code snippet that calls the PowerShell module.
@@ -22,7 +22,7 @@ Make sure to keep the access token in a secure location. Most Continuous Integra
 
 ## PowerShell
 
-SignPath can be integrated in your automated build process by using our API. For convenience, we provide a PowerShell module that can be used from within your build/deploy chain. The module can be downloaded from [PSGallery](https://www.powershellgallery.com/packages/SignPath/1.0.1).
+SignPath can be integrated in your automated build process by using our API. For convenience, we provide a PowerShell module that can be used from within your build/deploy chain. The module can be downloaded from [PowerShell Gallery](https://www.powershellgallery.com/packages/SignPath).
 
 Signing requests can be created by calling the following commands via PowerShell:
 
@@ -142,3 +142,97 @@ curl -H "Authorization: Bearer $CI_USER_TOKEN" \
 ```
 
 **Success result:** HTTP status code `200`. Returns the binary content of the signed artifact.
+
+## AppVeyor
+
+If you are using the CI service AppVeyor, there is an alternative CI integration. Instead of pushing the artifact from your build script, you can issue an AppVeyor notification after your build, and SignPath.io will pull the artifact from AppVeyor. This results in additional confidence and provides the foundation for restricted Open Source signing.
+
+### Rationale
+
+By pulling the artifact from AppVeyor, SignPath.io can make sure that the binary artifact is a result of a specific build process applied to specific source code (branch and commit).
+
+### Prerequisites and restrictions
+
+This feature is a proof-of-concept for Open Source projects. Future versions may allow disabling certain limitations in paid subscriptions.
+
+Current limitations:
+
+  * The AppVeyor project and the Git repository must be public on one of the following hosting services:
+    * GitHub
+    * GitLab
+    * Bitbucket
+
+These are verified in order to guarantee that the binary results from the specified source code:
+
+  * No additional scripts may be executed during the build step and no cache entries may be used (so that the build remains fully traceable and is only built from the repository)
+  * The build settings must not be modified between starting the AppVeyor build and calling SignPath.io
+
+
+### Build documentation
+
+In order to enable independent verification of builds, SignPath performs the following actions:
+
+  * For NuGet packages:
+    1 The build settings are stored in an AppVeyorSettings.json file in the root of the NuGet package
+    2 The commit hash and repository URL are written to the metadata of the NuGet package
+
+These steps allow consumers of the signed artifact to confidently link the it to a specific source code version and build settings.
+
+### Setup
+<table style="table-layout: auto;">
+<thead>
+  <tr>
+    <th style="width: 20%;">Action</th>
+    <th style="width: 40%;">Remarks</th>
+    <th style="width: 40%;">Step by step</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Add an AppVeyor integration to a SignPath project</td>
+    <td>SignPath.io must authenticode against Appveyor to retrieve the build artifacts</td>
+    <td>
+
+  1 On [ci.appveyor.com](https://ci.appveyor.com), select _My Profile_ and _API Keys_, then remember the **Bearer token** for the next step
+  2 On SignPath.io, add an _AppVeyor integration_ to your _project_ and enter the **API key** you just acquired
+
+  </td>
+  </tr>
+  <tr>
+    <td>Encrypt the SignPath API token in AppVeyor</td>
+    <td>AppVeyor lets you encrypt secret values. You can then safely use the encrypted string in your appveyor.yaml file</td>
+    <td>
+
+  1 On SignPath.io, choose the Users menu and create a new _CI User_ or open an existing one
+  2 Remember the **SignPath API token** for the next step
+  3 On [ci.appveyor.com](https://ci.appveyor.com), open _Account Settings_ and choose _[Encrypt YAML](https://ci.appveyor.com/tools/encrypt)_
+  4 Enter **"Bearer &lt;SignPath API token&gt;"** (without quotes)
+  5 Remember the **encrypted SignPath API token** for the next step
+
+  </td>
+  </tr>
+  <tr>
+    <td>Add a deploy Webhook</td>
+    <td colspan="2">Append this to your appveyor.yaml file:
+
+```yaml
+deploy:
+- provider: Webhook
+  url: https://app.signpath.io/API/v1/<ORGANIZATION_ID>/Integrations/AppVeyor?SigningPolicyId=<SIGNING_POLICY_ID>
+  on_build_success: true
+  on_build_failure: false
+  on_build_status_changed: false
+  method: POST
+  authorization:
+     secure: <ENCRYPTED_ACCESS_TOKEN>
+```
+
+Replace the parameters:
+
+* `<ORGANIZATION_ID>` and `<SIGNING_POLICY_ID>` values can be retrieved from the Signing policy page
+* `<ENCRYPTED_ACCESS_TOKEN>` is the value from the previous step
+
+</td>
+</tr>
+</tbody>
+</table>
