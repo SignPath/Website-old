@@ -30,7 +30,7 @@ See also: [Distribution of roles](#distribution-of-roles)
       <td>Administrator</td>
       <td>
 
-Register for a free trial or paid subscription ![TODO](todo.png)
+Register for a free trial!
 
 </td></tr>
     <tr>
@@ -87,7 +87,6 @@ For each project
     <tr>
       <td>Integrate into CI builds</td>
       <td>Development</td>
-      <!-- TODO: the link needs to be updated -->
       <td>
 
 Use our PowerShell module or call our API for automatically submitting signing requests to SignPath. See [build system integration].

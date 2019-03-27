@@ -27,12 +27,20 @@ function _markdownToHtml(file) {
 function build() {
   return gulp.src(MARKDOWN_GLOB)
     .pipe(replace(/\*\*Title\:\*\*.*/g, ''))
-    .pipe(replace(/\[(.*)\]\: (.*.md.html)/g, function(match, key, file) {
+    .pipe(replace(/\[(.*)\]\: (.*)/g, function(match, key, file) {
+      let anchor = '';
+      if (file.indexOf('#') != -1) {
+        anchor = file.substr(file.indexOf('#'));
+        file = file.substr(0, file.indexOf('#'));
+      }
+      if (file.length == 0 && anchor.length > 0) return match; // is a reference on the same file
+      if (file.startsWith('https://') || file.startsWith('http://')) return match; // is a complete URL
+
       let dest = path.normalize(path.join(path.dirname(this.file.relative), file)).replace(/\\/g, '/');
       if (dest in productionLinks) {
-        return `[${key}]: ${productionLinks[dest]}`;
+        return `[${key}]: ${productionLinks[dest]}${anchor}`;
       } else {
-        throw Error(`No production link found for "${dest}" in src/productionLinks.js - please update`);
+        throw Error(`No production link found for "${dest}" in src/productionLinks.js - please update (matched ${match} in ${this.file.relative})`);
       }
     }))
     .pipe(tap(_markdownToHtml))

@@ -50,7 +50,7 @@ There is often a conflict of interests: development teams need to be responsive 
 Development teams and InfoSec people often have diverging objectives:
 
 * For **software developers,** the job is done when things work. While security *is* an important part of the software development profession, there are so many other problems to take care of. Also, not every development team has a time budget for security. Code signing, like everything else, must be **simple and easy to automate.**
-* Today's **agile development and DevOps teams** often tend to sacrifice secure processes for speed and flexibility. A long-winded 10 step code signin process involving several people will be the first thing some will throw out the window when it impedes automation. Also, CI and CD pipelines have enough pitfalls already, code signing must be reliable and **not break builds and deployments.**
+* Today's **agile development and DevOps teams** often tend to sacrifice secure processes for speed and flexibility. A long-winded 10 step code signing process involving several people will be the first thing some will throw out the window when it impedes automation. Also, CI and CD pipelines have enough pitfalls already, code signing must be reliable and **not break builds and deployments.**
 * **InfoSec teams** often have a diametrically opposed purpose: they need to make sure that undesired activities *cannot* take place -- often at the expense of simplicity in development and operations teams. Their time is limited too: they want to define **secure operational policies** and move on to the next security-related matter.
 
 **Simplicity is security!** Obscure process will be disregarded by teams under pressure. Even when executed in good faith, repetitive and tiresome manual processes are prone to errors caused by inattentiveness.
@@ -76,7 +76,6 @@ SignPath provides a simple model that meets the requirements of all parties incl
 **Automatic verification**
 
 * Verification of certificates, signatures, time stamps and manifest identities ensures that code signing has the intended effects for your users. No surprises at installation time. ![TODO](..\todo.png)
-* Warning if artifacts contain unsigned files. ![TODO](..\todo.png)
 
 </td></tr><tr><td>
 
@@ -91,7 +90,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 **Rely upon secure defaults**
 
 * Comprehensive documentation for code signing and SignPath available for those who want to dig deep.
-* SignPath configurations are secure by defaults, guidance where choices are required.
+* SignPath configurations are secure by default, guidance is provided where choices are required.
 * Deep signing allows you to put code signing at the end or your build process, or past it.
 * When something goes wrong, developer tools do not always specify the exact reason. SignPath will accompany generic API error messages with likely reasons and advice.
 
@@ -108,7 +107,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 
 * For each project, specify artifact contents and signing policies once, then automate signing.
 * Evolve artifact configurations as your project changes.
-* When branches start to drift apart, simply match your branching model in SignPath. ![TODO](..\todo.png)
+* When branches start to drift apart, simply match your branching model in SignPath.
 
 </td></tr><tr><td>
 
@@ -147,7 +146,6 @@ SignPath provides a simple model that meets the requirements of all parties incl
 **Deep signing**
 
 * With SignPath deep signing, development teams and contractors can easily sign all files in a package.
-* For packages with incomplete signing, use SignPath to deep-sign packages based on their own signature. ![TODO](..\todo.png)
 
 </td></tr>
 <tr><td>
@@ -164,7 +162,6 @@ SignPath provides a simple model that meets the requirements of all parties incl
 * Easily create Certificate Signing Requests (CSRs) for secure certificate purchase or in-house issuance.
 * Import existing certificates.
 * Create self-signed certificates for test-signing.
-* Get notified before certificates expire. ![TODO](..\todo.png)
 * Renew certificates.
 
 </td></tr>
@@ -182,7 +179,6 @@ SignPath provides a simple model that meets the requirements of all parties incl
 
 * SignPath.io uses SafeNet Luna Network HSMs [validated][luna fips] for FIPS 140-1 and FIPS 140-2 Level 3, and certified for Common Criteria (ISO/IEC15408).
 * SignPath always creates HSM-based keys as *non-exportable*, they cannot be read or copied from HSM storage even with physical administrative access.
-* Access to HSMs is limited to dedicated servers. These servers are several tiers from the Web server farm and do not participate in synchronous transactions. ![TODO](..\todo.png) <!-- currently access is required in order to read certain HSM key properties -->
 * Only authorized (and approved) signing requests will be processed by servers with access to HSMs.
 
 </td></tr>
@@ -200,10 +196,6 @@ SignPath provides a simple model that meets the requirements of all parties incl
 * Certificates created or requested by SignPath use SHA-256 hash digests and 2048 bit RSA keys
 * Signaturs always uses the SHA-256 hash algorithm for artifact digests.
 * Even for formats that still default to insecure SHA-1 signatures, SignPath always uses SHA-256 (including time stamps).
-
-**Reliable time stamp authority**
-
-* No more depending on free but unreliable public time stamp servers - SignPath.io uses a paid time stamp authority. ![TODO](..\todo.png)
 * SignPath signatures are always time stamped, regardless of methods and certificates.
 
 </td></tr>
@@ -219,7 +211,6 @@ SignPath provides a simple model that meets the requirements of all parties incl
 
 * Signing requests are restricted to the content specified in the project's artifact configuration.
 * Unexpected files are not signed.
-* If containers (e.g. installation packages) contain unexpected executable files, signing will be denied or approvers will be warned (depending on configuration). ![TODO](../todo.png)
 
 </td></tr>
 <tr><td>
@@ -257,8 +248,6 @@ SignPath provides a simple model that meets the requirements of all parties incl
 **Mulit-level logging and correlation**
 
 * Audit logs are maintained on HSM and application levels.
-* Audit logs can be downloaded for routine or random sample inspections, and for forensic evaluation. ![TODO](..\todo.png)
-* Tooling for log correlation allows to verify that every private key usage can be accounted for by an authorized signing request. ![TODO](..\todo.png)
 * Single-request deep signing ensures that multiple key usages can be traced to a single signing request (build, release, approval).
 
 </td></tr>

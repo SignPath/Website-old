@@ -17,7 +17,7 @@
 <p>The major entities in SignPath are <strong>projects</strong>, <strong>certificates</strong> and <strong>users</strong>. They are all part of your <strong>organization</strong>.</p>
 <p>Each <strong>project</strong> consists of</p>
 <ul>
-<li>an <strong>artifact configuration</strong> that defines how an artifact is structured, and which parts should be signed as well as the signing methods</li>
+<li>a single <strong>artifact configuration</strong> that defines how an artifact is structured, and which parts should be signed as well as the signing methods</li>
 <li>one or more <strong>signing policies</strong> (typically <em>test-signing</em> and <em>release-signing</em>) that declare the rules for signing and specify a <strong>certificate</strong></li>
 </ul>
 <p>When an artifact needs to be signed, a <strong>signing request</strong> for a specific <strong>project</strong> and <strong>signing policy</strong> is created.</p>
@@ -37,7 +37,7 @@
 <li>a CAB file containing EXE and DLL files, all of which should be signed with Authenticode</li>
 <li>an MSI installer containing an Office add-in, which in turn contains DLLs – the MSI file and the DLLs should be signed using Authenticode, while the Office add-in has a ClickOnce manifest that requires manifest signing</li>
 </ul>
-<p>For complex nested artifacts, creating the artifact configuration is a bit more involved. You need to create an XML file that describes the artifact, with all its nested elements, and the signing actions you want performed on these files. See <a href="/documentation/artifact-configuration">creating an artifact configuration</a>.</p>
+<p>For complex nested artifacts, creating the artifact configuration is a bit more involved. You need to create an XML file that describes the artifact, with all its nested elements, and the signing actions you want performed on these files. See <a href="/documentation/creating-an-artifact-configuration">creating an artifact configuration</a>.</p>
 <p>Note that a tight configuration of your artifact reduces the risk of unwanted signatures. Add constraints liberally.</p>
 <h2 id="signing-policies">Signing policies</h2>
 <p>The same project is usually signed for different purposes, most commonly test- and release-signing. Define signing policies for each project as required.</p>
@@ -61,12 +61,12 @@
 </ul>
 </td><td>
 <ul>
-<li>Distribute certificate only to testing devices</li>
+<li>Distribute the certificate only to testing devices</li>
 <li>Usually a self-signed certificate</li>
 </ul>
 </td>
     <td>Only permitted submitters (people or CI pipelines)</td>
-    <td>Since certificate is only valid in test environments and builds are frequent, manual approval is usually not required.</td>
+    <td>Since the certificate is only valid in test environments and builds are frequent, manual approval is usually not required.</td>
   </tr>
   <tr>
     <td>Release-signing</td>

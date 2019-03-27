@@ -10,7 +10,7 @@ The artifact configuration describes the structure of the artifacts you want to 
 
 !!! info ![Information](info.png)Tips:
 
-* **Basic artifact configurations can be generated from sample artifacts.** However, this is feature is not yet integrated in the online application. Until then, feel free to ask our support for help at [support@singpath.io](mailto:support@signpath.io?subject=Request%20for%20artifact%20configuration). Please attach your sample artifact. ![TODO](../todo.png)
+* **Basic artifact configurations can be generated from sample artifacts.** However, this is feature is not yet integrated in the online application. Until then, feel free to ask our support for help at [support@singpath.io](mailto:support@signpath.io?subject=Request%20for%20artifact%20configuration). Please attach your sample artifact.
 * Alternatively, if you don't know the internal structure of your artifact, [extract container files](#extracting-artifact-packages) to your disk first.
 * Use a schema-aware XML editor, such as Microsoft Visual Studio, to edit your artifact configuration. (Some tools may require you to download the [schema](https://app.signpath.io/web/artifact-configuration/v1.xsd)).
 
@@ -81,7 +81,7 @@ Container-format elements may contain other file elements for deep signing.
     <td>.appx, .appxbundle</td>
     <td>App packages for Microsoft Store/Universal Windows Platform
 
-Deep signing is not yet supported. ![TODO](../todo.png)
+Deep signing is not yet supported.
   </td>
   </tr>
   <tr>
@@ -180,7 +180,7 @@ For file and directory sets, specify the signing directive in the `<for-each>` e
 Microsoft Authenticode is the primary signing method on the Windows platform. Authenticode is a versatile and extensible mechanism that works for many different file types:
 
 * [Portable Executable](https://en.wikipedia.org/wiki/Portable_Executable) (PE) files: EXE, DLL, and some other executable file formats including device drivers
-* Installation formats: AppX, MSI, CAB, App-V ![TODO](../todo.png) and the upcoming MSIX ![TODO](../todo.png)
+* Installation formats: AppX, MSI, and CAB
 * PowerShell scripts and modules
 
 Using `<authenticode-sign>` is equivalent to using Microsoft's `SignTool.exe`.

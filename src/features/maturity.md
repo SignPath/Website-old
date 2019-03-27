@@ -1,4 +1,4 @@
-# Code signing maturity model
+# Code signing maturity guide
 
 ## How do you keep your keys secure?
 
@@ -14,7 +14,7 @@ Extended Validation (EV) certificates are only available with hardware protectio
 
 [PFX files] with private keys </td><td>
 
-* A brute force attack on the PFX password might successfully retreive your private key.
+* A brute force attack on the PFX password might successfully retrieve your private key.
   * Depending on the entropy of your password and the password cipher your PFX file uses.
   * The PFX format does not prescribe a specific cipher.
   * Also, some files use a weak cipher for the container and a strong cipher for the private key with the same encryption key, so a brute force attack on the weak cipher will also reveal the encryption key for the private key.
@@ -42,7 +42,7 @@ USB [HSM] tokens </td><td>
 
 Assuming FIPS 140-2 Level 2 or higher.
 
-* While the private key cannot be retreived from the USB device, the device itself must be kept secure. Since USB devices can easily be removed, this basically rules out permanent installation on build machines unless additional physical security measures are taken.
+* While the private key cannot be retrieved from the USB device, the device itself must be kept secure. Since USB devices can easily be removed, this basically rules out permanent installation on build machines unless additional physical security measures are taken.
 * Access to private keys is usually protected with proprietary password protection. Password entry is usually designed for manual usage scenarios such as authentication or signing of documents. USB HSM tokens do not usually provide secure authentication for automated scenarios.
 * Unless the USB device has a proprietary logging mechanism, key abuse cannot be detected.
 

@@ -7,7 +7,7 @@
   <title>TODO</title>
 </head>
 <body>
-<h1 id="code-signing-maturity-model">Code signing maturity model</h1>
+<h1 id="code-signing-maturity-guide">Code signing maturity guide</h1>
 <h2 id="how-do-you-keep-your-keys-secure">How do you keep your keys secure?</h2>
 <p>Extended Validation (EV) certificates are only available with hardware protection. While Organization Validated (OV) certificates can still be obtained from many Certificate Authorities without hardware protection, this is considered insecure.</p>
 <table><thead><tr>
@@ -16,9 +16,9 @@
   <th>Risks</th>
 </tr></thead><tbody>
 <tr><td><p>0</p></td><td>
-<p><a href="../code-signing/2_theory#certificate-files">PFX files</a> with private keys </p></td><td><p></p>
+<p><a href="/code-signing/theory#certificate-files">PFX files</a> with private keys </p></td><td><p></p>
 <ul>
-<li>A brute force attack on the PFX password might successfully retreive your private key.
+<li>A brute force attack on the PFX password might successfully retrieve your private key.
 <ul>
 <li>Depending on the entropy of your password and the password cipher your PFX file uses.</li>
 <li>The PFX format does not prescribe a specific cipher.</li>
@@ -46,16 +46,16 @@
 </ul>
 </td></tr>
 <tr><td><p>2</p></td><td>
-<p>USB <a href="../code-signing/3_windows#hardware-security-modules-hsms">HSM</a> tokens </p></td><td><p></p>
+<p>USB <a href="/code-signing/windows-platform#hardware-security-modules-hsms">HSM</a> tokens </p></td><td><p></p>
 <p>Assuming FIPS 140-2 Level 2 or higher.</p>
 <ul>
-<li>While the private key cannot be retreived from the USB device, the device itself must be kept secure. Since USB devices can easily be removed, this basically rules out permanent installation on build machines unless additional physical security measures are taken.</li>
+<li>While the private key cannot be retrieved from the USB device, the device itself must be kept secure. Since USB devices can easily be removed, this basically rules out permanent installation on build machines unless additional physical security measures are taken.</li>
 <li>Access to private keys is usually protected with proprietary password protection. Password entry is usually designed for manual usage scenarios such as authentication or signing of documents. USB HSM tokens do not usually provide secure authentication for automated scenarios.</li>
 <li>Unless the USB device has a proprietary logging mechanism, key abuse cannot be detected.</li>
 </ul>
 </td></tr>
 <tr><td><p>3</p></td><td>
-<p>Professional <a href="../code-signing/3_windows#hardware-security-modules-hsms">HSMs</a> </p></td><td><p></p>
+<p>Professional <a href="/code-signing/windows-platform#hardware-security-modules-hsms">HSMs</a> </p></td><td><p></p>
 <p>Assuming FIPS 140-2 Level 2 or higher.</p>
 <ul>
 <li>Depending on connectivity, the HSM is always available on the network or on the computer where it is installed, access to the HSM must be constrained to ensure that only authorized users and services can use the private keys of code signing certificates.</li>

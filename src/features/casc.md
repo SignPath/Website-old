@@ -76,7 +76,6 @@ This page outlines how SignPath ensures that these recommendations are fulfilled
 | ------------------------------------------------------------------------------------------------------- | ------------- | ------- |
 | Test-signing private keys and certificates requires less security access controls than production code signing private keys and certificates | **Automatic** | Signing policies for test-signing and release-signing have different permissions and approval requirements.
 | Test-signing certificates can be self-signed or come from an internal test CA                           | **Guidance**  | Create a self-signed certificate from the setup wizard, or create a CSR for an in-house CA.
-| Test certificates must chain to a completely different root certificate than the root certificate that is used to sign publicly released products; this precaution helps ensure that test certificates are trusted only within the intended test environment | **Guidance**  | SignPath offers advice in the certificate administration console. ![TODO](../todo.png)
 | Establish a separate test code signing infrastructure to test-sign pre-release builds of software       | **Guidance**  | SignPath.io allows you to use the dedicated credentials and build agents for each signing policy. We recommend to share the essential build configuration in order to avoid confusion and configuration errors.
 
 [5]: #5-authenticate-code-to-be-signed
@@ -104,7 +103,6 @@ This page outlines how SignPath ensures that these recommendations are fulfilled
 | CASC recommendation details                                               | Compliance    | Remarks |
 | ------------------------------------------------------------------------- | ------------- | ------- |
 | Code signing does not confirm the safety or quality of the code; it confirms the publisher and whether or not the code has been changed | **n/a** | *(informational)*
-| Take care when incorporating code from other sources                      | **Guidance**  | See our [guidelines][3rd party components] for including third-party components. ![TODO](../todo.png)
 | Implement virus-scanning to help improve the quality of the released code | **Automatic** | *See above*
 
 [7]: #7-do-not-over-use-any-one-key-distribute-risk-with-multiple-certificates
@@ -115,21 +113,11 @@ This page outlines how SignPath ensures that these recommendations are fulfilled
 
 > SignPath allows you to configure any number of certificates at any given time. (Available HSM key storage capacity depends on your subscription type.)
 
-!!! info ![Information](../info.png) Do a cost/benefit analysis
+!!! info ![Information](info.png) Do a cost/benefit analysis
 Buying multiple EV certificates can be costly. On the other hand, non-EV certificates will always start with zero SmartScreen reputation.
 
 SignPath.io recommends that you consider buying separate certificates for major product lines, teams or customers. However, you can have a perfectly secure code signing process with a single release certificate.  
 !!!
-
-> ![TODO](../todo.png) **This should be separate guidance**
-> Since test-signing for pre-releases is usually checked less rigorously, it often makes sense to issue separate test certificates for different teams and deploy those certificates only on machines that belong to this team. This is especially true if you distribute test certificates to customers for installation on their test machines.
->
-> * This might have an adverse effect on security if you don't have good control over these test certificates.
->   * Aim for automatic deployment and undeployment based on some directory (Windows *Group Policy Objects* are a good candidate).
->   * It is more secure to have an in-house CA issue test certificates than to use self-signed certificates, because only a CA can revoke certificates in case of a security incident.
-> * There is no value in separating test certificates pre-release builds are generally deployed across the organization.
-
-<br>
 
 | CASC recommendation details | Remarks |
 | --------------------------- | ------- |
@@ -137,6 +125,5 @@ SignPath.io recommends that you consider buying separate certificates for major 
 | If the code with the security flaw was issued before more good code was issued, then revoking the certificate will impact the good code as well | SignPath lets you re-sign individual releases that were involuntary affected by revocations.
 | Changing keys and certificates often will help to avoid this conflict | This is true, but it will only reduce the problem in some situations. If you discover a security flaw shortly after the incident, chances are that you will still be using the same key and certificate.
 
-[3rd party components]: TODO
 [signing policies]: ../documentation/1_introduction.md.html#signing-policies
 [luna fips]: https://data-protection-updates.gemalto.com/2018/07/24/safenet-luna-hsm-7-now-fips-140-2-level-3-validated/

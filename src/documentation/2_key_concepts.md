@@ -8,7 +8,7 @@ The major entities in SignPath are **projects**, **certificates** and **users**.
 
 Each **project** consists of
 
-* an **artifact configuration** that defines how an artifact is structured, and which parts should be signed as well as the signing methods
+* a single **artifact configuration** that defines how an artifact is structured, and which parts should be signed as well as the signing methods
 * one or more **signing policies** (typically *test-signing* and *release-signing*) that declare the rules for signing and specify a **certificate**
 
 When an artifact needs to be signed, a **signing request** for a specific **project** and **signing policy** is created.
@@ -61,12 +61,12 @@ The same project is usually signed for different purposes, most commonly test- a
 
 </td><td>
 
-* Distribute certificate only to testing devices
+* Distribute the certificate only to testing devices
 * Usually a self-signed certificate
 
 </td>
     <td>Only permitted submitters (people or CI pipelines)</td>
-    <td>Since certificate is only valid in test environments and builds are frequent, manual approval is usually not required.</td>
+    <td>Since the certificate is only valid in test environments and builds are frequent, manual approval is usually not required.</td>
   </tr>
   <tr>
     <td>Release-signing</td>
