@@ -8,7 +8,7 @@ This is a good thing, because you don't want your test-signing process to be as 
 
 ## Test certificate strategies
 
-There are several strategies for creating and rolling out test certiticates.
+There are several strategies for creating and rolling out test certificates.
 
 <table><thead><tr>
     <th>Strategy</th>
@@ -52,7 +52,7 @@ There are several strategies for creating and rolling out test certiticates.
 **Disadvantages:**
 
 * Some configuration effort, especially if the certificate is to be trusted only on selected computers
-* Cannot revoke certificatein case of abuse (but you can follow the incident process above)
+* Cannot revoke certificate in case of abuse (but you can follow the incident process above)
 
     </td></tr>
     <tr><td><p>Issue certificate from an in-house CA</p></td>
@@ -82,10 +82,10 @@ There are several strategies for creating and rolling out test certiticates.
 
 ### Certificate store selection
 
-You shoud generally add self-signed test certificates to the `Trusted Root Certification Authorities` certificate store of computers you use for testing your software. If you do this, Windows will treat your test certificates as if they were issued by a trusted Root CA.
+You should generally add self-signed test certificates to the `Trusted Root Certification Authorities` certificate store of computers you use for testing your software. If you do this, Windows will treat your test certificates as if they were issued by a trusted Root CA.
 
 !!! info ![Information](info.png) Trusted Publishers
-You may also add your test certificates to the `Trusted Publishers` store on internal machines. This is what happens when a user choses *always trust this publisher* during installation, and therefore results in the same behaviour, so don't do this if you want to replicate the default behaviour on user machines. Adding a certificate to this store will affect User Account Control (UAC) device driver installation prompts as well as whitelisting features such as Software Restriction Policies (SRP), AppLocker and WDAC Code Integrity Policies. (Only add your certificates to this store for computers in your own organization.)
+You may also add your test certificates to the `Trusted Publishers` store on internal machines. This is what happens when a user choses *always trust this publisher* during installation, and therefore results in the same behavior, so don't do this if you want to replicate the default behavior on user machines. Adding a certificate to this store will affect User Account Control (UAC) device driver installation prompts as well as whitelisting features such as Software Restriction Policies (SRP), AppLocker and WDAC Code Integrity Policies. (Only add your certificates to this store for computers in your own organization.)
 !!!
 
 ### Manual installation
@@ -99,8 +99,10 @@ You may also add your test certificates to the `Trusted Publishers` store on int
 
 ### Using scripts and batch files
 
-* In PowerShell, use `Import-Certificate`
-* In cmd.exe, use `CertUtil -ImportCert`
+* In PowerShell scripts, use `Import-Certificate <certificate-file> -CertStoreLocation Cert:\LocalMachine\Root`
+* In batch files, use `CertUtil -addstore Root <certificate-file>`
+
+These commands require administrative permissions.
 
 ### Auto-enrollment
 

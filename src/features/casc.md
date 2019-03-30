@@ -138,5 +138,5 @@ SignPath.io recommends that you consider buying separate certificates for major 
 | Changing keys and certificates often will help to avoid this conflict | This is true, but it will only reduce the problem in some situations. If you discover a security flaw shortly after the incident, chances are that you will still be using the same key and certificate.
 
 [3rd party components]: TODO
-[signing policies]: ../documentation/1_introduction.md.html#signing-policies
+[signing policies]: ../documentation/1_introduction#signing-policies
 [luna fips]: https://data-protection-updates.gemalto.com/2018/07/24/safenet-luna-hsm-7-now-fips-140-2-level-3-validated/

@@ -82,7 +82,29 @@ For some time, it was recommended that files should be dual-signed with both SHA
 
 ## Hardware Security Modules (HSMs)
 
-SignTool.exe (or Authenticode in general) cannot use HSMs directly, but it uses the Windows CryptoAPI to access certificates in Windows certificate stores. CryptoAPI uses an extensible architecture for storing certificates: A Cryptographic Service Provider (CSP) can implement physical storage of certificates as keys as well as implement cryptographic algorithms, like creating signatures. HSMs usually bring their own installable CSPs. You can think of this CSP as a device driver for the HSM. So if you use SignTool.exe referencing a certificate via its HSM’s CSP, SignTool.exe will effectively transfer the digest to the HSM, and the HSM will create the signature without ever exposing the private key.
+SignTool.exe (or Authenticode in general) cannot use HSMs directly, but it uses the Windows CryptoAPI to access certificates in Windows certificate stores. CryptoAPI uses an extensible architecture for storing certificates: Cryptographic Service Providers (CSPs) 
+
+A CSP can provide these services:
+
+* physical storage of certificates and keys
+* implementation of cryptographic algorithms, like encryption, digests and signatures
+
+HSMs usually bring their own installable CSPs. You can think of this CSP as a device driver for the HSM.
+
+!!! background ![Warning](../images/background.png)
+Here is what happens when you call SignTool.exe with a certificate from a HSM:
+
+* SignTool.exe calls the Authenticode API
+  * Authenticode computes the digest via CryptoAPI (CAPI)
+  * Authenticode calls CAPI to create a signature for the digest
+    * CAPI finds the certificate on the CSP provided by the HSM
+    * CAPI calls the CSP with the digest and the certificate's ID
+      * The CSP submits a *create signature* request to the HSM
+        * The HSM creates a signature
+  * Authenticode stores the signature in the file
+!!!
+
+In this process, the HSM will never expose the private key to any other system.
 
 The current implementation of Authenticode and SignTool.exe has two weaknesses:
 
@@ -91,7 +113,12 @@ The current implementation of Authenticode and SignTool.exe has two weaknesses:
   
 ### Buyer’s advice
 
-* Whether a HSM supports SHA-2 code signing is an important consideration when buying a HSM. You should ask specifically for support of SHA-256 in Microsoft Authenticode. We also recommend that you consider the complexity of creating certificates via CSRs and accessing them before choosing a HSM.
+* USB token HSMs cannot easily be used in virtualized environments and are limited to a single machine. Also, they usually require interactive authentication via PIN codes or other mechanisms that may prevent automation.
+* Professional network HSMs solve this problem, but they require extensive operational procedures and staff training.
+* As stated above, Authenticode and many other signing mechanisms require CSPs, a technology based on CAPI1 which is otherwise often considered obsolete. HSM support for CSPs therefore varies widely in quality of software, documentation and support.
+* Whether a HSM supports SHA-2 code signing is an important consideration when buying a HSM. You should ask specifically for support of SHA-256 in Microsoft Authenticode (or more technically, CSPs and CAPI v1).
+* HSMs have varying support for creating certificates via certificate signing requests (CSRs) and accessing them from CSPs. You might have to search for working procedures on the internet or contact the vendor's tech support.
+**Warning:** Since this is quite difficult to accomplish, many users resort to importing insecure key files into the HSM, which defies the purpose of the HSM in a critical stage. This is not a secure practice, and does not meet regulations for Extended Validation (EV) certificates!
 * Some complex key management systems have a FIPS-certified HSM at their core as part of a larger physical or virtual system. In this case, the FIPS certification might not encompass the entire system. You should ask specifically if FIPS certification is provided for the entire use case of generating keys and CSRs, as well as creating signatures.
 
 ## Miscellaneous
@@ -104,7 +131,7 @@ An HSM is a device that stores secret keys and performs cryptographic operations
 
 ### HSM limitations
 
-Note that hardware keys can still be physically stolen, especially when stored on inexpensive USB devices. Additionally, even if the key is not stolen, it could be abused by a hacker who gains access.
+Note that hardware keys can still be physically stolen, especially when stored on inexpensive USB devices. Additionally, even if the key is not stolen, it could be abused by a hacker who gains access to the HSM, or a system that can access the HSM, such as a build server.
 
 ### Microsoft SmartScreen
 

@@ -50,7 +50,7 @@ There is often a conflict of interests: development teams need to be responsive 
 Development teams and InfoSec people often have diverging objectives:
 
 * For **software developers,** the job is done when things work. While security *is* an important part of the software development profession, there are so many other problems to take care of. Also, not every development team has a time budget for security. Code signing, like everything else, must be **simple and easy to automate.**
-* Today's **agile development and DevOps teams** often tend to sacrifice secure processes for speed and flexibility. A long-winded 10 step code signin process involving several people will be the first thing some will throw out the window when it impedes automation. Also, CI and CD pipelines have enough pitfalls already, code signing must be reliable and **not break builds and deployments.**
+* Today's **agile development and DevOps teams** often tend to sacrifice secure processes for speed and flexibility. A long-winded 10 step code signing process involving several people will be the first thing some will throw out the window when it impedes automation. Also, CI and CD pipelines have enough pitfalls already, code signing must be reliable and **not break builds and deployments.**
 * **InfoSec teams** often have a diametrically opposed purpose: they need to make sure that undesired activities *cannot* take place -- often at the expense of simplicity in development and operations teams. Their time is limited too: they want to define **secure operational policies** and move on to the next security-related matter.
 
 **Simplicity is security!** Obscure process will be disregarded by teams under pressure. Even when executed in good faith, repetitive and tiresome manual processes are prone to errors caused by inattentiveness.
@@ -198,7 +198,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 **No insecure or outdated methods**
 
 * Certificates created or requested by SignPath use SHA-256 hash digests and 2048 bit RSA keys
-* Signaturs always uses the SHA-256 hash algorithm for artifact digests.
+* Signatures always uses the SHA-256 hash algorithm for artifact digests.
 * Even for formats that still default to insecure SHA-1 signatures, SignPath always uses SHA-256 (including time stamps).
 
 **Reliable time stamp authority**
@@ -242,8 +242,8 @@ SignPath provides a simple model that meets the requirements of all parties incl
 
 **Full auditing and notifications**
 
-* Keep track of all administrative activities as well as signing submissions and aprovals.
-* Audit data must be relatable to develpment and release processes.
+* Keep track of all administrative activities as well as signing submissions and approvals.
+* Audit data must be relatable to development and release processes.
 * Log every private key usage, but don't get lost in noise.
 
 </td><td>

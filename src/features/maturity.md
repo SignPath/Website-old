@@ -2,7 +2,7 @@
 
 ## How do you keep your keys secure?
 
-Extended Validation (EV) certificates are only available with hardware protection. While Organization Validated (OV) certificates can still be obtained from many Certificate Authorities without hardware protection, this is considered insecure.
+Extended Validation (EV) certificates are only available with [Hardware Security Modules] (HSMs). While Organization Validated (OV) certificates can still be obtained from many Certificate Authorities without hardware protection, this is considered insecure.
 
 <table><thead><tr>
   <th>Rating</th>
@@ -16,17 +16,18 @@ Extended Validation (EV) certificates are only available with hardware protectio
 
 **Risks**
 
-* A brute force attack on the PFX password might successfully retreive your private key.
+* A brute force attack on the PFX password might successfully retrieve your private key.
   * Depending on the entropy of your password and the password cipher your PFX file uses.
   * The PFX format does not prescribe a specific cipher.
   * Also, some files use a weak cipher for the container and a strong cipher for the private key with the same encryption key, so a brute force attack on the weak cipher will also reveal the encryption key for the private key.
 * If your password leaks, your private key is accessible to everyone who has access to the PFX file.
   * In general, memorizable passwords are unsafe, and high-entropy passwords need to be stored securely.
-  * You basically shift the burden from private key secrecy to password secrecy.
-* Sometimes PFX files are considerd secure because they are only used for certificate installation. However, even a temporary exposure of the PFX file (e.g. via file shares, backup media or e-mail storage) will nullify this assumption.
+  * It is very tempting for development and DevOps teams to store PFX files in accessible locations such as file servers or source code repositories. Also, PFX passwords might be stored in build scripts and batch files.
+  * This basically shifts the burden from private key secrecy to password secrecy.
+* Sometimes PFX files are considered secure because they are only used for certificate installation. However, even a temporary exposure of the PFX file (e.g. via file shares, backup media or e-mail storage) will nullify this assumption.
 * Key theft or abuse cannot be detected.
 
-**Verdict**: Very low security.
+**Verdict:** Does not meet basic security requirements.
 
 </td></tr>
 <tr><td><p>1</p></td><td>
@@ -41,12 +42,15 @@ Windows certificate store</td><td>
 * Even if the private key cannot be obtained as clear text, it can still be used by authorized users and services to create unwanted signatures.
 * Key theft or abuse cannot be detected reliably.
 
-**Verdict**: Some resistance against key theft, limited control over key usage.
+**Verdict**:
+
+* Some resistance against key theft, but unlikely to withstand professional attacks.
+* Limited control over key usage.
 
 </td></tr>
 <tr><td><p>2</p></td><td>
 
-USB [HSM] tokens </td><td>
+USB HSM tokens </td><td>
 
 **Assumptions**
 
@@ -55,16 +59,19 @@ USB [HSM] tokens </td><td>
 
 **Remaining risks**
 
-* While the private key cannot be retreived from the USB device, the device itself must be kept secure. Since USB devices can easily be removed, this basically rules out permanent installation on build machines unless additional physical security measures are taken.
+* While the private key cannot be retrieved from the USB device, the device itself must be kept secure. Since USB devices can easily be removed, this basically rules out permanent installation on build machines unless additional physical security measures are taken.
 * Access to private keys is usually protected with proprietary password protection. Password entry is usually designed for manual usage scenarios such as authentication or signing of documents. USB HSM tokens do not usually provide secure authentication for automated scenarios.
 * Unless the USB device has a proprietary logging mechanism, key abuse cannot be detected.
 
-**Verdict:** Key theft requires physical access and is easily detected, limited control over key usage.
+**Verdict:**
+
+* Persistent key theft requires physical access and is easily detected.
+* Limited control over key usage. Dependency on secret password or PIN in case of physical access or access to the computer.
 
 </td></tr>
 <tr><td><p>3</p></td><td>
 
-Professional [HSMs][HSM] </td><td>
+Professional HSMs </td><td>
 
 **Assumptions**
 
@@ -78,17 +85,26 @@ Professional [HSMs][HSM] </td><td>
   * Consider that developers, build engineers and test engineers often have extensive permission on build environments for troubleshooting, including remote access. In this case, it is easy to perform unmonitored and unaudited code signings.
 * While secure logging is usually provided by HSMs, the resulting low-level log entries are hard to correlate to code signings, especially in scenarios where multiple software artifacts are signed for a single software release.
 
-**Verdict:** Key theft impossible if security procedures are followed, limited control over key usage.
+**Verdict:**
+
+* Key theft impossible if security procedures are followed.
+* Limited control over key usage.
+* Auditing is possible but difficult to monitor without process alignment.
 
 </td></tr></tbody></table>
 
-While HSMs are strongly recommended, their security comes with a price.
+HSMs are required for EV certificates for a reason, and strongly recommended for any code signing implementation. However, their security advantages come with a price.
 
-* Considerable hardware cost for professional HSMs
-* Administrative procedures and training for professional HSMs
+* High TCO for professional HSMs
+  * Considerable hardware cost
+  * Vendor training for HSM operators
+  * Elaborate administrative procedures for secure operation, often requiring physical presence of several operators
 * Dependency on physical device access for non-network devices (USB or PCI)
+  * Only network HSMs can be shared in distributed build systems
 * Dependency on installation of vendor CSPs *(CryptoAPI Cryptographic Service Providers)*
   * Note that CryptoAPI is a legacy technology, so vendor CSPs are sometimes outdated and poorly supported. However, most code signing mechanisms by Microsoft including Authenticode cannot use the more modern *Cryptography API: Next Generation* (CNG) model.
 
+## Who has permission to use the keys?
+
 [PFX files]: ../code-signing/2_theory#certificate-files
-[HSM]: ../code-signing/3_windows#hardware-security-modules-hsms
+[Hardware Security Modules]: ../code-signing/3_windows#hardware-security-modules-hsms

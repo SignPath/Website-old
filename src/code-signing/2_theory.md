@@ -75,7 +75,7 @@ Important extensions and optional fields include:
 * **Subject alternative name:** Used to list additional domain names for multi-domain HTTPS certificates.
 * **CRL distribution points** and **authority information access:** Used to provide information about revocation services (CRL and/or OCSP).
 
-Note that many of these fields use dot-separated numbers called *Object Identifiers* (OIDs). A reference can be found at  [oid-info.com](http://oid-info.com/) or [oidref.com](http://oidref.com/).
+Note that many of these fields use dot-separated numbers called *Object Identifiers* (OIDs). A reference can be found at [oid-info.com](http://oid-info.com/) or [oidref.com](http://oidref.com/).
 
 ### Certificate types
 
@@ -130,7 +130,7 @@ It is recommended to store private keys only on secure hardware, such as HSMs.
 
 While PFX files with private keys seem convenient, they should only be used if no secure storage or exchange mechanism is available.
 
-A brute force attack on password might successfully retreive your private key. There are several risks:
+A brute force attack on password might successfully retrieve your private key. There are several risks:
 
 * The entropy of your password may be too low.
 * PEM and PFX are container formats. They do *not* prescribe a specific cipher.

@@ -134,6 +134,6 @@ For signing policies that require approval, each approver will receive an e-mail
 
 Administrators will be notified about important events. They can also use the Web application to see a full activity audit for each entity, including users, certificates, projects, signing policies and signing requests.
 
-[key concepts]: 2_key_concepts.md.html
-[artifact configuration]: 3_artifact_configuration.md.html
-[build system integration]: 4_build_integration.md.html
+[key concepts]: 2_key_concepts
+[artifact configuration]: 3_artifact_configuration
+[build system integration]: 4_build_integration
