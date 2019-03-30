@@ -7,7 +7,6 @@
   <title>TODO</title>
 </head>
 <body>
-<p><strong>Title:</strong> CASC best practices - SignPath.io</p>
 <h1 id="ca-security-council-best-practices-for-code-signing">CA Security Council best practices for code signing</h1>
 <p>The <a href="https://casecurity.org/">CA Security Council</a> is an organization of several Certification Authorities. One of its goals is to advance code signing practices in the industry. The CASC has released a <a href="https://casecurity.org/wp-content/uploads/2016/12/CASC-Code-Signing.pdf">white paper</a> that contain several best practices for code signing.</p>
 <p>This is good and valuable advice, and SignPath.io supports these recommendations. However, it can be quite difficult and expensive to set up and repeatedly execute a code signing process that meets these criteria. If you use SignPath, it will take care of these recommendations for you. (SignPath organization administrators will be able to opt out of some security practices.)</p>
@@ -163,7 +162,7 @@
 <tr>
 <td>Test certificates must chain to a completely different root certificate than the root certificate that is used to sign publicly released products; this precaution helps ensure that test certificates are trusted only within the intended test environment</td>
 <td><strong>Guidance</strong></td>
-<td>SignPath offers advice in the certificate administration console. <img src="https://about.signpath.io/wp-content/uploads/images//../todo.png" alt="TODO"></td>
+<td>SignPath offers advice in the certificate administration console. <img src="https://about.signpath.io/wp-content/uploads/../todo.png" alt="TODO"></td>
 </tr>
 <tr>
 <td>Establish a separate test code signing infrastructure to test-sign pre-release builds of software</td>
@@ -225,7 +224,7 @@
 <tr>
 <td>Take care when incorporating code from other sources</td>
 <td><strong>Guidance</strong></td>
-<td>See our <a href="TODO">guidelines</a> for including third-party components. <img src="https://about.signpath.io/wp-content/uploads/images//../todo.png" alt="TODO"></td>
+<td>See our <a href="TODO">guidelines</a> for including third-party components. <img src="https://about.signpath.io/wp-content/uploads/../todo.png" alt="TODO"></td>
 </tr>
 <tr>
 <td>Implement virus-scanning to help improve the quality of the released code</td>
@@ -240,12 +239,12 @@
 <p>SignPath allows you to configure any number of certificates at any given time. (Available HSM key storage capacity depends on your subscription type.)</p>
 </blockquote>
 <div class="admonition info">
-<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/images//../info.png" alt="Information"> Do a cost/benefit analysis</p>
+<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/../info.png" alt="Information"> Do a cost/benefit analysis</p>
 <p>Buying multiple EV certificates can be costly. On the other hand, non-EV certificates will always start with zero SmartScreen reputation.</p>
 <p>SignPath.io recommends that you consider buying separate certificates for major product lines, teams or customers. However, you can have a perfectly secure code signing process with a single release certificate.</p>
 </div>
 <blockquote>
-<p><img src="https://about.signpath.io/wp-content/uploads/images//../todo.png" alt="TODO"> <strong>This should be separate guidance</strong>
+<p><img src="https://about.signpath.io/wp-content/uploads/../todo.png" alt="TODO"> <strong>This should be separate guidance</strong>
 Since test-signing for pre-releases is usually checked less rigorously, it often makes sense to issue separate test certificates for different teams and deploy those certificates only on machines that belong to this team. This is especially true if you distribute test certificates to customers for installation on their test machines.</p>
 <ul>
 <li>This might have an adverse effect on security if you don't have good control over these test certificates.

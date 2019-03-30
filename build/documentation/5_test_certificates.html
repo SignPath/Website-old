@@ -1,0 +1,115 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TODO</title>
+</head>
+<body>
+<h1 id="working-with-test-certificates">Working with test certificates</h1>
+<p>Test certificates should not be created by commercial certificate authorities, and are therefore not recognized by operating systems and browsers.</p>
+<p>This is a good thing, because you don't want your test-signing process to be as sensitive as your release-signing process. After all, a mistakenly or even maliciously signed binary should not affect your users and customers.</p>
+<h2 id="test-certificate-strategies">Test certificate strategies</h2>
+<p>There are several strategies for creating and rolling out test certiticates.</p>
+<table><thead><tr>
+    <th>Strategy</th>
+    <th>Description</th>
+  </tr></thead>
+  <tbody>
+    <tr><td><p>Manual installation of self-signed certificates</p></td>
+    <td>
+<p><strong>Process:</strong></p>
+<ul>
+<li>Create a self-signed certificate in SignPath</li>
+<li>Install it on every computer used for testing and development (manually or using a script)</li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>No set-up required</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>
+<p>Distribution mechanism not secure (users can be tricked into installing any certificate)</p>
+</li>
+<li>
+<p>Manual effort (once on every computer)</p>
+</li>
+<li>
+<p>Cannot revoke certificate in case of abuse</p>
+  </li></ul></td></tr>
+  <tr><td><p>Automatic installation of self-signed certificates</p></td>
+  <td>
+
+
+<p><strong>Process:</strong></p>
+<ul>
+<li>Create a self-signed certificate in SignPath</li>
+<li>Install it on all or selected computers using auto-enrollment</li>
+<li>In case of serious incidents, disable these GPOs <em>and</em> add the certificate to computers <em>Untrusted Certificates</em> list</li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Central control</li>
+<li>Can use existing Active Directory groups and OUs for selection when using auto-enrollment</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>
+<p>Some configuration effort, especially if the certificate is to be trusted only on selected computers</p>
+</li>
+<li>
+<p>Cannot revoke certificatein case of abuse (but you can follow the incident process above)</p>
+  </li></ul></td></tr>
+  <tr><td><p>Issue certificate from an in-house CA</p></td>
+  <td>
+
+
+<p><strong>Process:</strong></p>
+<ul>
+<li>Create a certificate signing request (CSR) in SignPath</li>
+<li>Depending on your permissions,
+<ul>
+<li>send the CSR to your PKI team, or</li>
+<li>use your in-house CA (e.g. Microsoft Active Directory Certificate Services or OpenSSL) to issue the certificate</li>
+</ul>
+</li>
+<li>Import the signed certificate in SignPath</li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Central control via existing PKI infrastructure</li>
+<li>Straight-forward revocation process</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Cannot easily limit certificate rollout to specific computers, business unites etc.</li>
+</ul>
+</td></tr>
+</tbody></table>
+<h2 id="certificate-installation">Certificate installation</h2>
+<h3 id="manual">Manual</h3>
+<ul>
+<li>You can open any certificate in Windows Explorer
+<ul>
+<li>Open a certificate file</li>
+<li>Open a program file's property page in Windows Explorer and go to the <em>Digital Signatures</em> tab. From here, open a signature <em>(Details)</em> and select <em>View Certificate</em>.</li>
+</ul>
+</li>
+<li>In the certificate property window, click <em>Install Certificate...</em></li>
+<li>Select <em>Current User</em> or <em>Local Machine</em> location</li>
+<li>Select the <em>Trusted Publishers</em> store</li>
+</ul>
+<h3 id="scripting">Scripting</h3>
+<ul>
+<li>In PowerShell, use <code>Import-Certificate</code></li>
+<li>In cmd.exe, use <code>CertUtil -ImportCert</code></li>
+</ul>
+<h3 id="auto-enrollment">Auto-enrollment</h3>
+<p>Use Group Policy Objects (GPOs) to add certificates to computers.</p>
+<ul>
+<li>In order to trust a certificate, create a GPO for <code>Windows Settings/Security Settings/Public Key Policies/Trusted Publishers Certificates</code></li>
+<li>In order to explicitly un-trust a certificate, create a GPO for  <code>Windows Settings/Security Settings/Public Key Policies/Untrusted Certificates</code></li>
+</ul>
+</body></html>
