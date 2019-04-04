@@ -22,7 +22,7 @@ In case you have more complex, nested artifacts, you might want to not only sign
 
 ## File elements
 
-Every XML description is wrapped in an `<artifact-configuration>` root element which contains exactly one file element. This file element specifies the type of artifact and signing method.
+Every XML description is wrapped in an `<artifact-configuration>` root element which contains exactly one file element. This file element specifies the type of artifact and signing method. Optionally, you can restrict the name of the file using the `path` attribute.
 
 Container-format elements may contain other file elements for deep signing.
 
@@ -371,11 +371,11 @@ You can sign multiple unrelated artifacts by packing them into a single ZIP file
 
 ### Deep-signing an MSI installer
 
-This will sign the PE files `libs/common.dll` and `main.exe`, then re-package their MSI container and sign it too.
+This will sign the PE files `libs/common.dll` and `main.exe`, then re-package their MSI container and sign it too. It also restricts the name of the MSI container file.
 
 ```xml
 <artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
-  <msi-file>
+  <msi-file path="MyProduct.v*.msi">
     <directory path="libs">
       <pe-file path="common.dll">
         <authenticode-sign/>

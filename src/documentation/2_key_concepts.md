@@ -8,13 +8,13 @@ The major entities in SignPath are **projects**, **certificates** and **users**.
 
 Each **project** consists of
 
-* a single **artifact configuration** that defines how an artifact is structured, and which parts should be signed as well as the signing methods
+* one or more **artifact configurations** that define how an artifact (or a version of the artifact) is structured, and which parts should be signed as well as the signing methods
 * one or more **signing policies** (typically *test-signing* and *release-signing*) that declare the rules for signing and specify a **certificate**
 
-When an artifact needs to be signed, a **signing request** for a specific **project** and **signing policy** is created.
+When an artifact needs to be signed, a **signing request** for a specific **project**, **signing policy** and **artifact configuration** are created.
 
 This UML class diagram shows the fundamental relationships:
-![Key concepts UML](documentation_key-concepts.png)
+![Key concepts UML](documentation_key-concepts_v2.png)
 
 ## Projects
 
@@ -28,7 +28,7 @@ If you don’t use a CI system or some other kind of build automation, we highly
 
 ## Artifact configurations
 
-At the core of each SignPath project is an artifact configuration. It describes the file type of your artifact and a corresponding code signing method (e.g. an EXE file signed with Authenticode). You can also sign multiple files or complex nested artifacts, e.g.
+At the core of each SignPath project is an artifact configuration. It describes the file type of your artifact and a corresponding code signing method (e.g. an EXE file signed with Authenticode). You can specify multiple artifact configurations to allow different versions of your software to be signed (e.g. in case the structure of your artifact changes). You can also sign multiple files or complex nested artifacts, e.g.
 
 * a ZIP archive containing several artifacts that need Authenticode signing
 * a CAB file containing EXE and DLL files, all of which should be signed with Authenticode
