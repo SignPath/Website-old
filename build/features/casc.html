@@ -1,0 +1,258 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TODO</title>
+</head>
+<body>
+<h1 id="ca-security-council-best-practices-for-code-signing">CA Security Council best practices for code signing</h1>
+<p>The <a href="https://casecurity.org/">CA Security Council</a> is an organization of several Certification Authorities. One of its goals is to advance code signing practices in the industry. The CASC has released a <a href="https://casecurity.org/wp-content/uploads/2016/12/CASC-Code-Signing.pdf">white paper</a> that contain several best practices for code signing.</p>
+<p>This is good and valuable advice, and SignPath.io supports these recommendations. However, it can be quite difficult and expensive to set up and repeatedly execute a code signing process that meets these criteria. If you use SignPath, it will take care of these recommendations for you. (SignPath organization administrators will be able to opt out of some security practices.)</p>
+<p>This page outlines how SignPath ensures that these recommendations are fulfilled.</p>
+<h2 id="overview">Overview</h2>
+<table>
+<thead>
+<tr>
+<th>CASC recommendation</th>
+<th>SignPath compliance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Minimize access to private keys</td>
+<td><strong><a href="#1-minimize-access-to-private-keys">Automatic</a></strong></td>
+</tr>
+<tr>
+<td>2. Protect private keys with cryptographic hardware products</td>
+<td><strong><a href="#2-protect-private-keys-with-cryptographic-hardware-products">Automatic</a></strong></td>
+</tr>
+<tr>
+<td>3. Time-stamp code</td>
+<td><strong><a href="#3-time-stamp-code">Automatic</a></strong></td>
+</tr>
+<tr>
+<td>4. Understand the difference between test-signing and release-signing</td>
+<td><strong><a href="#4-understand-the-difference-between-test-signing-and-release-signing">Automatic</a></strong></td>
+</tr>
+<tr>
+<td>5. Authenticate code to be signed</td>
+<td><strong><a href="#5-authenticate-code-to-be-signed">Automatic</a></strong></td>
+</tr>
+<tr>
+<td>6. Virus scan code before signing</td>
+<td><strong><a href="#6-virus-scan-code-before-signing">Automatic</a></strong></td>
+</tr>
+<tr>
+<td>7. Do not over-use any one key</td>
+<td><strong><a href="#7-do-not-over-use-any-one-key-distribute-risk-with-multiple-certificates">Optional</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="detailed-recommendations">Detailed recommendations</h2>
+<h3 id="1-minimize-access-to-private-keys">1. Minimize access to private keys</h3>
+<p><strong>Automatically fulfilled when using SignPath.</strong></p>
+<blockquote>
+<p>SignPath stores keys on hardware security modules (HSMs) and strictly limits access to those based on authentication, rules, permissions and approvals.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>CASC recommendation details</th>
+<th>Compliance</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Allow minimal connections to computers with keys</td>
+<td><strong>Automatic</strong></td>
+<td>No computers (including SignPath.io servers) can read HSM-based keys. Authorized build agents are authenticated before submitting signing requests.</td>
+</tr>
+<tr>
+<td>Minimize the number of users who have key access</td>
+<td><strong>Automatic</strong></td>
+<td>No users (including SignPath.io administrators) can read HSM-based keys. Authorized users are authenticated before submitting signing requests.</td>
+</tr>
+<tr>
+<td>Use physical security controls to reduce access to keys</td>
+<td><strong>Automatic</strong></td>
+<td>Access to HSMs is restricted to dedicated SignPath.io servers that execute fully authorized signing requests.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-protect-private-keys-with-cryptographic-hardware-products">2. Protect private keys with cryptographic hardware products</h3>
+<p><strong>Automatically fulfilled when using SignPath.</strong></p>
+<blockquote>
+<p>Keys for release signing are stored on a hardware security module (HSM) by default.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>CASC recommendation details</th>
+<th>Compliance</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cryptographic hardware does not allow export of the private key to software where it could be attacked</td>
+<td><strong>Automatic</strong></td>
+<td>SignPath always creates HSM-based keys as <em>non-exportable</em>.</td>
+</tr>
+<tr>
+<td>Use a FIPS 140 Level 2-certified product (or better)</td>
+<td><strong>Automatic</strong></td>
+<td>SignPath.io uses SafeNet Luna Network HSMs <a href="https://data-protection-updates.gemalto.com/2018/07/24/safenet-luna-hsm-7-now-fips-140-2-level-3-validated/">validated</a> for FIPS 140-1 and FIPS 140-2 Level 3, and certified for Common Criteria (ISO/IEC15408).</td>
+</tr>
+<tr>
+<td>Use an EV code signing certificate which requires the private key to be generated and stored in hardware</td>
+<td><strong>Automatic</strong></td>
+<td>SignPath will create a certificate signing request (CSR) from your HSM key. Use this CSR to purchase a certificate from any Certificate Authority. While this is required only for EV certificates, SignPath ensures the same security for normal (OV) certificates.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-time-stamp-code">3. Time-stamp code</h3>
+<p><strong>Automatically fulfilled when using SignPath.</strong></p>
+<blockquote>
+<p>All signatures will be counter-signed with SHA256 time stamps by a reliable time stamping server.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>CASC recommendation details</th>
+<th>Compliance</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Time-stamping allows code to be verified after the certificate has expired or been revoked</td>
+<td><strong>n/a</strong></td>
+<td><em>(informational)</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-understand-the-difference-between-test-signing-and-release-signing">4. Understand the difference between test-signing and release-signing</h3>
+<p><strong>Automatically fulfilled when using SignPath.</strong></p>
+<blockquote>
+<p>This is what SignPath <a href="/documentation#signing-policies">signing policies</a> are all about. While projects contain all information required for signing a specific artifact, only signing configurations will allow your projects to be signed using any given certificate.</p>
+<p>SignPath advises you to create at least one signing policy for test-signing and one for release-signing.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>CASC recommendation details</th>
+<th>Compliance</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Test-signing private keys and certificates requires less security access controls than production code signing private keys and certificates</td>
+<td><strong>Automatic</strong></td>
+<td>Signing policies for test-signing and release-signing have different permissions and approval requirements.</td>
+</tr>
+<tr>
+<td>Test-signing certificates can be self-signed or come from an internal test CA</td>
+<td><strong>Guidance</strong></td>
+<td>Create a self-signed certificate from the setup wizard, or create a CSR for an in-house CA.</td>
+</tr>
+<tr>
+<td>Establish a separate test code signing infrastructure to test-sign pre-release builds of software</td>
+<td><strong>Guidance</strong></td>
+<td>SignPath.io allows you to use the dedicated credentials and build agents for each signing policy. We recommend to share the essential build configuration in order to avoid confusion and configuration errors.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-authenticate-code-to-be-signed">5. Authenticate code to be signed</h3>
+<p><strong>Automatically fulfilled when using SignPath.</strong></p>
+<blockquote>
+<p>Signing requires a signing policy and authenticated signing requests. Release-signing additionally requires authenticated approvals.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>CASC recommendation details</th>
+<th>Compliance</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Any code that is submitted for signing should be strongly authenticated before it is signed and released</td>
+<td><strong>Automatic</strong></td>
+<td>Signing request must be submitted from authenticated users or build agents.</td>
+</tr>
+<tr>
+<td>Implement a code signing submission and approval process to prevent the signing of unapproved or malicious code</td>
+<td><strong>Automatic</strong></td>
+<td>Define submission and approval permissions per signing configuration.</td>
+</tr>
+<tr>
+<td>Log all code signing activities for auditing and/or incident-response purposes</td>
+<td><strong>Automatic</strong></td>
+<td>All activities including submission and approval (or denial) are logged and easily accessible from the user interface. Also, submitted and signed code is retained for later use including auditing, incident response, forensics, and re-signing. (Retention period depends on subscription type.)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-virus-scan-code-before-signing">6. Virus scan code before signing</h3>
+<p><strong>Automatically fulfilled when using SignPath.</strong></p>
+<blockquote>
+<p>Every signing request will be scanned for malware first.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>CASC recommendation details</th>
+<th>Compliance</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code signing does not confirm the safety or quality of the code; it confirms the publisher and whether or not the code has been changed</td>
+<td><strong>n/a</strong></td>
+<td><em>(informational)</em></td>
+</tr>
+<tr>
+<td>Implement virus-scanning to help improve the quality of the released code</td>
+<td><strong>Automatic</strong></td>
+<td><em>See above</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="7-do-not-over-use-any-one-key-distribute-risk-with-multiple-certificates">7. Do not over-use any one key (distribute risk with multiple certificates)</h3>
+<p><strong>Using multiple release certificates is optional with SignPath.</strong></p>
+<blockquote>
+<p>SignPath allows you to configure any number of certificates at any given time. (Available HSM key storage capacity depends on your subscription type.)</p>
+</blockquote>
+<div class="admonition info">
+<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/info.png" alt="Information"> Do a cost/benefit analysis</p>
+<p>Buying multiple EV certificates can be costly. On the other hand, non-EV certificates will always start with zero SmartScreen reputation.</p>
+<p>SignPath.io recommends that you consider buying separate certificates for major product lines, teams or customers. However, you can have a perfectly secure code signing process with a single release certificate.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>CASC recommendation details</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>If code is found with a security flaw, then publishers may want to prompt a User Account Control dialogue box to appear when the code is installed in the future; this can be done by revoking the code signing certificate so a revoked prompt will occur</td>
+<td>SignPath puts you in a good position in case you have to revoke a certificate: All signatures have a valid time stamp, so only signatures from <em>after</em> the revocation date will be invalid.</td>
+</tr>
+<tr>
+<td>If the code with the security flaw was issued before more good code was issued, then revoking the certificate will impact the good code as well</td>
+<td>SignPath lets you re-sign individual releases that were involuntary affected by revocations.</td>
+</tr>
+<tr>
+<td>Changing keys and certificates often will help to avoid this conflict</td>
+<td>This is true, but it will only reduce the problem in some situations. If you discover a security flaw shortly after the incident, chances are that you will still be using the same key and certificate.</td>
+</tr>
+</tbody>
+</table>
+</body></html>

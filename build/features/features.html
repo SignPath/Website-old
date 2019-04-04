@@ -1,0 +1,234 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TODO</title>
+</head>
+<body>
+<h1 id="signpathio-features">SignPath.io Features</h1>
+<p><ul class="markdownIt-TOC">
+<li><a href="#benefits">Benefits</a>
+<ul>
+<li><a href="#risk-landscape">Risk landscape</a></li>
+</ul>
+</li>
+<li><a href="#objectives">Objectives</a></li>
+<li><a href="#alignment-of-development-and-infosec-objectives">Alignment of development and InfoSec objectives</a>
+<ul>
+<li><a href="#developer-goals">Developer goals</a></li>
+<li><a href="#infosec-goals">InfoSec goals</a></li>
+</ul>
+</li>
+</ul>
+</p>
+<h2 id="benefits">Benefits</h2>
+<p>With SignPath, it is easy to set up a secure and repeatable code signing process.</p>
+<p>Benefits include:</p>
+<ul>
+<li><strong>Full control</strong> for people in charge of <strong>security</strong>.</li>
+<li><strong>Simple workflows</strong> for difficult topics including certificate management, user and machine permissions, automatic or rule-based approval.</li>
+<li><strong>No messing with details</strong> such as signing tools and formats, time stamps, or HSMs.</li>
+<li><strong>Deep signing:</strong> one-step signing of nested artifacts.</li>
+<li>Easy integration with <strong>CI/CD pipelines</strong>.</li>
+</ul>
+<p>Security is the most important objective:</p>
+<ul>
+<li>SignPath eliminates the risk of <strong>private key theft</strong> without exposing you to the difficulties of key management, certificate storage and CSP drivers, USB tokens or HSM management.</li>
+<li>Using a few simple mechanisms, you can ensure that <strong>only qualified builds will be signed</strong>.</li>
+<li>Choose from various levels of <strong>malware and virus detection</strong>, including periodic re-scans.</li>
+<li>In case of an <strong>incident</strong>, you get full auditing and support for time-based certificate revocation and easy re-signing of earlier valid releases.</li>
+</ul>
+<h3 id="risk-landscape">Risk landscape</h3>
+<p>Code signing is a cornerstone of anti-malware protection. Operating systems, app stores, add-in systems, anti-malware tools and management software all rely on the validity of signatures and certificates. So naturally, code signing keys and processes are under constant attack. When they are compromised, an important line of defense in software distribution and updates is broken.</p>
+<p>Software distributions and updates that are trusted to be from a specific author, vendor or publisher, might actually originate from hackers, blackmailers, or even political or corporate adversaries. They might simply be infected with a virus. Recent history has many cases of thorough attacks that started out with compromised code signing keys, including some well-reported high-profile attacks.</p>
+<p>Insecure code signing practices and unprotected code signing keys are an invitation for hackers. Anyone who publishes software that is widely used, or used by customers that can be considered valuable targets, is also a potential first target in a staged attack. Recent research shows that ISVs and game studios make popular targets.</p>
+<p>Compromised keys and certificates make users and customer organizations extremely vulnerable to various kinds of attacks. The owner of the compromised certificate will in turn face all kinds of problems, including reputation damage and liability claims.</p>
+<p>Incident management is no breeze either without preparation -- what needs to be done when a code signing breach is discovered? Mistakes happen under distress, and it's a bad time to find out that you have made a mistake in the past, such as missing, invalid or weak time stamps.</p>
+<h2 id="objectives">Objectives</h2>
+<p>SignPath aims to turn code signing into a controlled and repeatable process that aligns the needs of both development teams and InfoSec people.</p>
+<p>While practices, tools and services for code signing usually focus on certificate management, there are also important process requirements. There are many recommendations, but they are hard and expensive to implement. SignPath addresses code signing from a process perspective. Our topmost priority is to make it easy to set up a code signing process that just works for development teams and is secure and auditable at the same time.</p>
+<p>There is often a conflict of interests: development teams need to be responsive and productive and want InfoSec to get out of the way. On the other hand, InfoSec is responsible for minimizing the considerable risk associated with code signing and therefore need to get control over the process.</p>
+<!-- markdownlint-disable MD036 no emphasis as heading -->
+<h2 id="alignment-of-development-and-infosec-objectives">Alignment of development and InfoSec objectives</h2>
+<p>Development teams and InfoSec people often have diverging objectives:</p>
+<ul>
+<li>For <strong>software developers,</strong> the job is done when things work. While security <em>is</em> an important part of the software development profession, there are so many other problems to take care of. Also, not every development team has a time budget for security. Code signing, like everything else, must be <strong>simple and easy to automate.</strong></li>
+<li>Today's <strong>agile development and DevOps teams</strong> often tend to sacrifice secure processes for speed and flexibility. A long-winded 10 step code signing process involving several people will be the first thing some will throw out the window when it impedes automation. Also, CI and CD pipelines have enough pitfalls already, code signing must be reliable and <strong>not break builds and deployments.</strong></li>
+<li><strong>InfoSec teams</strong> often have a diametrically opposed purpose: they need to make sure that undesired activities <em>cannot</em> take place -- often at the expense of simplicity in development and operations teams. Their time is limited too: they want to define <strong>secure operational policies</strong> and move on to the next security-related matter.</li>
+</ul>
+<p><strong>Simplicity is security!</strong> Obscure process will be disregarded by teams under pressure. Even when executed in good faith, repetitive and tiresome manual processes are prone to errors caused by inattentiveness.</p>
+<p>SignPath provides a simple model that meets the requirements of all parties including  corporate stakeholders. It's easy to set up and does not interfere with development processes, in fact it makes automation of code signing really simple. At the same time it provides full control for the InfoSec team at a policy level.</p>
+<h3 id="developer-goals">Developer goals</h3>
+<table><thead><tr>
+  <th>Goals</th>
+  <th>SignPath features</th>
+</tr></thead><tbody>
+<tr><td>
+<p><strong>Signed code works for users</strong></p>
+<ul>
+<li>Installation of downloaded files without warnings.</li>
+<li>Correct publisher name displayed during installation time.</li>
+<li>DevOps: Use application control/whitelisting.</li>
+</ul>
+</td><td>
+<p><strong>Automatic verification</strong></p>
+<ul>
+<li>Verification of certificates, signatures, time stamps and manifest identities ensures that code signing has the intended effects for your users. No surprises at installation time. <img src="https://about.signpath.io/wp-content/uploads/..%5Ctodo.png" alt="TODO"></li>
+</ul>
+</td></tr><tr><td>
+<p><strong>Simplicity</strong></p>
+<ul>
+<li>No code signing know-how required.</li>
+<li>Treat signing as a final or post-build step.</li>
+<li>Get clear error messages.</li>
+</ul>
+</td><td>
+<p><strong>Rely upon secure defaults</strong></p>
+<ul>
+<li>Comprehensive documentation for code signing and SignPath available for those who want to dig deep.</li>
+<li>SignPath configurations are secure by default, guidance is provided where choices are required.</li>
+<li>Deep signing allows you to put code signing at the end or your build process, or past it.</li>
+<li>When something goes wrong, developer tools do not always specify the exact reason. SignPath will accompany generic API error messages with likely reasons and advice.</li>
+</ul>
+</td></tr><tr><td>
+<p><strong>Agility</strong></p>
+<ul>
+<li>Minimize overhead per release.</li>
+<li>Support release processes and branching models.</li>
+</ul>
+</td><td>
+<p><strong>Projects and signing policies</strong></p>
+<ul>
+<li>For each project, specify artifact contents and signing policies once, then automate signing.</li>
+<li>Evolve artifact configurations as your project changes.</li>
+<li>When branches start to drift apart, simply match your branching model in SignPath.</li>
+</ul>
+</td></tr><tr><td>
+<p><strong>Continuous integration and delivery (CI/CD)</strong></p>
+<ul>
+<li>Simple integration with CI tools and services.</li>
+<li>No messing with complicated tools, USB tokens, certificate stores, vendor CSPs.</li>
+<li>Fully automated builds.</li>
+</ul>
+</td><td>
+<p><strong>Build system integration</strong></p>
+<ul>
+<li>Call SignPath from build scripts using our PowerShell script or simple REST APIs.</li>
+<li>Use synchronous or asynchronous mode (for delayed approvals).</li>
+<li>No failed builds: SignPath.io service downtimes are within timeout limits.</li>
+</ul>
+</td><td></td></tr></tbody></table>
+<h3 id="infosec-goals">InfoSec goals</h3>
+<table><thead><tr>
+  <th>Goals</th>
+  <th>SignPath features</th>
+</tr></thead><tbody>
+<tr><td>
+<p><strong>Sign code so code execution policies can be installed</strong></p>
+<ul>
+<li>Use with Windows WDAC Code Integrity Policies, AppLocker or third party whitelisting products.</li>
+<li>Every executable file, including DLLs, needs to be signed for whitelisting.</li>
+<li>Cannot fall back to individual file hashes (administration nightmare).</li>
+</ul>
+</td><td>
+<p><strong>Deep signing</strong></p>
+<ul>
+<li>With SignPath deep signing, development teams and contractors can easily sign all files in a package.</li>
+</ul>
+</td></tr>
+<tr><td>
+<p><strong>Control certificate issuance and renewal</strong></p>
+<ul>
+<li>Get certificates from commercial or in-house Certificate Authorities.</li>
+<li>Monitor validity periods.</li>
+</ul>
+</td><td>
+<p><strong>Certificate management</strong></p>
+<ul>
+<li>Easily create Certificate Signing Requests (CSRs) for secure certificate purchase or in-house issuance.</li>
+<li>Import existing certificates.</li>
+<li>Create self-signed certificates for test-signing.</li>
+<li>Renew certificates.</li>
+</ul>
+</td></tr>
+<tr><td>
+<p><strong>Private key security</strong></p>
+<ul>
+<li>Secure HSM key generation and key storage.</li>
+<li>Prevent direct access to HSM.</li>
+<li>Ensure that signing is authorized.</li>
+</ul>
+</td><td>
+<p><strong>HSM key storage and signing requests</strong></p>
+<ul>
+<li>SignPath.io uses SafeNet Luna Network HSMs <a href="https://data-protection-updates.gemalto.com/2018/07/24/safenet-luna-hsm-7-now-fips-140-2-level-3-validated/">validated</a> for FIPS 140-1 and FIPS 140-2 Level 3, and certified for Common Criteria (ISO/IEC15408).</li>
+<li>SignPath always creates HSM-based keys as <em>non-exportable</em>, they cannot be read or copied from HSM storage even with physical administrative access.</li>
+<li>Only authorized (and approved) signing requests will be processed by servers with access to HSMs.</li>
+</ul>
+</td></tr>
+<tr><td>
+<p><strong>Ensure reliable signing methods</strong></p>
+<ul>
+<li>Only use secure algorithms and ciphers, strong keys</li>
+<li>Always use time stamps</li>
+</ul>
+</td><td>
+<p><strong>No insecure or outdated methods</strong></p>
+<ul>
+<li>Certificates created or requested by SignPath use SHA-256 hash digests and 2048 bit RSA keys</li>
+<li>Signaturs always uses the SHA-256 hash algorithm for artifact digests.</li>
+<li>Even for formats that still default to insecure SHA-1 signatures, SignPath always uses SHA-256 (including time stamps).</li>
+<li>SignPath signatures are always time stamped, regardless of methods and certificates.</li>
+</ul>
+</td></tr>
+<tr><td>
+<p><strong>Constrain certificate usage for products and projects</strong></p>
+<ul>
+<li>Restrictions based on content.</li>
+</ul>
+</td><td>
+<p><strong>Artifact configurations</strong></p>
+<ul>
+<li>Signing requests are restricted to the content specified in the project's artifact configuration.</li>
+<li>Unexpected files are not signed.</li>
+</ul>
+</td></tr>
+<tr><td>
+<p><strong>Enforce signing process through policies</strong></p>
+<ul>
+<li>CA-issued certificates require stricter policies and monitoring than test certificates.</li>
+<li>Assign user roles for submission and approval.</li>
+</ul>
+</td><td>
+<p><strong>Define projects with artifact configurations and signing policies</strong></p>
+<ul>
+<li>Administrators control signing process by defining policies.</li>
+<li>Approval and automation can be decentralized.</li>
+<li>Define test- and release-signing policies per product/project.</li>
+</ul>
+</td></tr>
+<tr><td>
+<p><strong>Full auditing and notifications</strong></p>
+<ul>
+<li>Keep track of all administrative activities as well as signing submissions and aprovals.</li>
+<li>Audit data must be relatable to develpment and release processes.</li>
+<li>Log every private key usage, but don't get lost in noise.</li>
+</ul>
+</td><td>
+<p><strong>Append-only data storage</strong></p>
+<ul>
+<li>SignPath.io uses <a href="https://martinfowler.com/eaaDev/EventSourcing.html">event sourcing</a>, an append-only data architecture for applications.</li>
+<li>Activities are not merely logged: the log <em>is</em> the primary data source for every entity.</li>
+<li>Data views are only caches that can be verified or rebuilt at any time.</li>
+</ul>
+<p><strong>Mulit-level logging and correlation</strong></p>
+<ul>
+<li>Audit logs are maintained on HSM and application levels.</li>
+<li>Single-request deep signing ensures that multiple key usages can be traced to a single signing request (build, release, approval).</li>
+</ul>
+</td></tr>
+</tbody></table>
+<!-- markdownlint-enable MD036 -->
+</body></html>

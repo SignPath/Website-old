@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TODO</title>
+</head>
+<body>
+<h1 id="build-system-integration">Build system integration</h1>
+<p><ul class="markdownIt-TOC">
+<li><a href="#abstract">Abstract</a></li>
+<li><a href="#authorization">Authorization</a></li>
+<li><a href="#powershell">PowerShell</a></li>
+<li><a href="#http-rest-api">HTTP REST API</a>
+<ul>
+<li><a href="#base-url-and-authentication">Base URL and authentication</a></li>
+<li><a href="#submit-a-signing-request">Submit a signing request</a></li>
+<li><a href="#check-the-status-of-a-signing-request">Check the status of a signing request</a></li>
+<li><a href="#download-the-signed-artifact">Download the signed artifact</a></li>
+</ul>
+</li>
+<li><a href="#appveyor">AppVeyor</a>
+<ul>
+<li><a href="#rationale">Rationale</a></li>
+<li><a href="#prerequisites-and-restrictions">Prerequisites and restrictions</a></li>
+<li><a href="#build-documentation">Build documentation</a></li>
+<li><a href="#setup">Setup</a></li>
+</ul>
+</li>
+</ul>
+</p>
+<h2 id="abstract">Abstract</h2>
+<p>This section describes how SignPath can be integrated into automated builds using continuous integration software. You can use the PowerShell module provided by SignPath, directly call the Web API to submit signing requests, or integrate SignPath as part of your AppVeyor build step.</p>
+<div class="admonition info">
+<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/info.png" alt="Information"> Locating ID values</p>
+<p>All necessary IDs can be found on the signing policy details page, including a code snippet that calls the PowerShell module.</p>
+</div>
+<h2 id="authorization">Authorization</h2>
+<p>Before accessing the API, you have to create a CI User in the User section of the SignPath application.</p>
+<p>The API token is displayed when a new CI user is created. (If you lose the API key, you will need to generate a new one.)</p>
+<p>Make sure to keep the access token in a secure location. Most Continuous Integration (CI) systems provides a mechanism to store secrets, which is usually the best place to keep API tokens. If you use several distinct systems for API access, we recommend that you create individual CI User accounts in SignPath.</p>
+<h2 id="powershell">PowerShell</h2>
+<p>SignPath can be integrated in your automated build process by using our API. For convenience, we provide a PowerShell module that can be used from within your build/deploy chain. The module can be downloaded from <a href="https://www.powershellgallery.com/packages/SignPath">PowerShell Gallery</a>.</p>
+<p>Signing requests can be created by calling the following commands via PowerShell:</p>
+<pre><code class="language-powershell">Install-Module -Name SignPath
+
+# Submit a signing request and get a signing request ID without waiting for completion ...
+$signingRequestID = Submit-SigningRequest
+    -CIUserToken $CI_USER_TOKEN
+    -OrganizationId $YOUR_ORGANIZATION_ID
+    -SigningPolicyId $SIGNING_POLICY_ID
+    -InputArtifactPath $PATH_TO_INPUT_ARTIFACT
+
+# ... and download the signed artifact later.
+Get-SignedArtifact
+    -CIUserToken $CI_USER_TOKEN
+    -OrganizationId $YOUR_ORGANIZATION_ID
+    -SigningRequestId $signingRequestID
+    -OutputArtifactPath $PATH_TO_OUTPUT_ARTIFACT
+
+# Or submit a signing request and wait for completion.
+Submit-SigningRequest
+    -CIUserToken $CI_USER_TOKEN
+    -OrganizationId $YOUR_ORGANIZATION_ID
+    -SigningPolicyId $SIGNING_POLICY_ID
+    -InputArtifactPath $PATH_TO_INPUT_ARTIFACT
+    -OutputArtifactPath $PATH_TO_OUTPUT_ARTIFACT
+    -WaitForCompletion
+</code></pre>
+<h2 id="http-rest-api">HTTP REST API</h2>
+<p>In case the PowerShell module is not sufficient, you can communicate directly with our API by calling our public HTTP REST endpoints.</p>
+<h3 id="base-url-and-authentication">Base URL and authentication</h3>
+<p>SignPath.io uses bearer authentication.</p>
+<table>
+<thead>
+<tr>
+<th>Common API arguments</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base URL</td>
+<td><code>https://app.signpath.io/API/v1/</code>OrganizationId</td>
+</tr>
+<tr>
+<td>Authorization HTTP header field</td>
+<td><code>Authorization: Bearer &lt;token&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>You need to provide these values for every single API request.</p>
+<h3 id="submit-a-signing-request">Submit a signing request</h3>
+<table>
+<thead>
+<tr>
+<th>Synopsis</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URL</td>
+<td><code>/SigningRequests</code></td>
+</tr>
+<tr>
+<td>Method</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>Encoding</td>
+<td>multipart/form-data</td>
+</tr>
+<tr>
+<td><code>SigningPolicyId</code></td>
+<td>Signing policy for which you want to create the signing request</td>
+</tr>
+<tr>
+<td><code>Artifact</code></td>
+<td>Artifact file</td>
+</tr>
+<tr>
+<td><code>Description</code></td>
+<td>Optional description for your signing request (e.g. version number)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-bash">curl -H &quot;Authorization: Bearer $CI_USER_TOKEN&quot; \
+     -F &quot;SigningPolicyId=$SIGNING_POLICY_ID&quot; \
+     -F &quot;Artifact=@$PATH_TO_ARTIFACT&quot; \
+     -F &quot;Description=$DESCRIPTION&quot; \  
+     https://app.signpath.io/API/v1/$ORGANIZATION_ID/SigningRequests
+</code></pre>
+<p><strong>Success result:</strong> HTTP status code <code>201</code>. A HTTP <code>Location</code> response-header field is returned with the URL of the created entity.</p>
+<h3 id="check-the-status-of-a-signing-request">Check the status of a signing request</h3>
+<table>
+<thead>
+<tr>
+<th>Synopsis</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URL</td>
+<td><code>/SigningRequests/</code>id <br> (<code>Location</code> response-header field from <code>/SigningRequests</code>)</td>
+</tr>
+<tr>
+<td>Method</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-bash">curl -H &quot;Authorization: Bearer $CI_USER_TOKEN&quot; \
+     https://app.signpath.io/API/v1/$ORGANIZATION_ID/SigningRequest/$SIGNING_REQUEST_ID
+</code></pre>
+<p><strong>Success result:</strong> HTTP status code <code>200</code>. Status of the signing request in JSON format:</p>
+<pre><code class="language-json">{
+  &quot;status&quot;:&quot;Completed&quot;,
+  &quot;description&quot;:&quot;called by curl&quot;,
+  &quot;projectId&quot;:&quot;edd545ef-e113-48ba-aba7-de2d59ea2f26&quot;,
+  &quot;projectName&quot;:&quot;SignPath Test Project&quot;,
+  &quot;signingPolicyId&quot;:&quot;9ebd30b0-ef6b-4e46-a248-103516bc36fc&quot;,
+  &quot;signingPolicyName&quot;:&quot;test-signing&quot;,
+  &quot;uploadedArtifactLink&quot;:&quot;https://app.signpath.io/API/v1/a05be341-8a85-4c06-828a-710459e325ab/SigningRequests/a15e4d4f-7e03-4b15-9e2e-f3d8daeeaa75/UploadedArtifact&quot;,
+  &quot;signedArtifactLink&quot;:&quot;https://app.signpath.io/API/v1/a05be341-8a85-4c06-828a-710459e325ab/SigningRequests/a15e4d4f-7e03-4b15-9e2e-f3d8daeeaa75/SignedArtifact&quot;
+}
+</code></pre>
+<p><strong>Possible <code>status</code> values:</strong> <code>WaitingForApproval</code>, <code>QueuedForProcessing</code>, <code>Processing</code>, <code>Completed</code>, <code>Failed</code>, <code>Denied</code>, <code>Canceled</code></p>
+<h3 id="download-the-signed-artifact">Download the signed artifact</h3>
+<p>Once the signing request has been successfully completed, the status response contains a <code>signedArtifactLink</code> field with a link to the signed artifact file. It can easily be retrieved by issuing the following command:</p>
+<table>
+<thead>
+<tr>
+<th>Synopsis</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URL</td>
+<td><code>/SigningRequests/</code>id<code>/SignedArtifact</code> <br> (<code>signedArtifactLink</code> field from <code>GET SigningRequests/</code>id)</td>
+</tr>
+<tr>
+<td>Method</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-bash">curl -H &quot;Authorization: Bearer $CI_USER_TOKEN&quot; \
+     -o $LOCAL_PATH_TO_DOWNLOADED_ARTIFACT \
+     https://app.signpath.io/API/v1/$ORGANIZATION_ID/SigningRequest/$SIGNING_REQUEST_ID/SignedArtifact
+</code></pre>
+<p><strong>Success result:</strong> HTTP status code <code>200</code>. Returns the binary content of the signed artifact.</p>
+<h2 id="appveyor">AppVeyor</h2>
+<p>If you are using the CI service AppVeyor, there is an alternative CI integration. Instead of pushing the artifact from your build script, you can issue an AppVeyor notification after your build, and SignPath.io will pull the artifact from AppVeyor. This results in additional confidence and provides the foundation for restricted Open Source signing.</p>
+<h3 id="rationale">Rationale</h3>
+<p>By pulling the artifact from AppVeyor, SignPath.io can make sure that the binary artifact is a result of a specific build process applied to specific source code (branch and commit).</p>
+<h3 id="prerequisites-and-restrictions">Prerequisites and restrictions</h3>
+<p>This feature is a proof-of-concept for Open Source projects. Future versions may allow disabling certain limitations in paid subscriptions.</p>
+<p>Current limitations:</p>
+<ul>
+<li>The AppVeyor project and the Git repository must be public on one of the following hosting services:
+<ul>
+<li>GitHub</li>
+<li>GitLab</li>
+<li>Bitbucket</li>
+</ul>
+</li>
+</ul>
+<p>These are verified in order to guarantee that the binary results from the specified source code:</p>
+<ul>
+<li>No additional scripts may be executed during the build step and no cache entries may be used (so that the build remains fully traceable and is only built from the repository)</li>
+<li>The build settings must not be modified between starting the AppVeyor build and calling SignPath.io</li>
+</ul>
+<h3 id="build-documentation">Build documentation</h3>
+<p>In order to enable independent verification of builds, SignPath performs the following actions:</p>
+<ul>
+<li>For NuGet packages:
+1 The build settings are stored in an AppVeyorSettings.json file in the root of the NuGet package
+2 The commit hash and repository URL are written to the metadata of the NuGet package</li>
+</ul>
+<p>These steps allow consumers of the signed artifact to confidently link the it to a specific source code version and build settings.</p>
+<h3 id="setup">Setup</h3>
+<table style="table-layout: auto;">
+<thead>
+  <tr>
+    <th style="width: 20%;">Action</th>
+    <th style="width: 40%;">Remarks</th>
+    <th style="width: 40%;">Step by step</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Add an AppVeyor integration to a SignPath project</td>
+    <td>SignPath.io must authenticode against Appveyor to retrieve the build artifacts</td>
+    <td>
+<p>1 On <a href="https://ci.appveyor.com">ci.appveyor.com</a>, select <em>My Profile</em> and <em>API Keys</em>, then remember the <strong>Bearer token</strong> for the next step
+2 On SignPath.io, add an <em>AppVeyor integration</em> to your <em>project</em> and enter the <strong>API key</strong> you just acquired</p>
+  </td>
+  </tr>
+  <tr>
+    <td>Encrypt the SignPath API token in AppVeyor</td>
+    <td>AppVeyor lets you encrypt secret values. You can then safely use the encrypted string in your appveyor.yaml file</td>
+    <td>
+<p>1 On SignPath.io, choose the Users menu and create a new <em>CI User</em> or open an existing one
+2 Remember the <strong>SignPath API token</strong> for the next step
+3 On <a href="https://ci.appveyor.com">ci.appveyor.com</a>, open <em>Account Settings</em> and choose <em><a href="https://ci.appveyor.com/tools/encrypt">Encrypt YAML</a></em>
+4 Enter <strong>&quot;Bearer &lt;SignPath API token&gt;&quot;</strong> (without quotes)
+5 Remember the <strong>encrypted SignPath API token</strong> for the next step</p>
+  </td>
+  </tr>
+  <tr>
+    <td>Add a deploy Webhook</td>
+    <td colspan="2">Append this to your appveyor.yaml file:
+<pre><code class="language-yaml">deploy:
+- provider: Webhook
+  url: https://app.signpath.io/API/v1/&lt;ORGANIZATION_ID&gt;/Integrations/AppVeyor?SigningPolicyId=&lt;SIGNING_POLICY_ID&gt;
+  on_build_success: true
+  on_build_failure: false
+  on_build_status_changed: false
+  method: POST
+  authorization:
+     secure: &lt;ENCRYPTED_ACCESS_TOKEN&gt;
+</code></pre>
+<p>Replace the parameters:</p>
+<ul>
+<li><code>&lt;ORGANIZATION_ID&gt;</code> and <code>&lt;SIGNING_POLICY_ID&gt;</code> values can be retrieved from the Signing policy page</li>
+<li><code>&lt;ENCRYPTED_ACCESS_TOKEN&gt;</code> is the value from the previous step</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</body></html>

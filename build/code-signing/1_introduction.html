@@ -1,0 +1,43 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TODO</title>
+</head>
+<body>
+<h1 id="introduction-to-code-signing">Introduction to code signing</h1>
+<p><ul class="markdownIt-TOC">
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#implementation">Implementation</a></li>
+</ul>
+</p>
+<h2 id="purpose">Purpose</h2>
+<p>Installing and updating software is arguably the most vulnerable activity from a security perspective. While anti-malware software can mitigate some well-known risks, it can never provide full protection. Since even a single successful attack is enough to take over a user account, a computer or even a network, it is imperative that only software from trusted sources is installed on user devices and servers.</p>
+<p>Code signing is used to indicate and verify the publisher of software programs and make sure the software has not been modified after publishing.</p>
+<p>Code signing can provide the following security assertions:</p>
+<ul>
+<li><strong>Authentication:</strong> who signed the code</li>
+<li><strong>Integrity:</strong> the code cannot be changed undetected</li>
+<li><strong>Non-repudiation:</strong> the original signer cannot deny having signed the file</li>
+</ul>
+<p>(Note that these assertions are made based on certificate authority practices, publisher practices and cryptographic methods. This does not imply a legal guarantee.)</p>
+<p>On a higher level, the objective of code signing is to provide evidence that software does not impose security threats to users and systems executing it:</p>
+<ul>
+<li><strong>Trust:</strong> Organizations and persons must undergo an identification process with a certificate authority, so one could assume <em>a smaller likelihood of criminal intent</em>. Using the information about the publisher’s identity, users can make <em>educated decisions</em> about whether to install and execute a specific program, and system administrators can define <em>security policies</em> that will be enforced, allowing only trusted programs to execute or gain elevated permissions.</li>
+<li><strong>Virus prevention:</strong> Cryptographic signatures can guarantee that no alteration, such as a virus infection, has taken place <em>after</em> the publisher has signed it.</li>
+<li><strong>Update safety:</strong> Through certificates, updates can be verified to be published by the original publisher.</li>
+<li><strong>Persistence:</strong> Modern code signing techniques deliver the signature with the software, so it can be verified at any time independently from the delivery mechanism.</li>
+</ul>
+<h2 id="implementation">Implementation</h2>
+<p>Code signing uses public key cryptography for signing and verification, in a way very similar to e-mail and PDF file signatures. Publishers are identified using certificates they purchase from trusted certificate authorities, much like HTTPS certificates.</p>
+<p>Code signing certificates always identify legal entities such as businesses, educational institutions and government agencies, and sometimes individual persons.</p>
+<p>Today, code signatures are considered by most operating systems, web browsers, development platforms, add-in systems, app stores, anti-malware utilities and some enterprise management software. There are specific code signing methods for different file formats, and systems vary in how they check signatures and what effect they have.</p>
+<p>For instance:</p>
+<ul>
+<li>Before Windows executes a downloaded file, it looks for a signature and validates it. If the file has a valid signature, Windows SmartScreen will assert the file's reputation based on the certificate.</li>
+<li>When a program tries to modify a user's system, Windows User Account Control (UAC) will display a warning that informs the user about the software's publisher.</li>
+</ul>
+<p>Other platforms have different methods for signing and verification, some of them are also listed in this guide.</p>
+</body></html>
