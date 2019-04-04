@@ -11,7 +11,7 @@ Each **project** consists of
 * one or more **artifact configurations** that define how an artifact (or a version of the artifact) is structured, and which parts should be signed as well as the signing methods
 * one or more **signing policies** (typically *test-signing* and *release-signing*) that declare the rules for signing and specify a **certificate**
 
-When an artifact needs to be signed, a **signing request** for a specific **project**, **signing policy** and **artifact configuration** is created.
+When an artifact needs to be signed, a **signing request** for a specific **project**, **signing policy** and **artifact configuration** are created.
 
 This UML class diagram shows the fundamental relationships:
 ![Key concepts UML](documentation_key-concepts_v2.png)
