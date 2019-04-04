@@ -17,12 +17,12 @@
 <p>The major entities in SignPath are <strong>projects</strong>, <strong>certificates</strong> and <strong>users</strong>. They are all part of your <strong>organization</strong>.</p>
 <p>Each <strong>project</strong> consists of</p>
 <ul>
-<li>a single <strong>artifact configuration</strong> that defines how an artifact is structured, and which parts should be signed as well as the signing methods</li>
+<li>one or more <strong>artifact configurations</strong> that define how an artifact (or a version of the artifact) is structured, and which parts should be signed as well as the signing methods</li>
 <li>one or more <strong>signing policies</strong> (typically <em>test-signing</em> and <em>release-signing</em>) that declare the rules for signing and specify a <strong>certificate</strong></li>
 </ul>
-<p>When an artifact needs to be signed, a <strong>signing request</strong> for a specific <strong>project</strong> and <strong>signing policy</strong> is created.</p>
+<p>When an artifact needs to be signed, a <strong>signing request</strong> for a specific <strong>project</strong>, <strong>signing policy</strong> and <strong>artifact configuration</strong> is created.</p>
 <p>This UML class diagram shows the fundamental relationships:
-<img src="https://about.signpath.io/wp-content/uploads/documentation_key-concepts.png" alt="Key concepts UML"></p>
+<img src="https://about.signpath.io/wp-content/uploads/documentation_key-concepts_v2.png" alt="Key concepts UML"></p>
 <h2 id="projects">Projects</h2>
 <p>Define a project for each artifact, or for each set of artifacts that should be signed in a single step.</p>
 <p>Typically, there is one set of artifacts per software product, development team or project. If you use continuous integration (CI) tools, the artifacts will be the output of a single build configuration, or a subset of that output. Or maybe you have several build configurations that create different versions of structurally identical artifacts – those can still be represented by a single SignPath project.</p>
@@ -31,7 +31,7 @@
 <p>If you don’t use a CI system or some other kind of build automation, we highly recommend starting now. A reproducible build process is a most basic ingredient for safe code signing.</p>
 </div>
 <h2 id="artifact-configurations">Artifact configurations</h2>
-<p>At the core of each SignPath project is an artifact configuration. It describes the file type of your artifact and a corresponding code signing method (e.g. an EXE file signed with Authenticode). You can also sign multiple files or complex nested artifacts, e.g.</p>
+<p>At the core of each SignPath project is an artifact configuration. It describes the file type of your artifact and a corresponding code signing method (e.g. an EXE file signed with Authenticode). You can specify multiple artifact configurations to allow different versions of your software to be signed (e.g. in case the structure of your artifact changes). You can also sign multiple files or complex nested artifacts, e.g.</p>
 <ul>
 <li>a ZIP archive containing several artifacts that need Authenticode signing</li>
 <li>a CAB file containing EXE and DLL files, all of which should be signed with Authenticode</li>

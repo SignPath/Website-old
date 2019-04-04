@@ -30,7 +30,7 @@ See also: [Distribution of roles](#distribution-of-roles)
       <td>Administrator</td>
       <td>
 
-Register for a free trial!
+Register for a free trial or paid subscription!
 
 </td></tr>
     <tr>

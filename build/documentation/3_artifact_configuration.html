@@ -66,7 +66,7 @@
 <h2 id="deep-signing">Deep signing</h2>
 <p>In case you have more complex, nested artifacts, you might want to not only sign the container itself (for instance, an MSI installer package), but also all files that are shipped within the container (e.g. .exe and .dll files within the MSI installer). Therefore, every container format can contain multiple other file or directory elements to be signed. Each of those will be extracted, signed, and then put back into the container file during the signing process. In order for SignPath to find the right file, all inner elements need a path attribute.</p>
 <h2 id="file-elements">File elements</h2>
-<p>Every XML description is wrapped in an <code>&lt;artifact-configuration&gt;</code> root element which contains exactly one file element. This file element specifies the type of artifact and signing method.</p>
+<p>Every XML description is wrapped in an <code>&lt;artifact-configuration&gt;</code> root element which contains exactly one file element. This file element specifies the type of artifact and signing method. Optionally, you can restrict the name of the file using the <code>path</code> attribute.</p>
 <p>Container-format elements may contain other file elements for deep signing.</p>
 <h3 id="file-element-types-and-signing-directives">File element types and signing directives</h3>
 <table id="signing-file-elements">
@@ -362,9 +362,9 @@
 &lt;/artifact-configuration&gt;
 </code></pre>
 <h3 id="deep-signing-an-msi-installer">Deep-signing an MSI installer</h3>
-<p>This will sign the PE files <code>libs/common.dll</code> and <code>main.exe</code>, then re-package their MSI container and sign it too.</p>
+<p>This will sign the PE files <code>libs/common.dll</code> and <code>main.exe</code>, then re-package their MSI container and sign it too. It also restricts the name of the MSI container file.</p>
 <pre><code class="language-xml">&lt;artifact-configuration xmlns=&quot;http://signpath.io/artifact-configuration/v1&quot;&gt;
-  &lt;msi-file&gt;
+  &lt;msi-file path=&quot;MyProduct.v*.msi&quot;&gt;
     &lt;directory path=&quot;libs&quot;&gt;
       &lt;pe-file path=&quot;common.dll&quot;&gt;
         &lt;authenticode-sign/&gt;
