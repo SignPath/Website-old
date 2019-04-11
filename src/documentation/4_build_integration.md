@@ -179,6 +179,9 @@ In order to enable independent verification of builds, SignPath performs the fol
 These steps allow consumers of the signed artifact to confidently link the it to a specific source code version and build settings.
 
 ### Setup
+This shows the secrets that need to be shared between AppVeyor.com and SignPath.io:
+![AppVeyor Setup flow](documentation_build-integration_appveyor.png)
+
 <table style="table-layout: auto;">
 <thead>
   <tr>
@@ -190,11 +193,11 @@ These steps allow consumers of the signed artifact to confidently link the it to
 <tbody>
   <tr>
     <td>Add an AppVeyor integration to a SignPath project</td>
-    <td>SignPath.io must authenticode against Appveyor to retrieve the build artifacts</td>
+    <td>SignPath.io must authenticate against Appveyor to retrieve the build artifacts</td>
     <td>
 
-  1 On [ci.appveyor.com](https://ci.appveyor.com), select _My Profile_ and _API Keys_, then remember the **Bearer token** for the next step
-  2 On SignPath.io, add an _AppVeyor integration_ to your _project_ and enter the **API key** you just acquired
+  1. On [ci.appveyor.com](https://ci.appveyor.com), select _My Profile_ and _API Keys_, then remember the **Bearer token** for the next step
+  2. On SignPath.io, add an _AppVeyor integration_ to your _project_ and enter the **API key** you just acquired
 
   </td>
   </tr>
@@ -203,11 +206,11 @@ These steps allow consumers of the signed artifact to confidently link the it to
     <td>AppVeyor lets you encrypt secret values. You can then safely use the encrypted string in your appveyor.yaml file</td>
     <td>
 
-  1 On SignPath.io, choose the Users menu and create a new _CI User_ or open an existing one
-  2 Remember the **SignPath API token** for the next step
-  3 On [ci.appveyor.com](https://ci.appveyor.com), open _Account Settings_ and choose _[Encrypt YAML](https://ci.appveyor.com/tools/encrypt)_
-  4 Enter **"Bearer &lt;SignPath API token&gt;"** (without quotes)
-  5 Remember the **encrypted SignPath API token** for the next step
+  1. On SignPath.io, choose the Users menu and create a new _CI User_ or open an existing one
+  2. Remember the **SignPath API token** for the next step
+  3. On [ci.appveyor.com](https://ci.appveyor.com), open _Account Settings_ and choose _[Encrypt YAML](https://ci.appveyor.com/tools/encrypt)_
+  4. Enter **"Bearer &lt;SignPath API token&gt;"** (without quotes)
+  5. Remember the **encrypted SignPath API token** for the next step
 
   </td>
   </tr>
@@ -218,7 +221,8 @@ These steps allow consumers of the signed artifact to confidently link the it to
 ```yaml
 deploy:
 - provider: Webhook
-  url: https://app.signpath.io/API/v1/<ORGANIZATION_ID>/Integrations/AppVeyor?SigningPolicyId=<SIGNING_POLICY_ID>
+  url: https://app.signpath.io/API/v1/<ORGANIZATION_ID>
+/Integrations/AppVeyor?SigningPolicyId=<SIGNING_POLICY_ID>
   on_build_success: true
   on_build_failure: false
   on_build_status_changed: false
