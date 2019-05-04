@@ -38,40 +38,49 @@ SignPath Foundation cannot except any liability for damages resulting from softw
 
 ### All OSS projects
 
+#### Restrictions
+
 * **Sign your own projects only**
   The team responsible for code signing must also be the team responsible for development and maintenance, including ownership of the source code repository.
 * **Sign your own binaries only**
   The team must only sign software artifacts built from their own source  code.
   * Your team must be the maintainers of all source code files and build scripts
   * If you need signed libraries from another OSS project (“upstream”), ask them to get a signature via [SignPath Foundation] or any other means
-  * If you use your own modified version of that upstream software, you may sign it with your project’s certificate if
+  * If you need to build your own modified version of upstream software, you may sign it with your project’s certificate if
     * the upstream project publishes signed builds
-    * your project visibly uses a fork of the upstream project, e.g. using GitHub’s fork function
+    * your project visibly uses a fork of the upstream project, e.g. using GitHub’s fork feature
     * the release branches you use for signing are based on upstream branches that are usually signed
     * you fulfill all other obligations as required for your own project by this policy, e.g. code reviews for all changes of the upstream code base
   * You may include unsigned binaries of upstream OSS projects, e.g. DLL files, in your signed packages, e.g. MSI installers.
     * We kindly ask you to try and get as much signing coverage. If you use upstream libraries, please ask their maintainers to sign their code. Note that the “OSS library subscription” of SignPath.io and SignPath Foundation are available to all OSS library projects.
     * Note that in the future, SignPath Foundation may require that signed packages only include signed program and library files.
 * **Don’t fight the system**
-  You must accept all technical constraints in place for SignPath.io OSS subscription and not work around them. Noteworthy constraints include:
+  You must accept all technical constraints in place for SignPath.io OSS subscription and not try to work around them. Noteworthy constraints include:
   * Binary artifacts must be built from source code in a verifiable way
   * Every release needs manual approval for signing
   * All team members must use multi-factor authentication
-  * The project's name must be specified and enforced using [file attribute restrictions]
+  * All signed binaries must have metadata attributes set enforced using [file attribute restrictions]
+    * Set all *product name* attributes to your project's name
+    * Set all *product version* attributes to the same value in each build
+    * (remember that other project's binaries must not be signed, but may be included in signed packages and installers)
 
   Note that some constraints are not implemented yet.
+* **No hacking tools**
+  Software must not include features that may be used to circumvent security measures or exploit security vulnerabilities of their execution environment (e.g. operating system), including security diagnosis tools
+  * We are aware of the utility of white hat security tools, but cannot sign them using SignPath Foundation certificates.
+
+#### Program coding and information requirements
+
 * **Respect user privacy and security**
   Software must not include features that compromise the privacy or security of users and their systems
-  * Software that collects user data and transfers it to other systems must a) describe this behavior in a privacy policy, b) display this policy during installation and c) include installation options to disable these functions 
+  * Software that collects user data and transfers it to systems not specified by the user must a) describe this behavior in a privacy policy, b) display this policy during installation and c) include installation options to disable these functions
 * **Announce system changes**
   Software must not modify the user’s system configuration without proper warnings
 * **Provide uninstallation**
   Software that includes instructions or automated facilities for installation must also include instructions or automated facilities for uninstallation.
-* **No hacking tools**
-  Software must not include features that may be used to circumvent security measures or exploit security vulnerabilities of their execution environment (e.g. operating system), including security diagnosis tools
-  * We are aware of the utility of white hat security tools, but cannot sign them using SignPath Foundation certificates.
-  **Investigate accusations of violation**
-  When SignPath Foundation receives complaints about violation of the Code of Conduct, the project team must assist in verification, investigation and root cause analysis.
+
+#### SignPath requirements
+
 * **Assign code signing roles**
   The OSS project team must self-organize to create a team structure with clear responsibilities
   * **Authors**: people who are trusted to modify the source code in the project’s version control system without additional reviews
@@ -88,6 +97,8 @@ SignPath Foundation cannot except any liability for damages resulting from softw
     * Privacy policy:
       * Link to your privacy policy or “This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.”
       * Remember to specify the privacy policies of other Open Source or third party components your application uses if your users are affected.
+**Investigate accusations of violation**
+  When SignPath Foundation receives complaints about violation of the Code of Conduct, the project team must assist in verification, investigation and root cause analysis.
 
 ### Additional conditions for OSS library subscriptions (SignPath Foundation)
 
