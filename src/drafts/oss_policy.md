@@ -88,7 +88,7 @@ SignPath Foundation cannot except any liability for damages resulting from softw
   * **Approvers**: each signing request must be approved by a team member trusted by the entire team to decide if a certain release can be code signed (especially if all contributions
 * **Specify a code signing policy**
   A code signing policy must be specified on the project’s home page
-  * Use the term "**Code signing policy**" on your project’s home page (section header or link to a policy page)
+  * Use the term "**Code signing policy**" on your project’s home page and download/release pages (section header or link to a dedicated page)
   * Include the following information:
     * "Free code signing provided by [SignPath.io], certificate by [SignPath Foundation]"
     * Team role and their members (see above, may include references to the project’s permission groups). Example (markdown syntax):
