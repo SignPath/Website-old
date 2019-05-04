@@ -57,6 +57,7 @@ SignPath Foundation cannot except any liability for damages resulting from softw
   * Binary artifacts must be built from source code in a verifiable way
   * Every release needs manual approval for signing
   * All team members must use multi-factor authentication
+  * The project's name must be specified and enforced using [file attribute restrictions]
 
   Note that some constraints are not implemented yet.
 * **Respect user privacy and security**
@@ -94,6 +95,8 @@ SignPath Foundation cannot except any liability for damages resulting from softw
   Signed software must be built for the sole purpose of being used by other software developers.
   * Signed software must not be able to execute on computers of end users, e.g. by implementing plugin/add-in/extension interfaces of other applications.
   * If you want to build add-ins for other applications, you need to apply for a full OSS subscription.
+
+[file attribute restrictions]:../documentation/3_artifact_configuration#file-attribute-restrictions
 
 [SignPath Foundation]:https://signpath.org
 [SignPath.io]:https://signpath.io
