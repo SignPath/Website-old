@@ -95,8 +95,10 @@ SignPath Foundation cannot except any liability for damages resulting from softw
       * Committers and reviewers: `[Members team](https://github.com/orgs/…/teams/members)`
       * Approvers: `[Owners](https://github.com/orgs/…/people?query=role%3Aowner)`
     * Privacy policy:
-      * Link to your privacy policy or “This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.”
+      * Link to your privacy policy or "This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it."
       * Remember to specify the privacy policies of other Open Source or third party components your application uses if your users are affected.
+
+  In the future, SignPath may provide code signing policy pages for all projects that just need to be linked.
 **Investigate accusations of violation**
   When SignPath Foundation receives complaints about violation of the Code of Conduct, the project team must assist in verification, investigation and root cause analysis.
 
