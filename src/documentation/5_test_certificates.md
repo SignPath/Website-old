@@ -2,11 +2,9 @@
 
 # Creating and deploying test certificates
 
-Test certificates are usually not be created by commercial certificate authorities, and are therefore not recognized by operating systems and browsers.
+Test certificates should not be created by commercial certificate authorities, and are therefore not recognized by operating systems and browsers.
 
 This is a good thing, because you don't want your test-signing process to be as sensitive as your release-signing process. After all, a mistakenly or even maliciously signed binary should not affect your users and customers.
-
-Still, you might want your test systems to trust your test certificates. Here's how.
 
 ## Test certificate strategies
 
