@@ -223,10 +223,6 @@ deploy:
 - provider: Webhook
   url: https://app.signpath.io/API/v1/<ORGANIZATION_ID>
 /Integrations/AppVeyor?SigningPolicyId=<SIGNING_POLICY_ID>
-  on_build_success: true
-  on_build_failure: false
-  on_build_status_changed: false
-  method: POST
   authorization:
      secure: <ENCRYPTED_ACCESS_TOKEN>
 ```
