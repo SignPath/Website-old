@@ -273,19 +273,15 @@ Submit-SigningRequest
     <td colspan="2">Append this to your appveyor.yaml file:
 <pre><code class="language-yaml">deploy:
 - provider: Webhook
-  url: https://app.signpath.io/API/v1/&lt;ORGANIZATION_ID&gt;
-/Integrations/AppVeyor?SigningPolicyId=&lt;SIGNING_POLICY_ID&gt;
-  on_build_success: true
-  on_build_failure: false
-  on_build_status_changed: false
-  method: POST
+  url: https://app.signpath.io/API/v1/&lt;ORGANIZATION_ID&gt;/Integrations/AppVeyor?SigningPolicyId=&lt;SIGNING_POLICY_ID&gt;
   authorization:
      secure: &lt;ENCRYPTED_ACCESS_TOKEN&gt;
 </code></pre>
 <p>Replace the parameters:</p>
 <ul>
 <li><code>&lt;ORGANIZATION_ID&gt;</code> and <code>&lt;SIGNING_POLICY_ID&gt;</code> values can be retrieved from the Signing policy page</li>
-<li><code>&lt;ENCRYPTED_ACCESS_TOKEN&gt;</code> is the value from the previous step</li>
+<li><code>&lt;ENCRYPTED_ACCESS_TOKEN&gt;</code> is the value from the previous step
+g</li>
 </ul>
 </td>
 </tr>

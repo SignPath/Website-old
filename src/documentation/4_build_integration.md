@@ -221,12 +221,7 @@ This shows the secrets that need to be shared between AppVeyor.com and SignPath.
 ```yaml
 deploy:
 - provider: Webhook
-  url: https://app.signpath.io/API/v1/<ORGANIZATION_ID>
-/Integrations/AppVeyor?SigningPolicyId=<SIGNING_POLICY_ID>
-  on_build_success: true
-  on_build_failure: false
-  on_build_status_changed: false
-  method: POST
+  url: https://app.signpath.io/API/v1/<ORGANIZATION_ID>/Integrations/AppVeyor?SigningPolicyId=<SIGNING_POLICY_ID>
   authorization:
      secure: <ENCRYPTED_ACCESS_TOKEN>
 ```
@@ -235,7 +230,7 @@ Replace the parameters:
 
 * `<ORGANIZATION_ID>` and `<SIGNING_POLICY_ID>` values can be retrieved from the Signing policy page
 * `<ENCRYPTED_ACCESS_TOKEN>` is the value from the previous step
-
+g
 </td>
 </tr>
 </tbody>
