@@ -215,7 +215,7 @@
 <h2 id="time-stamping">Time stamping</h2>
 <p>After signing a software artifact, the signature should be counter-signed by a time stamp authority (TSA). A time stamp provides proof that the signing has taken place at a certain date and time.</p>
 <p>Each code signing certificate has a validity period of usually one to three years. Without timestamps, all signatures would be invalid after this period. Time stamps extend each signatures signature validity to that of the time stamp certificate, which is usually at least another 10 years from the time of signing.</p>
-<p>Also, signatures would become invalid if a certificates is revoked later, even if the certificate is still considered valid for the time of signing.</p>
+<p>Also, signatures would become invalid if a certificate is revoked later, even if the certificate is still considered valid for the time of signing.</p>
 <p>Note: While the latter occurs less often, it would indirectly create a security problem: having a large number of legitimately signed binaries without time stamps would strongly discourage revocation of compromised certificates.</p>
 <p>Certificate authorities that issue code signing certificates must also offer a free time stamping service. However, they usually apply quotas to individual client IP addresses and do not guarantee service availability, which sometimes leads to problems in automated code signing scenarios.</p>
 <div class="admonition warning">

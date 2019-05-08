@@ -19,9 +19,9 @@ Extended Validation (EV) certificates are only available with hardware protectio
   * The PFX format does not prescribe a specific cipher.
   * Also, some files use a weak cipher for the container and a strong cipher for the private key with the same encryption key, so a brute force attack on the weak cipher will also reveal the encryption key for the private key.
 * If your password leaks, your private key is accessible to everyone who has access to the PFX file.
-  * In general, memorizable passwords are unsafe, and high-entropy passwords need to be stored securely.
+  * In general, memorable passwords are unsafe, and high-entropy passwords need to be stored securely.
   * You basically shift the burden from private key secrecy to password secrecy.
-* Sometimes PFX files are considerd secure because they are only used for certificate installation. However, even a temporary exposure of the PFX file (e.g. via file shares, backup media or e-mail storage) will nullify this assumption.
+* Sometimes PFX files are considered secure because they are only used for certificate installation. However, even a temporary exposure of the PFX file (e.g. via file shares, backup media or e-mail storage) will nullify this assumption.
 * Key theft or abuse cannot be detected.
 
 </td></tr>
@@ -31,7 +31,7 @@ Windows certificate store</td><td>
 
 * Certificates can be installed on machines without allowing key export. However, this relies on DPAPI storage, which relies on password secrecy and supports several restore options. DPAPI should not be trusted to keep secrets from people with access to the computer or disk, whether physical or remote, running or at rest.
 * While DPAPI supports a certain level of event logging, this is intended for troubleshooting, not security.
-* While CryptoAPI (which is used by Microsoft's signing tools) provides logging, it is up to the computer's administrator to ensure that logging is enabled, that logs are stored for a defined period, and that logs cannot not be truncated and will not roll over.
+* While CryptoAPI (which is used by Microsoft's signing tools) provides logging, it is up to the computer's administrator to ensure that logging is enabled, that logs are stored for a defined period, and that logs cannot be truncated and will not roll over.
 * Even if the private key cannot be obtained as clear text, it can still be used by authorized users and services to create unwanted signatures.
 * Key theft or abuse cannot be detected reliably.
 

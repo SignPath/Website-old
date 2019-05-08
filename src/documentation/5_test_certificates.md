@@ -6,7 +6,7 @@ This is a good thing, because you don't want your test-signing process to be as 
 
 ## Test certificate strategies
 
-There are several strategies for creating and rolling out test certiticates.
+There are several strategies for creating and rolling out test certificates.
 
 <table><thead><tr>
     <th>Strategy</th>
@@ -50,7 +50,7 @@ There are several strategies for creating and rolling out test certiticates.
 **Disadvantages:**
 
 * Some configuration effort, especially if the certificate is to be trusted only on selected computers
-* Cannot revoke certificatein case of abuse (but you can follow the incident process above)
+* Cannot revoke certificate in case of abuse (but you can follow the incident process above)
 
     </td></tr>
     <tr><td><p>Issue certificate from an in-house CA</p></td>
@@ -71,7 +71,7 @@ There are several strategies for creating and rolling out test certiticates.
 
 **Disadvantages:**
 
-* Cannot easily limit certificate rollout to specific computers, business unites etc.
+* Cannot easily limit certificate roll-out to specific computers, business unites etc.
 
 </td></tr>
 </tbody></table>
