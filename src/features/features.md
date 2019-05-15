@@ -20,14 +20,13 @@ Security is the most important objective:
 
 * SignPath eliminates the risk of **private key theft** without exposing you to the difficulties of key management, certificate storage and CSP drivers, USB tokens or HSM management.
 * Using a few simple mechanisms, you can ensure that **only qualified builds will be signed**.
-* Choose from various levels of **malware and virus detection**, including periodic re-scans.
 * In case of an **incident**, you get full auditing and support for time-based certificate revocation and easy re-signing of earlier valid releases.
 
 ### Risk landscape
 
 Code signing is a cornerstone of anti-malware protection. Operating systems, app stores, add-in systems, anti-malware tools and management software all rely on the validity of signatures and certificates. So naturally, code signing keys and processes are under constant attack. When they are compromised, an important line of defense in software distribution and updates is broken.
 
-Software distributions and updates that are trusted to be from a specific author, vendor or publisher, might actually originate from hackers, blackmailers, or even political or corporate adversaries. They might simply be infected with a virus. Recent history has many cases of thorough attacks that started out with compromised code signing keys, including some well-reported high-profile attacks.
+Software distributions and updates that are trusted to be from a specific author, vendor or publisher, might actually originate from hackers, blackmailers, or even political or corporate adversaries. The artifacts might simply be infected with a virus. Recent history has many cases of thorough attacks that started out with compromised code signing keys, including some well-reported high-profile attacks.
 
 Insecure code signing practices and unprotected code signing keys are an invitation for hackers. Anyone who publishes software that is widely used, or used by customers that can be considered valuable targets, is also a potential first target in a staged attack. Recent research shows that ISVs and game studios make popular targets.
 
@@ -53,7 +52,7 @@ Development teams and InfoSec people often have diverging objectives:
 * Today's **agile development and DevOps teams** often tend to sacrifice secure processes for speed and flexibility. A long-winded 10 step code signing process involving several people will be the first thing some will throw out the window when it impedes automation. Also, CI and CD pipelines have enough pitfalls already, code signing must be reliable and **not break builds and deployments.**
 * **InfoSec teams** often have a diametrically opposed purpose: they need to make sure that undesired activities *cannot* take place -- often at the expense of simplicity in development and operations teams. Their time is limited too: they want to define **secure operational policies** and move on to the next security-related matter.
 
-**Simplicity is security!** Obscure process will be disregarded by teams under pressure. Even when executed in good faith, repetitive and tiresome manual processes are prone to errors caused by inattentiveness.
+**Simplicity is security!** Obscure processes will be disregarded by teams under pressure. Even when executed in good faith, repetitive and tiresome manual processes are prone to errors caused by inattentiveness.
 
 SignPath provides a simple model that meets the requirements of all parties including  corporate stakeholders. It's easy to set up and does not interfere with development processes, in fact it makes automation of code signing really simple. At the same time it provides full control for the InfoSec team at a policy level.
 
@@ -75,7 +74,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 
 **Automatic verification**
 
-* Verification of certificates, signatures, time stamps and manifest identities ensures that code signing has the intended effects for your users. No surprises at installation time. ![TODO](..\todo.png)
+* Verification of certificates, signatures, time stamps and manifest identities ensures that code signing has the intended effects for your users. No surprises at installation time.
 
 </td></tr><tr><td>
 
@@ -123,7 +122,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 
 * Call SignPath from build scripts using our PowerShell script or simple REST APIs.
 * Use synchronous or asynchronous mode (for delayed approvals).
-* No failed builds: SignPath.io service downtimes are within timeout limits.
+* No failed builds: Planned SignPath.io service downtimes are within timeout limits.
 
 </td><td></tbody></table>
 
@@ -194,7 +193,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 **No insecure or outdated methods**
 
 * Certificates created or requested by SignPath use SHA-256 hash digests and 2048 bit RSA keys
-* Signaturs always uses the SHA-256 hash algorithm for artifact digests.
+* Signatures always use the SHA-256 hash algorithm for artifact digests.
 * Even for formats that still default to insecure SHA-1 signatures, SignPath always uses SHA-256 (including time stamps).
 * SignPath signatures are always time stamped, regardless of methods and certificates.
 
@@ -224,7 +223,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 
 **Define projects with artifact configurations and signing policies**
 
-* Administrators control signing process by defining policies.
+* Administrators control the signing process by defining policies.
 * Approval and automation can be decentralized.
 * Define test- and release-signing policies per product/project.
 
@@ -233,8 +232,8 @@ SignPath provides a simple model that meets the requirements of all parties incl
 
 **Full auditing and notifications**
 
-* Keep track of all administrative activities as well as signing submissions and aprovals.
-* Audit data must be relatable to develpment and release processes.
+* Keep track of all administrative activities as well as signing submissions and approvals.
+* Audit data must be related to development and release processes.
 * Log every private key usage, but don't get lost in noise.
 
 </td><td>

@@ -2,7 +2,7 @@
 
 # CA Security Council best practices for code signing
 
-The [CA Security Council](https://casecurity.org/) is an organization of several Certification Authorities. One of its goals is to advance code signing practices in the industry. The CASC has released a [white paper](https://casecurity.org/wp-content/uploads/2016/12/CASC-Code-Signing.pdf) that contain several best practices for code signing.
+The [CA Security Council](https://casecurity.org/) is an organization of several Certification Authorities. One of its goals is to advance code signing practices in the industry. The CASC has released a [white paper](https://casecurity.org/wp-content/uploads/2016/12/CASC-Code-Signing.pdf) that contains several best practices for code signing.
 
 This is good and valuable advice, and SignPath.io supports these recommendations. However, it can be quite difficult and expensive to set up and repeatedly execute a code signing process that meets these criteria. If you use SignPath, it will take care of these recommendations for you. (SignPath organization administrators will be able to opt out of some security practices.)
 
@@ -76,7 +76,7 @@ This page outlines how SignPath ensures that these recommendations are fulfilled
 | ------------------------------------------------------------------------------------------------------- | ------------- | ------- |
 | Test-signing private keys and certificates requires less security access controls than production code signing private keys and certificates | **Automatic** | Signing policies for test-signing and release-signing have different permissions and approval requirements.
 | Test-signing certificates can be self-signed or come from an internal test CA                           | **Guidance**  | Create a self-signed certificate from the setup wizard, or create a CSR for an in-house CA.
-| Establish a separate test code signing infrastructure to test-sign pre-release builds of software       | **Guidance**  | SignPath.io allows you to use the dedicated credentials and build agents for each signing policy. We recommend to share the essential build configuration in order to avoid confusion and configuration errors.
+| Establish a separate test code signing infrastructure to test-sign pre-release builds of software       | **Guidance**  | SignPath.io allows you to use dedicated credentials and build agents for each signing policy. We recommend to share the essential build configuration in order to avoid confusion and configuration errors.
 
 [5]: #5-authenticate-code-to-be-signed
 
@@ -114,15 +114,15 @@ This page outlines how SignPath ensures that these recommendations are fulfilled
 > SignPath allows you to configure any number of certificates at any given time. (Available HSM key storage capacity depends on your subscription type.)
 
 !!! info ![Information](info.png) Do a cost/benefit analysis
-Buying multiple EV certificates can be costly. On the other hand, non-EV certificates will always start with zero SmartScreen reputation.
+Buying multiple EV certificates can be costly. On the other hand, non-EV certificates will always start with zero [SmartScreen](https://en.wikipedia.org/wiki/Microsoft_SmartScreen) reputation.
 
 SignPath.io recommends that you consider buying separate certificates for major product lines, teams or customers. However, you can have a perfectly secure code signing process with a single release certificate.  
 !!!
 
 | CASC recommendation details | Remarks |
 | --------------------------- | ------- |
-| If code is found with a security flaw, then publishers may want to prompt a User Account Control dialogue box to appear when the code is installed in the future; this can be done by revoking the code signing certificate so a revoked prompt will occur | SignPath puts you in a good position in case you have to revoke a certificate: All signatures have a valid time stamp, so only signatures from *after* the revocation date will be invalid.
-| If the code with the security flaw was issued before more good code was issued, then revoking the certificate will impact the good code as well | SignPath lets you re-sign individual releases that were involuntary affected by revocations.
+| If code is found with a security flaw, then publishers may want to prompt a User Account Control dialog box to appear when the code is installed in the future; this can be done by revoking the code signing certificate so a revoked prompt will occur | SignPath puts you in a good position in case you have to revoke a certificate: All signatures have a valid time stamp, so only signatures from *after* the revocation date will be invalid.
+| If the code with the security flaw was issued before more good code was issued, then revoking the certificate will impact the good code as well | SignPath lets you re-sign individual releases that were involuntarily affected by revocations.
 | Changing keys and certificates often will help to avoid this conflict | This is true, but it will only reduce the problem in some situations. If you discover a security flaw shortly after the incident, chances are that you will still be using the same key and certificate.
 
 [signing policies]: ../documentation/1_introduction.md.html#signing-policies

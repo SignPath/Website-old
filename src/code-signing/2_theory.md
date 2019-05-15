@@ -196,7 +196,7 @@ After signing a software artifact, the signature should be counter-signed by a t
 
 Each code signing certificate has a validity period of usually one to three years. Without timestamps, all signatures would be invalid after this period. Time stamps extend each signatures signature validity to that of the time stamp certificate, which is usually at least another 10 years from the time of signing.
 
-Also, signatures would become invalid if a certificates is revoked later, even if the certificate is still considered valid for the time of signing.
+Also, signatures would become invalid if a certificate is revoked later, even if the certificate is still considered valid for the time of signing.
 
 Note: While the latter occurs less often, it would indirectly create a security problem: having a large number of legitimately signed binaries without time stamps would strongly discourage revocation of compromised certificates.
 

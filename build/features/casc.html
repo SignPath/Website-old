@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1 id="ca-security-council-best-practices-for-code-signing">CA Security Council best practices for code signing</h1>
-<p>The <a href="https://casecurity.org/">CA Security Council</a> is an organization of several Certification Authorities. One of its goals is to advance code signing practices in the industry. The CASC has released a <a href="https://casecurity.org/wp-content/uploads/2016/12/CASC-Code-Signing.pdf">white paper</a> that contain several best practices for code signing.</p>
+<p>The <a href="https://casecurity.org/">CA Security Council</a> is an organization of several Certification Authorities. One of its goals is to advance code signing practices in the industry. The CASC has released a <a href="https://casecurity.org/wp-content/uploads/2016/12/CASC-Code-Signing.pdf">white paper</a> that contains several best practices for code signing.</p>
 <p>This is good and valuable advice, and SignPath.io supports these recommendations. However, it can be quite difficult and expensive to set up and repeatedly execute a code signing process that meets these criteria. If you use SignPath, it will take care of these recommendations for you. (SignPath organization administrators will be able to opt out of some security practices.)</p>
 <p>This page outlines how SignPath ensures that these recommendations are fulfilled.</p>
 <h2 id="overview">Overview</h2>
@@ -162,7 +162,7 @@
 <tr>
 <td>Establish a separate test code signing infrastructure to test-sign pre-release builds of software</td>
 <td><strong>Guidance</strong></td>
-<td>SignPath.io allows you to use the dedicated credentials and build agents for each signing policy. We recommend to share the essential build configuration in order to avoid confusion and configuration errors.</td>
+<td>SignPath.io allows you to use dedicated credentials and build agents for each signing policy. We recommend to share the essential build configuration in order to avoid confusion and configuration errors.</td>
 </tr>
 </tbody>
 </table>
@@ -230,7 +230,7 @@
 </blockquote>
 <div class="admonition info">
 <p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/info.png" alt="Information"> Do a cost/benefit analysis</p>
-<p>Buying multiple EV certificates can be costly. On the other hand, non-EV certificates will always start with zero SmartScreen reputation.</p>
+<p>Buying multiple EV certificates can be costly. On the other hand, non-EV certificates will always start with zero <a href="https://en.wikipedia.org/wiki/Microsoft_SmartScreen">SmartScreen</a> reputation.</p>
 <p>SignPath.io recommends that you consider buying separate certificates for major product lines, teams or customers. However, you can have a perfectly secure code signing process with a single release certificate.</p>
 </div>
 <table>
@@ -242,12 +242,12 @@
 </thead>
 <tbody>
 <tr>
-<td>If code is found with a security flaw, then publishers may want to prompt a User Account Control dialogue box to appear when the code is installed in the future; this can be done by revoking the code signing certificate so a revoked prompt will occur</td>
+<td>If code is found with a security flaw, then publishers may want to prompt a User Account Control dialog box to appear when the code is installed in the future; this can be done by revoking the code signing certificate so a revoked prompt will occur</td>
 <td>SignPath puts you in a good position in case you have to revoke a certificate: All signatures have a valid time stamp, so only signatures from <em>after</em> the revocation date will be invalid.</td>
 </tr>
 <tr>
 <td>If the code with the security flaw was issued before more good code was issued, then revoking the certificate will impact the good code as well</td>
-<td>SignPath lets you re-sign individual releases that were involuntary affected by revocations.</td>
+<td>SignPath lets you re-sign individual releases that were involuntarily affected by revocations.</td>
 </tr>
 <tr>
 <td>Changing keys and certificates often will help to avoid this conflict</td>

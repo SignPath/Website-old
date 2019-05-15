@@ -8,7 +8,7 @@
 
 The primary code signing mechanism of Windows is Authenticode. It is used to sign executables and libraries as well as installers, packages, device drivers, and PowerShell scripts. Additionally, some programs use code signing to validate add-ins on installation. They use specific package formats, such as ClickOnce (Microsoft Office) or Open Packaging Convention (Microsoft Visual Studio), and therefore require specific tools for code signing. Every program has its own rules for displaying and enforcing code signing.
 
-A new member of the code signing family is NuGet, a platform for distribution of program libraries to software developers. NuGet is currently introducing optional code signing with its own tool set. Code signing will be verified by the NuGet Gallery ([nuget.org](https://www.nuget.org)) and displayed prominently online as well as in Visual Studio.
+A new member of the code signing family is NuGet, a platform for distribution of program libraries to software developers. NuGet is currently introducing optional code signing with its own toolset. Code signing will be verified by the NuGet Gallery ([nuget.org](https://www.nuget.org)) and displayed prominently online as well as in Visual Studio.
 
 ## Applications
 
@@ -24,7 +24,7 @@ When a program is already installed, signatures of individual program files may 
 
 ### Mark-of-the-Web: download files and code signing
 
-The Mark-of-the-Web (MotW) is an indication that a file has been *downloaded from the internet*. It is applied by browsers and other tools that download files to local disks. This indicates to Windows that the program might not be secure. When the program is started, the signature and certificate validation process is executed. All major browsers for Windows apply the MotW correctly: (Internet Explorer, Edge, Chrome, Firefox and Opera). Notably, 7zip does not propagate the MotW when unpacking. You can see (and remove) this indication in Windows Explorer by opening the program file’s Properties dialog just below the file attributes.
+The Mark-of-the-Web (MotW) is an indication that a file has been *downloaded from the internet*. It is applied by browsers and other tools that download files to local disks. This indicates to Windows that the program might not be secure. When the program is started, the signature and certificate validation process is executed. All major browsers for Windows apply the MotW correctly (Internet Explorer, Edge, Chrome, Firefox and Opera). Notably, 7zip does not propagate the MotW when unpacking. You can see (and remove) this indication in Windows Explorer by opening the program file’s Properties dialog just below the file attributes.
 
 ## File types
 

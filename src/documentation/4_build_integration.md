@@ -230,7 +230,7 @@ Replace the parameters:
 
 * `<ORGANIZATION_ID>` and `<SIGNING_POLICY_ID>` values can be retrieved from the Signing policy page
 * `<ENCRYPTED_ACCESS_TOKEN>` is the value from the previous step
-g
+
 </td>
 </tr>
 </tbody>
