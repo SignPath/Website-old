@@ -108,7 +108,7 @@ Note that hardware keys can still be physically stolen, especially when stored o
 
 ### Microsoft SmartScreen
 
-SmartScreen is a cloud-based system best known for avoiding fishing sites and social engineering attacks. It is also a vital part of Microsoft's anti-malware strategy, a function it performs by checking downloaded software against lists of known programs and certificates.
+SmartScreen is a cloud-based system best known for avoiding phishing sites and social engineering attacks. It is also a vital part of Microsoft's anti-malware strategy, a function it performs by checking downloaded software against lists of known programs and certificates.
 
 | Validation and reputation | Action |
 | ------------------------- | ------ |
