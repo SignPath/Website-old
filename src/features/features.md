@@ -161,6 +161,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 * Easily create Certificate Signing Requests (CSRs) for secure certificate purchase or in-house issuance.
 * Import existing certificates.
 * Create self-signed certificates for test-signing.
+* Get notified before certificates expire.
 * Renew certificates.
 
 </td></tr>
