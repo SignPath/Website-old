@@ -106,8 +106,9 @@ Windows 10 features two flavors of Code Integrity Policy mechanisms:</p>
 <li>implementation of cryptographic algorithms, like encryption, digests and signatures</li>
 </ul>
 <p>HSMs usually bring their own installable CSPs. You can think of this CSP as a device driver for the HSM.</p>
-<p>!!! background <img src="https://about.signpath.io/wp-content/uploads/../images/background.png" alt="Warning">
-Here is what happens when you call SignTool.exe with a certificate from a HSM:</p>
+<div class="admonition note">
+<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/background.png" alt="Warning"></p>
+<p>Here is what happens when you call SignTool.exe with a certificate from a HSM:</p>
 <ul>
 <li>SignTool.exe calls the Authenticode API
 <ul>
@@ -126,11 +127,11 @@ Here is what happens when you call SignTool.exe with a certificate from a HSM:</
 </li>
 </ul>
 </li>
-<li>Authenticode stores the signature in the file
-!!!</li>
+<li>Authenticode stores the signature in the file</li>
 </ul>
 </li>
 </ul>
+</div>
 <p>In this process, the HSM will never expose the private key to any other system.</p>
 <p>The current implementation of Authenticode and SignTool.exe has two weaknesses:</p>
 <ul>
