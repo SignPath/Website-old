@@ -113,7 +113,7 @@ There are several file formats for storing certificates:
   * .cer, .crt
 * **PKCS#12:** contain certificates and optionally private keys
   * .p12
-  * .pfx (named after the legacy PFX format, but usually contain PKCS#12 data)  
+  * .pfx (named after the legacy PFX format, but usually in PKCS#12 format)  
 * **PKCS#7:** signature files without signed data
   * .p7b, .p7c
 
