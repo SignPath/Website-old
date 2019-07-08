@@ -71,7 +71,7 @@ USB HSM tokens </td><td>
 </td></tr>
 <tr><td><p>3</p></td><td>
 
-Professional [HSMs][HSM] </td><td>
+Professional [HSMs][HSMs] </td><td>
 
 **Assumptions**
 
@@ -105,4 +105,4 @@ HSMs are required for EV certificates for a reason, and strongly recommended for
   * Note that CryptoAPI is a legacy technology, so vendor CSPs are sometimes outdated and poorly supported. However, most code signing mechanisms by Microsoft including Authenticode cannot use the more modern *Cryptography API: Next Generation* (CNG) model.
 
 [PFX files]: ../code-signing/2_theory#certificate-files
-[HSM]: ../code-signing/3_windows#hardware-security-modules-hsms
+[HSMs]: ../code-signing/3_windows#hardware-security-modules-hsms

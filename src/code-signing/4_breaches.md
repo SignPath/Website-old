@@ -90,7 +90,7 @@ Media coverage was provided by [The Register](https://www.theregister.co.uk/2017
 
 ### CCleaner supply chain attack
 
-Also in 2017, a backdoor was implanted in the popular Windows utility **CCleaner**. When Chinese hacker group Axiom/APT17 managed to compromise the vendor, the modified software was not only signed, but entered the regular distribution process too. This resulted in malware **infection of more than 2 million users.** The first attack stage only extracted non-sensitive data from infected machines. See the [**Wikipedia** article](https://en.wikipedia.org/wiki/CCleaner#Trojan_in_distributed_program) for more information, including media references.
+Also in 2017, a backdoor was implanted in the popular Windows utility **CCleaner**. When Chinese hacker group Axiom/APT17 managed to compromise the vendor, the modified software was not only signed, but entered the regular distribution process too. This resulted in malware **infection of more than 2 million users.** The first attack stage only extracted non-sensitive data from infected machines. See the [Wikipedia article](https://en.wikipedia.org/wiki/CCleaner#Trojan_in_distributed_program) for more information, including media references.
 
 Reporting by [**Talos**](https://blog.talosintelligence.com/2017/09/avast-distributes-malware.html) and [**Cisco**](https://blogs.cisco.com/security/talos/ccleaner-c2-concern) (2017) identified a **second stage** of targeted infections: "Only about 40 PCs operated by **high-tech and telecommunications companies were further infected**". The target list included HTC, Samsung, Sony, VMware, Intel, Microsoft, Cisco, O2, Vodafone, Linksys, Epson Akamai, and DLink.
 
@@ -169,4 +169,4 @@ Some of the **supply chain media coverage** Microsoft mentions in the video:
 [ShadowHammer]:#shadowhammer
 [PDF editor incident]:#pdf-editor-incident
 
-[code signing introduction]:../code-signing/1_introduction
+[code signing introduction]:../code-signing/1_introduction.md.html

@@ -70,7 +70,7 @@ The primary tool for code signing is SignTool.exe from the Windows SDK, which ca
 
 The digest algorithm defaults to SHA-1. However, you need to use at least SHA-2 for any practical purpose. The most common choice is SHA-256 (SHA-2 algorithm with 256-bit digests). The certificate can be a PFX file or a certificate from a Windows certificate store.
 
-* A PFX file must contain the private key. If it contains a password protected private key, the password must be specified using an additional parameter. Alternatively, the private key can be provided by a CSP (see below).
+* If a PFX file contains a password protected private key, the password must be specified using an additional parameter. Alternatively, the private key can be provided by a CSP (see below).
 * A certificate can be stored in a certificate store. In this case, you must provide the certificate name or thumbprint. (A certificate from the Windows certificate store  can be chosen automatically, but this is fragile and therefore not recommended.)
 * You can also use a hardware security module through the Windows certificate store.
   
@@ -89,7 +89,7 @@ A CSP can provide these services:
 * physical storage of certificates and keys
 * implementation of cryptographic algorithms, like encryption, digests and signatures
 
-HSMs usually bring their own installable CSPs. You can think of this CSP as a device driver for the HSM.
+HSMs usually bring their own installable CSPs. You can think of the CSP as a device driver for the HSM.
 
 !!! note ![Warning](background.png)
 Here is what happens when you call SignTool.exe with a certificate from a HSM:

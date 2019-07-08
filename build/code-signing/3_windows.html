@@ -91,7 +91,7 @@ Windows 10 features two flavors of Code Integrity Policy mechanisms:</p>
 </ul>
 <p>The digest algorithm defaults to SHA-1. However, you need to use at least SHA-2 for any practical purpose. The most common choice is SHA-256 (SHA-2 algorithm with 256-bit digests). The certificate can be a PFX file or a certificate from a Windows certificate store.</p>
 <ul>
-<li>A PFX file must contain the private key. If it contains a password protected private key, the password must be specified using an additional parameter. Alternatively, the private key can be provided by a CSP (see below).</li>
+<li>If a PFX file contains a password protected private key, the password must be specified using an additional parameter. Alternatively, the private key can be provided by a CSP (see below).</li>
 <li>A certificate can be stored in a certificate store. In this case, you must provide the certificate name or thumbprint. (A certificate from the Windows certificate store  can be chosen automatically, but this is fragile and therefore not recommended.)</li>
 <li>You can also use a hardware security module through the Windows certificate store.</li>
 </ul>
@@ -105,7 +105,7 @@ Windows 10 features two flavors of Code Integrity Policy mechanisms:</p>
 <li>physical storage of certificates and keys</li>
 <li>implementation of cryptographic algorithms, like encryption, digests and signatures</li>
 </ul>
-<p>HSMs usually bring their own installable CSPs. You can think of this CSP as a device driver for the HSM.</p>
+<p>HSMs usually bring their own installable CSPs. You can think of the CSP as a device driver for the HSM.</p>
 <div class="admonition note">
 <p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/background.png" alt="Warning"></p>
 <p>Here is what happens when you call SignTool.exe with a certificate from a HSM:</p>

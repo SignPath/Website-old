@@ -7,7 +7,18 @@
   <title>TODO</title>
 </head>
 <body>
-<p>[toc]</p>
+<p><ul class="markdownIt-TOC">
+<li><a href="#test-certificate-strategies">Test certificate strategies</a></li>
+<li><a href="#certificate-installation">Certificate installation</a>
+<ul>
+<li><a href="#certificate-store-selection">Certificate store selection</a></li>
+<li><a href="#manual-installation">Manual installation</a></li>
+<li><a href="#using-scripts-and-batch-files">Using scripts and batch files</a></li>
+<li><a href="#auto-enrollment">Auto-enrollment</a></li>
+</ul>
+</li>
+</ul>
+</p>
 <h1 id="creating-and-deploying-test-certificates">Creating and deploying test certificates</h1>
 <p>Test certificates should not be created by commercial certificate authorities, and are therefore not recognized by operating systems and browsers.</p>
 <p>This is a good thing, because you don't want your test-signing process to be as sensitive as your release-signing process. After all, a mistakenly or even maliciously signed binary should not affect your users and customers.</p>
