@@ -168,5 +168,4 @@ Some of the **supply chain media coverage** Microsoft mentions in the video:
 [ShadowPad]:#shadowpad
 [ShadowHammer]:#shadowhammer
 [PDF editor incident]:#pdf-editor-incident
-
-[code signing introduction]:../code-signing/1_introduction.md.html
+[code signing introduction]: ../code-signing/1_introduction

@@ -1,6 +1,7 @@
 /** contains the paths used in production - they must match the Wordpress setup **/
 
 export default {
+	'code-signing/1_introduction':                      '/code-signing',
 	'code-signing/2_theory':                            '/code-signing/theory',
 	'code-signing/3_windows':                           '/code-signing/windows-platform',
     'documentation/1_introduction.md.html':             '/documentation',

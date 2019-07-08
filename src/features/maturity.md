@@ -2,7 +2,7 @@
 
 ## How do you keep your keys secure?
 
-Extended Validation (EV) certificates are only available with Hardware Security Modules (HSMs)[HSMs]. While Organization Validated (OV) certificates can still be obtained from many Certificate Authorities without hardware protection, this is considered insecure.
+Extended Validation (EV) certificates are only available with Hardware Security Modules [HSMs][HSMs]. While Organization Validated (OV) certificates can still be obtained from many Certificate Authorities without hardware protection, this is considered insecure.
 
 <table><thead><tr>
   <th>Rating</th>
