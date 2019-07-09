@@ -2,9 +2,9 @@
 
 @[toc]
 
-Recent attack reports and coverage by tech and mainstream media as well as research groups show the increasing role that **supply-chain attacks** using **stolen code signing certificates** (or more accurately, their private keys) play in targeted attacks.
+Recent attack reports, tech and mainstream media as well as research groups show the increasing role of **supply-chain attacks** using **stolen code signing certificates** (or more accurately, their private keys) in targeted attacks.
 
-In short, while high-value targets often have their defenses up, the same is not always true for software vendors and contractors. So in order to compromise worthwhile targets, attackers will go out of their way to infiltrate them by attacking their suppliers first. With a valid signature from a known supplier, it is much easier to infiltrate the network of a hardened target.
+In short, while high-value targets often have their defenses up, the same is not always the case for software vendors and contractors. So in order to compromise worthwhile targets, attackers will try to infiltrate them by attacking their suppliers first. With a valid signature from a known supplier, it is much easier to infiltrate the network of a hardened target.
 
 Major concepts include:
 
@@ -12,7 +12,7 @@ Major concepts include:
 In the case of stealing code signing keys, there are even dedicated teams that perform key theft as a support function for other teams (see [Winnti umbrella] below).
 * **Code signing**: the process of applying a cryptographic signature to software components. Properly signed software can be verified to be signed by a specific publisher (authentication) and unmodified (integrity). Code signatures are verified by many platforms and tools, including operating systems, Web browsers, update mechanisms and anti-malware tools. See [code signing introduction] for more information.
 Since in theory, a well-functioning code signing infrastructure can be used to effectively prevent malware infections, the code signing ecosystem itself is subject to increasingly fierce attacks.
-* **Supply chain attacks**: High-level targets such as government organizations, defense companies or infrastructure providers, are often well-prepared for internet attacks. In order to circumvent their defenses, hackers will attack organizations that provide software to their targets and are less prepared for sophisticated attacks, such as software vendors or contractors. Since malware injection would be detected through code signing, attackers will try to steal the victims private keys and sign the infected software versions, or get the victim to do the signing.
+* **Supply chain attacks**: High-level targets such as government organizations, defense companies or infrastructure providers, are often well-prepared for internet attacks. In order to circumvent their defenses, hackers will attack organizations that provide software to their targets and are less prepared for sophisticated attacks, such as software vendors or contractors. Since malware injection would be detected through code signing, attackers will try to steal the victims private keys and sign infected software versions, or get the victim to do the signing.
 The signed and infected software will then be distributed to high-level attack targets. Once the infected code is executed within their network, attackers will try to steal data and passwords, and compromise further systems such as back-end servers.
 * **Multi-layered attacks**: a software product is infected not by direct attack of the vendor, but by attacking the producer, packager or distributor of a third party or Open Source component (see [PDF editor incident] below).
 * **Multi stage attacks**: an infected component is distributed to a wide audience to open a backdoor, but the actual malware is only distributed to selected high-value targets. These targets are either pre-defined in the first stage, or selected via **Command and Control (C2) servers**. All incidents described here follow this pattern.
