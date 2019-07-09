@@ -1,4 +1,6 @@
-# Working with test certificates
+@[toc]
+
+# Creating and deploying test certificates
 
 Test certificates should not be created by commercial certificate authorities, and are therefore not recognized by operating systems and browsers.
 
@@ -44,7 +46,7 @@ There are several strategies for creating and rolling out test certificates.
 
 **Advantages:**
 
-* Central control
+* Central control via GPOs
 * Can use existing Active Directory groups and OUs for selection when using auto-enrollment
 
 **Disadvantages:**
@@ -66,7 +68,7 @@ There are several strategies for creating and rolling out test certificates.
 
 **Advantages:**
 
-* Central control via existing PKI infrastructure
+* Central control via PKI
 * Straight-forward revocation process
 
 **Disadvantages:**
@@ -78,25 +80,44 @@ There are several strategies for creating and rolling out test certificates.
 
 ## Certificate installation
 
-### Manual
+### Certificate store selection
 
-* You can open any certificate in Windows Explorer
-  * Open a certificate file
-  * Open a program file's property page in Windows Explorer and go to the *Digital Signatures* tab. From here, open a signature *(Details)* and select *View Certificate*.
+You should generally add self-signed test certificates to the `Trusted Root Certification Authorities` certificate store of computers you use for testing your software. If you do this, Windows will treat your test certificates as if they were issued by a trusted Root CA.
+
+!!! info ![Information](info.png) Trusted Publishers
+You may also add your test certificates to the `Trusted Publishers` store on internal machines. This is what happens when a user choses *always trust this publisher* during installation, and therefore results in the same behavior, so don't do this if you want to replicate the default behavior on user machines. Adding a certificate to this store will affect User Account Control (UAC) device driver installation prompts as well as whitelisting features such as Software Restriction Policies (SRP), AppLocker and WDAC Code Integrity Policies. (Only add your certificates to this store for computers in your own organization.)
+!!!
+
+### Manual installation
+
+* Open the certificate in Windows Explorer
+  * Certificate file: select *Open*.
+  * Signed files: select *Properties* from the context menu, go to the *Digital Signatures* tab, open a signature *(Details)* and select *View Certificate*.
 * In the certificate property window, click *Install Certificate...*
 * Select *Current User* or *Local Machine* location
 * Select the *Trusted Publishers* store
 
-### Scripting
+### Using scripts and batch files
 
-* In PowerShell, use `Import-Certificate`
-* In cmd.exe, use `CertUtil -ImportCert`
+* In PowerShell scripts, use `Import-Certificate <certificate-file> -CertStoreLocation Cert:\LocalMachine\Root`
+* In batch files, use `CertUtil -addstore Root <certificate-file>`
 
-[auto-enroll]: https://docs.microsoft.com/en-us/windows-server/networking/core-network-guide/cncg/server-certs/configure-server-certificate-autoenrollment
+These commands require administrative permissions.
 
 ### Auto-enrollment
 
 Use Group Policy Objects (GPOs) to add certificates to computers.
 
-* In order to trust a certificate, create a GPO for `Windows Settings/Security Settings/Public Key Policies/Trusted Publishers Certificates`
-* In order to explicitly un-trust a certificate, create a GPO for  `Windows Settings/Security Settings/Public Key Policies/Untrusted Certificates`
+* In order to trust a certificate, create a GPO for
+  * `Windows Settings`
+  * `Security Settings`
+  * `Public Key Policies/Trusted Root Certification Authorities`
+* In order to explicitly un-trust a certificate, create a GPO for
+  * `Windows Settings`
+  * `Security Settings`
+  * `Public Key Policies/Untrusted Certificates`
+
+See also: [Configure certificate auto-enrollment][auto-enroll] (Microsoft)
+
+[Certificate file]: ../code-signing/2_theory#certificate-files
+[auto-enroll]: https://docs.microsoft.com/en-us/windows-server/networking/core-network-guide/cncg/server-certs/configure-server-certificate-autoenrollment

@@ -41,9 +41,9 @@ While most known for its use in encryption, public-key cryptography is also used
 * The receiver, Bob, knows Alice’s public key.
 * When Bob receives a file signed by Alice, he can use Alice's public key to verify that the file was signed by Alice, and that it has not been modified since.
 
-Key distribution seems easy now: The private key *must not* be distributed, and the public key needs no protection. However, this creates a new problem: How to ensure that a certain public key actually belongs to a specific entity?
+Key distribution seems easy now: The private key *must not* be shared with anybody, and the public key needs no protection at all. However, this creates a new problem: How to ensure that a certain public key actually belongs to a specific entity?
 
-Public keys are linked to identities via certificates by a public key infrastructure (PKI). The most common type of PKI used today in general (and by most code signing platforms) is based on certificate authorities and the X.509 system of certificates.
+The solution to this is called a public key infrastructure (PKI). PKIs issue certificates that each contain a public key and the owner's identity. The most common type of PKI used today in general (and by all major signing platforms) is based on certificate authorities and the X.509 system of certificates.
 
 ## Certificates
 
@@ -75,7 +75,7 @@ Important extensions and optional fields include:
 * **Subject alternative name:** Used to list additional domain names for multi-domain HTTPS certificates.
 * **CRL distribution points** and **authority information access:** Used to provide information about revocation services (CRL and/or OCSP).
 
-Note that many of these fields use dot-separated numbers called *Object Identifiers* (OIDs). A reference can be found at  [oid-info.com](http://oid-info.com/) or [oidref.com](http://oidref.com/).
+Note that many of these fields use dot-separated numbers called *Object Identifiers* (OIDs). A reference can be found at [oid-info.com](http://oid-info.com/) or [oidref.com](http://oidref.com/).
 
 ### Certificate types
 
@@ -105,16 +105,21 @@ The consequences of Extended Validation differ between HTTPS and code signing:
 
 There are several file formats for storing certificates:
 
-* **DER encoded:** binary or Base64 encoded certificates
-  * .pem (Base64 only)
-  * .cer, .crt, .der
-* **PKCS#12:** contain certificates and optionally password-protected private keys too
+* **DER encoded:** binary encoded ASN.1 certificates and keys
+  * .der
+  * .cer, .crt (rarely used)
+* **PEM:** Base64 encoded DER files and/or private keys
+  * .pem
+  * .cer, .crt
+* **PKCS#12:** contain certificates and optionally private keys
   * .p12
-  * .pfx (named after the legacy PFX format, but usually contain PKCS#12 data)  
+  * .pfx (named after the legacy PFX format, but usually in PKCS#12 format)  
 * **PKCS#7:** signature files without signed data
   * .p7b, .p7c
 
-The prevalence of PFX files with private keys leads some people to think certificates contain private keys. This is not the case.
+Certificate files can contain a single certificate or an entire certificate chain up to the root certificate. Some formats can also contain private keys protected with a password or pass-phrase.
+
+The prevalence of files containing both certificates *and* private keys leads some people to think certificates contain private keys. This is not the case.
 
 It is recommended to store private keys only on secure hardware, such as HSMs.
 
@@ -123,9 +128,15 @@ It is recommended to store private keys only on secure hardware, such as HSMs.
 
 !!! warning ![Warning](warning.png) Private keys are not safe in PFX files
 
-While PFX files with private keys seem convenient, they should only be used if no secure storage or exchange mechanism is available. While strong passwords are possible, PFX password protection cannot be relied upon implicitly.
+While PFX files with private keys seem convenient, they should only be used if no secure storage or exchange mechanism is available.
 
-If you stumble across PFX files with private keys, especially in emails or on unprotected storage, you might need to question the security of the contained keys. If they could have been compromised, the certificate should be revoked by the issuing CA.
+A brute force attack on the password might successfully retrieve your private key. There are several risks:
+
+* The entropy of your password may be too low.
+* PEM and PFX are container formats. They do *not* prescribe a specific cipher.
+* Some files use a weak cipher for the container and a strong cipher for the private key with the same encryption key. A brute force attack on the weak cipher will also reveal the encryption key for the private key.
+
+If you come across PEM or PFX files with private keys, especially in emails or on unprotected storage, you might need to question the security of the contained keys. If they could have been compromised, the certificate should be revoked by the issuing CA.
 !!!
 
 ## Certificate Authorities (CAs)

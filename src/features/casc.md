@@ -125,5 +125,5 @@ SignPath.io recommends that you consider buying separate certificates for major 
 | If the code with the security flaw was issued before more good code was issued, then revoking the certificate will impact the good code as well | SignPath lets you re-sign individual releases that were involuntarily affected by revocations.
 | Changing keys and certificates often will help to avoid this conflict | This is true, but it will only reduce the problem in some situations. If you discover a security flaw shortly after the incident, chances are that you will still be using the same key and certificate.
 
-[signing policies]: ../documentation/1_introduction.md.html#signing-policies
+[signing policies]: ../documentation/2_key_concepts.md.html#signing-policies
 [luna fips]: https://data-protection-updates.gemalto.com/2018/07/24/safenet-luna-hsm-7-now-fips-140-2-level-3-validated/

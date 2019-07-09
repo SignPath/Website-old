@@ -44,7 +44,7 @@
 </p>
 <h2 id="signing-methods">Signing methods</h2>
 <p>The primary code signing mechanism of Windows is Authenticode. It is used to sign executables and libraries as well as installers, packages, device drivers, and PowerShell scripts. Additionally, some programs use code signing to validate add-ins on installation. They use specific package formats, such as ClickOnce (Microsoft Office) or Open Packaging Convention (Microsoft Visual Studio), and therefore require specific tools for code signing. Every program has its own rules for displaying and enforcing code signing.</p>
-<p>A new member of the code signing family is NuGet, a platform for distribution of program libraries to software developers. NuGet is currently introducing optional code signing with its own toolset. Code signing will be verified by the NuGet Gallery (<a href="https://www.nuget.org">nuget.org</a>) and displayed prominently online as well as in Visual Studio.</p>
+<p>A new member of the code signing family is NuGet, a platform for distribution of program libraries to software developers. NuGet is currently introducing optional code signing with its own tool set. Code signing will be verified by the NuGet Gallery (<a href="https://www.nuget.org">nuget.org</a>) and displayed prominently online as well as in Visual Studio.</p>
 <h2 id="applications">Applications</h2>
 <p>Windows will mark downloaded software as insecure and evaluate the code signing properties when it is first executed. It requires a signature that is cryptographically valid, based on a certificate issued by a trusted Certificate Authority, and it checks various properties of the certificate and the signature.</p>
 <ul>
@@ -57,7 +57,7 @@
 <li>When an administrator deploys a code signing policy, e.g. via Windows Code Integrity Policy or third party software. See Whitelisting and code-signing policies for more information.</li>
 </ul>
 <h3 id="mark-of-the-web-download-files-and-code-signing">Mark-of-the-Web: download files and code signing</h3>
-<p>The Mark-of-the-Web (MotW) is an indication that a file has been <em>downloaded from the internet</em>. It is applied by browsers and other tools that download files to local disks. This indicates to Windows that the program might not be secure. When the program is started, the signature and certificate validation process is executed. All major browsers for Windows apply the MotW correctly (Internet Explorer, Edge, Chrome, Firefox and Opera). Notably, 7zip does not propagate the MotW when unpacking. You can see (and remove) this indication in Windows Explorer by opening the program file’s Properties dialog just below the file attributes.</p>
+<p>The Mark-of-the-Web (MotW) is an indication that a file has been <em>downloaded from the internet</em>. It is applied by browsers and other tools that download files to local disks. This indicates to Windows that the program might not be secure. When the program is started, the signature and certificate validation process is executed. All major browsers for Windows apply the MotW correctly: (Internet Explorer, Edge, Chrome, Firefox and Opera). Notably, 7zip does not propagate the MotW when unpacking. You can see (and remove) this indication in Windows Explorer by opening the program file’s Properties dialog just below the file attributes.</p>
 <h2 id="file-types">File types</h2>
 <p>Most downloaded programs are installation programs or packages. Popular file types include Microsoft Installer (MSI), Cabinet Files (CAB), AppX Packages and Bundles, and App-V packages. Installers are also often distributed in the form of self-extracting programs (e.g. Setup.exe). For device drivers, Windows strictly requires Authenticode signing, either by the publisher or by the Windows Hardware Quality Lab (WHQL). PowerShell scripts and modules may also require code signing, depending on the security policy and the source of the file.</p>
 <h3 id="signing-individual-program-files-deep-signing">Signing individual program files (Deep signing)</h3>
@@ -91,7 +91,7 @@ Windows 10 features two flavors of Code Integrity Policy mechanisms:</p>
 </ul>
 <p>The digest algorithm defaults to SHA-1. However, you need to use at least SHA-2 for any practical purpose. The most common choice is SHA-256 (SHA-2 algorithm with 256-bit digests). The certificate can be a PFX file or a certificate from a Windows certificate store.</p>
 <ul>
-<li>A PFX file must contain the password. If it contains a password protected private key, the password must be specified using an additional parameter. Alternatively, the private key can be provided by a CSP (see below).</li>
+<li>If a PFX file contains a password protected private key, the password must be specified using an additional parameter. Alternatively, the private key can be provided by a CSP (see below).</li>
 <li>A certificate can be stored in a certificate store. In this case, you must provide the certificate name or thumbprint. (A certificate from the Windows certificate store  can be chosen automatically, but this is fragile and therefore not recommended.)</li>
 <li>You can also use a hardware security module through the Windows certificate store.</li>
 </ul>
@@ -99,7 +99,40 @@ Windows 10 features two flavors of Code Integrity Policy mechanisms:</p>
 <p>SHA-1 is no longer considered secure by the crypto community or Microsoft. Hackers may be able to forge signatures based on this outdated algorithm. Therefore, current versions of Windows will only accept signatures based on SHA-1 digests for files that were signed and time-stamped before 2016. For a signature to be considered valid, the certificate itself as well as any intermediate certificates in the certificate chain must be signed using SHA-2 too. (Note that Windows Explorer will still report SHA-1 signatures as valid in the file properties dialog, but for all purposes they will be rejected by Windows.)</p>
 <p>For some time, it was recommended that files should be dual-signed with both SHA-1 and SHA-2 signatures for backwards compatibility, but this seems no longer necessary: SHA-2 has been in Windows starting with Windows 8 and Server 2012. Also, Windows 7 and Server 2008 have been updated in 2015 to support SHA-2.</p>
 <h2 id="hardware-security-modules-hsms">Hardware Security Modules (HSMs)</h2>
-<p>SignTool.exe (or Authenticode in general) cannot use HSMs directly, but it uses the Windows CryptoAPI to access certificates in Windows certificate stores. CryptoAPI uses an extensible architecture for storing certificates: A Cryptographic Service Provider (CSP) can implement physical storage of certificates as keys as well as implement cryptographic algorithms, like creating signatures. HSMs usually bring their own installable CSPs. You can think of this CSP as a device driver for the HSM. So if you use SignTool.exe referencing a certificate via its HSM’s CSP, SignTool.exe will effectively transfer the digest to the HSM, and the HSM will create the signature without ever exposing the private key.</p>
+<p>SignTool.exe (or Authenticode in general) cannot use HSMs directly, but it uses the Windows CryptoAPI to access certificates in Windows certificate stores. CryptoAPI uses an extensible architecture for storing certificates: Cryptographic Service Providers (CSPs)</p>
+<p>A CSP can provide these services:</p>
+<ul>
+<li>physical storage of certificates and keys</li>
+<li>implementation of cryptographic algorithms, like encryption, digests and signatures</li>
+</ul>
+<p>HSMs usually bring their own installable CSPs. You can think of the CSP as a device driver for the HSM.</p>
+<div class="admonition note">
+<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/background.png" alt="Warning"></p>
+<p>Here is what happens when you call SignTool.exe with a certificate from a HSM:</p>
+<ul>
+<li>SignTool.exe calls the Authenticode API
+<ul>
+<li>Authenticode computes the digest via CryptoAPI (CAPI)</li>
+<li>Authenticode calls CAPI to create a signature for the digest
+<ul>
+<li>CAPI finds the certificate on the CSP provided by the HSM</li>
+<li>CAPI calls the CSP with the digest and the certificate's ID
+<ul>
+<li>The CSP submits a <em>create signature</em> request to the HSM
+<ul>
+<li>The HSM creates a signature</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Authenticode stores the signature in the file</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>In this process, the HSM will never expose the private key to any other system.</p>
 <p>The current implementation of Authenticode and SignTool.exe has two weaknesses:</p>
 <ul>
 <li>It can only use CryptoAPI, but not the more recent Cryptographic API: Next Generation (CNG).</li>
@@ -107,7 +140,12 @@ Windows 10 features two flavors of Code Integrity Policy mechanisms:</p>
 </ul>
 <h3 id="buyers-advice">Buyer’s advice</h3>
 <ul>
-<li>Whether a HSM supports SHA-2 code signing is an important consideration when buying a HSM. You should ask specifically for support of SHA-256 in Microsoft Authenticode. We also recommend that you consider the complexity of creating certificates via CSRs and accessing them before choosing a HSM.</li>
+<li>USB token HSMs cannot easily be used in virtualized environments and are limited to a single machine. Also, they usually require interactive authentication via PIN codes or other mechanisms that may prevent automation.</li>
+<li>Professional network HSMs solve this problem, but they require extensive operational procedures and staff training.</li>
+<li>As stated above, Authenticode and many other signing mechanisms require CSPs, a technology based on CAPI1 which is otherwise often considered obsolete. HSM support for CSPs therefore varies widely in quality of software, documentation and support.</li>
+<li>Whether a HSM supports SHA-2 code signing is an important consideration when buying a HSM. You should ask specifically for support of SHA-256 in Microsoft Authenticode (or more technically, CSPs and CAPI v1).</li>
+<li>HSMs have varying support for creating certificates via certificate signing requests (CSRs) and accessing them from CSPs. You might have to search for working procedures on the internet or contact the vendor's tech support.
+<strong>Warning:</strong> Since this is quite difficult to accomplish, many users resort to importing insecure key files into the HSM, which defies the purpose of the HSM in a critical stage. This is not a secure practice, and does not meet regulations for Extended Validation (EV) certificates!</li>
 <li>Some complex key management systems have a FIPS-certified HSM at their core as part of a larger physical or virtual system. In this case, the FIPS certification might not encompass the entire system. You should ask specifically if FIPS certification is provided for the entire use case of generating keys and CSRs, as well as creating signatures.</li>
 </ul>
 <h2 id="miscellaneous">Miscellaneous</h2>
@@ -115,9 +153,9 @@ Windows 10 features two flavors of Code Integrity Policy mechanisms:</p>
 <p>The private key of a certificate must be properly protected. Theft of private keys is the main attack vector for code signing, thereby compromising both users and publishers. Since it’s not possible to effectively protect private keys in files or certificate stores managed by Windows, it is widely recommended that hardware security modules (HSMs) are used for code signing. For Extended Validation certificates, it is even required that keys are managed in HSMs meeting the requirements of FIPS 140-2 level 2.</p>
 <p>An HSM is a device that stores secret keys and performs cryptographic operations using these keys. When used properly, the HSM will generate the key itself, and will never expose it to any user or any other device. So when you use a HSM for signing, the HSM will not give the key to the signing software. Rather, the signing software will send the data (the digest) to the HSM and ask for a signature.</p>
 <h3 id="hsm-limitations">HSM limitations</h3>
-<p>Note that hardware keys can still be physically stolen, especially when stored on inexpensive USB devices. Additionally, even if the key is not stolen, it could be abused by a hacker who gains access.</p>
+<p>Note that hardware keys can still be physically stolen, especially when stored on inexpensive USB devices. Additionally, even if the key is not stolen, it could be abused by a hacker who gains access to the HSM, or a system that can access the HSM, such as a build server.</p>
 <h3 id="microsoft-smartscreen">Microsoft SmartScreen</h3>
-<p>SmartScreen is a cloud-based system best known for avoiding fishing sites and social engineering attacks. It is also a vital part of Microsoft's anti-malware strategy, a function it performs by checking downloaded software against lists of known programs and certificates.</p>
+<p>SmartScreen is a cloud-based system best known for avoiding phishing sites and social engineering attacks. It is also a vital part of Microsoft's anti-malware strategy, a function it performs by checking downloaded software against lists of known programs and certificates.</p>
 <table>
 <thead>
 <tr>
