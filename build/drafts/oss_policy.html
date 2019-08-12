@@ -1,0 +1,163 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TODO</title>
+</head>
+<body>
+<h1 id="code-of-conduct-for-open-source-projects">Code of Conduct for Open Source projects</h1>
+<p><strong>Draft</strong></p>
+<h2 id="signpathio-terms-and-services">SignPath.io Terms and Services</h2>
+<ul>
+<li>No signing of malware and potentially unwanted programs</li>
+</ul>
+<h2 id="additional-conditions-for-free-oss-signpathio-subscriptions">Additional conditions for free OSS SignPath.io subscriptions</h2>
+<ul>
+<li>The project must use a OSI-approved Open Source license without commercial dual-licensing</li>
+<li>The project must be actively maintained</li>
+</ul>
+<p>If you bring your own certificate, that's it. If your certificate is issued by <a href="https://signpath.org">SignPath Foundation</a>, see the next section for additional constraints.</p>
+<h2 id="code-of-conduct-for-free-code-signing-certificates-signpath-foundation">Code of Conduct for free code signing certificates (SignPath Foundation)</h2>
+<p>The code signing certificate is issued to <a href="https://signpath.org">SignPath Foundation</a>. This means that SignPath Foundation is the publisher of the OSS project.</p>
+<p>SignPath Foundation will therefore define and execute technical constraints and require project members to follow certain rules.</p>
+<p>If any of the rules in the Code of Conduct are violated by the project team, SignPath Foundation reserves the right to</p>
+<ul>
+<li>pause or terminate the subscription without prior notice</li>
+<li>revoke the certificate effective immediately or retroactively</li>
+</ul>
+<p>SignPath Foundation cannot except any liability for damages resulting from software signed with certificates that were issued to SignPath Foundation.</p>
+<h3 id="oss-subscription-types">OSS Subscription types</h3>
+<ul>
+<li>Full OSS subscriptions
+<ul>
+<li>Allow projects to sign any file type, including executables and installers that are typically invoked by end users</li>
+<li>SignPath Foundation will accept applications for full OSS subscriptions based on a projects reputation</li>
+</ul>
+</li>
+<li>OSS library subscriptions
+<ul>
+<li>Allow projects to sign libraries and packages intended for software developers.</li>
+<li>Since software developers can be expected to make educated decisions about which OSS libraries to trust and use, reputation checks are not normally performed.</li>
+<li>However, SignPath Foundation reserves the right to reject any application.</li>
+</ul>
+</li>
+</ul>
+<h3 id="all-oss-projects">All OSS projects</h3>
+<h4 id="restrictions">Restrictions</h4>
+<ul>
+<li>
+<p><strong>Sign your own projects only</strong>
+The team responsible for code signing must also be the team responsible for development and maintenance, including ownership of the source code repository.</p>
+</li>
+<li>
+<p><strong>Sign your own binaries only</strong>
+The team must only sign software artifacts built from their own source  code.</p>
+<ul>
+<li>Your team must be the maintainers of all source code files and build scripts</li>
+<li>If you need signed libraries from another OSS project (“upstream”), ask them to get a signature via <a href="https://signpath.org">SignPath Foundation</a> or any other means</li>
+<li>If you need to build your own modified version of upstream software, you may sign it with your project’s certificate if
+<ul>
+<li>the upstream project publishes signed builds</li>
+<li>your project visibly uses a fork of the upstream project, e.g. using GitHub’s fork feature</li>
+<li>the release branches you use for signing are based on upstream branches that are usually signed</li>
+<li>you fulfill all other obligations as required for your own project by this policy, e.g. code reviews for all changes of the upstream code base</li>
+</ul>
+</li>
+<li>You may include unsigned binaries of upstream OSS projects, e.g. DLL files, in your signed packages, e.g. MSI installers.
+<ul>
+<li>We kindly ask you to try and get as much signing coverage. If you use upstream libraries, please ask their maintainers to sign their code. Note that the “OSS library subscription” of SignPath.io and SignPath Foundation are available to all OSS library projects.</li>
+<li>Note that in the future, SignPath Foundation may require that signed packages only include signed program and library files.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Don’t fight the system</strong>
+You must accept all technical constraints in place for SignPath.io OSS subscription and not try to work around them. Noteworthy constraints include:</p>
+<ul>
+<li>Binary artifacts must be built from source code in a verifiable way</li>
+<li>Every release needs manual approval for signing</li>
+<li>All team members must use multi-factor authentication</li>
+<li>All signed binaries must have metadata attributes set enforced using <a href="../documentation/3_artifact_configuration#file-attribute-restrictions">file attribute restrictions</a>
+<ul>
+<li>Set all <em>product name</em> attributes to your project's name</li>
+<li>Set all <em>product version</em> attributes to the same value in each build</li>
+<li>(remember that other project's binaries must not be signed, but may be included in signed packages and installers)</li>
+</ul>
+</li>
+</ul>
+<p>Note that some constraints are not implemented yet.</p>
+</li>
+<li>
+<p><strong>No hacking tools</strong>
+Software must not include features that may be used to circumvent security measures or exploit security vulnerabilities of their execution environment (e.g. operating system), including security diagnosis tools</p>
+<ul>
+<li>We are aware of the utility of white hat security tools, but cannot sign them using SignPath Foundation certificates.</li>
+</ul>
+</li>
+</ul>
+<h4 id="program-coding-and-information-requirements">Program coding and information requirements</h4>
+<ul>
+<li><strong>Respect user privacy and security</strong>
+Software must not include features that compromise the privacy or security of users and their systems
+<ul>
+<li>Software that collects user data and transfers it to systems not specified by the user must a) describe this behavior in a privacy policy, b) display this policy during installation and c) include installation options to disable these functions</li>
+</ul>
+</li>
+<li><strong>Announce system changes</strong>
+Software must not modify the user’s system configuration without proper warnings</li>
+<li><strong>Provide uninstallation</strong>
+Software that includes instructions or automated facilities for installation must also include instructions or automated facilities for uninstallation.</li>
+</ul>
+<h4 id="signpath-requirements">SignPath requirements</h4>
+<ul>
+<li>
+<p><strong>Assign code signing roles</strong>
+The OSS project team must self-organize to create a team structure with clear responsibilities</p>
+<ul>
+<li><strong>Authors</strong>: people who are trusted to modify the source code in the project’s version control system without additional reviews</li>
+<li><strong>Reviewers</strong>: each change proposed by people who are not committers (e.g. pull requests) must be reviewed by a team member</li>
+<li><strong>Approvers</strong>: each signing request must be approved by a team member trusted by the entire team to decide if a certain release can be code signed (especially if all contributions</li>
+</ul>
+</li>
+<li>
+<p><strong>Specify a code signing policy</strong>
+A code signing policy must be specified on the project’s home page</p>
+<ul>
+<li>Use the term &quot;<strong>Code signing policy</strong>&quot; on your project’s home page and download/release pages (section header or link to a dedicated page)</li>
+<li>Include the following information:
+<ul>
+<li>&quot;Free code signing provided by <a href="https://signpath.io">SignPath.io</a>, certificate by <a href="https://signpath.org">SignPath Foundation</a>&quot;</li>
+<li>Team role and their members (see above, may include references to the project’s permission groups). Example (markdown syntax):
+<ul>
+<li>Committers and reviewers: <code>[Members team](https://github.com/orgs/…/teams/members)</code></li>
+<li>Approvers: <code>[Owners](https://github.com/orgs/…/people?query=role%3Aowner)</code></li>
+</ul>
+</li>
+<li>Privacy policy:
+<ul>
+<li>Link to your privacy policy or &quot;This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.&quot;</li>
+<li>Remember to specify the privacy policies of other Open Source or third party components your application uses if your users are affected.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>In the future, SignPath may provide code signing policy pages for all projects that just need to be linked.
+<strong>Investigate accusations of violation</strong>
+When SignPath Foundation receives complaints about violation of the Code of Conduct, the project team must assist in verification, investigation and root cause analysis.</p>
+</li>
+</ul>
+<h3 id="additional-conditions-for-oss-library-subscriptions-signpath-foundation">Additional conditions for OSS library subscriptions (SignPath Foundation)</h3>
+<ul>
+<li><strong>Developer libraries only</strong>
+Signed software must be built for the sole purpose of being used by other software developers.
+<ul>
+<li>Signed software must not be able to execute on computers of end users, e.g. by implementing plugin/add-in/extension interfaces of other applications.</li>
+<li>If you want to build add-ins for other applications, you need to apply for a full OSS subscription.</li>
+</ul>
+</li>
+</ul>
+</body></html>
