@@ -35,7 +35,8 @@ Install-Module -Name SignPath
 $signingRequestID = Submit-SigningRequest
     -CIUserToken $CI_USER_TOKEN
     -OrganizationId $YOUR_ORGANIZATION_ID
-    -SigningPolicyId $SIGNING_POLICY_ID
+    -ProjectKey $YOUR_PROJECT_KEY
+    -SigningPolicyKey 'test-signing'
     -InputArtifactPath $PATH_TO_INPUT_ARTIFACT
 
 # ... and download the signed artifact later.
@@ -49,7 +50,8 @@ Get-SignedArtifact
 Submit-SigningRequest
     -CIUserToken $CI_USER_TOKEN
     -OrganizationId $YOUR_ORGANIZATION_ID
-    -SigningPolicyId $SIGNING_POLICY_ID
+    -ProjectKey $YOUR_PROJECT_KEY
+    -SigningPolicyKey 'test-signing'
     -InputArtifactPath $PATH_TO_INPUT_ARTIFACT
     -OutputArtifactPath $PATH_TO_OUTPUT_ARTIFACT
     -WaitForCompletion
@@ -85,9 +87,10 @@ You need to provide these values for every single API request.
 
 ```bash
 curl -H "Authorization: Bearer $CI_USER_TOKEN" \
-     -F "SigningPolicyId=$SIGNING_POLICY_ID" \
+     -F "ProjectKey=$YOUR_PROJECT_KEY" \
+     -F "SigningPolicyKey=test-signing" \
      -F "Artifact=@$PATH_TO_ARTIFACT" \
-     -F "Description=$DESCRIPTION" \  
+     -F "Description=$DESCRIPTION" \
      https://app.signpath.io/API/v1/$ORGANIZATION_ID/SigningRequests
 ```
 
@@ -113,17 +116,22 @@ curl -H "Authorization: Bearer $CI_USER_TOKEN" \
 ```json
 {
   "status":"Completed",
-  "description":"called by curl",
-  "projectId":"edd545ef-e113-48ba-aba7-de2d59ea2f26",
-  "projectName":"SignPath Test Project",
-  "signingPolicyId":"9ebd30b0-ef6b-4e46-a248-103516bc36fc",
+  "description":"Called by curl",
+  "projectId":"c90eb2c7-d34e-49fc-9e90-c00235ecaf1a",
+  "projectKey":"test-project",
+  "projectName":"Test project",
+  "artifactConfigurationId":"24b767a6-092f-4104-869d-25f0da159576",
+  "artifactConfigurationKey":"Default",
+  "artifactConfigurationName":"Default",
+  "signingPolicyId":"137ada35-fc11-4719-a3a4-269983692197",
+  "signingPolicyKey":"test-signing",
   "signingPolicyName":"test-signing",
-  "uploadedArtifactLink":"https://app.signpath.io/API/v1/a05be341-8a85-4c06-828a-710459e325ab/SigningRequests/a15e4d4f-7e03-4b15-9e2e-f3d8daeeaa75/UploadedArtifact",
-  "signedArtifactLink":"https://app.signpath.io/API/v1/a05be341-8a85-4c06-828a-710459e325ab/SigningRequests/a15e4d4f-7e03-4b15-9e2e-f3d8daeeaa75/SignedArtifact"
+  "unsignedArtifactLink":"https://sp-dev-web.dev.rubicon-it.com/SignPath.Application_green-rev1/API/v1/c2099ac1-b4b5-4b30-934e-3933c2d9922d/SigningRequests/a4559e13-9e95-480a-9567-5b8a3252bb27/UnsignedArtifact",
+  "signedArtifactLink":"https://sp-dev-web.dev.rubicon-it.com/SignPath.Application_green-rev1/API/v1/c2099ac1-b4b5-4b30-934e-3933c2d9922d/SigningRequests/a4559e13-9e95-480a-9567-5b8a3252bb27/SignedArtifact"
 }
 ```
 
-**Possible `status` values:** `WaitingForApproval`, `QueuedForProcessing`, `Processing`, `Completed`, `Failed`, `Denied`, `Canceled`
+**Possible `status` values:** `WaitingForApproval`, `QueuedForProcessing`, `Processing`, `Completed`, `Failed`, `Denied`, `Canceled`, `RetrievingArtifact`, `ArtifactRetrievalFailed`
 
 ### Download the signed artifact
 
@@ -223,14 +231,14 @@ This shows the secrets that need to be shared between AppVeyor.com and SignPath.
 ```yaml
 deploy:
 - provider: Webhook
-  url: https://app.signpath.io/API/v1/<ORGANIZATION_ID>/Integrations/AppVeyor?SigningPolicyId=<SIGNING_POLICY_ID>
+  url: https://app.signpath.io/API/v1/<ORGANIZATION_ID>/Integrations/AppVeyor?ProjectKey=<PROJECT_KEY>&SigningPolicyKey=<SIGNING_POLICY_KEY>
   authorization:
      secure: <ENCRYPTED_ACCESS_TOKEN>
 ```
 
 Replace the parameters:
 
-* `<ORGANIZATION_ID>` and `<SIGNING_POLICY_ID>` values can be retrieved from the Signing policy page
+* `<ORGANIZATION_ID>`, `<PROJECT_KEY>` and `<SIGNING_POLICY_KEY>` values can be retrieved from the Signing policy page
 * `<ENCRYPTED_ACCESS_TOKEN>` is the value from the previous step
 
 </td>
