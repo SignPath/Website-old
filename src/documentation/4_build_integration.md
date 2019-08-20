@@ -36,7 +36,7 @@ $signingRequestID = Submit-SigningRequest
     -CIUserToken $CI_USER_TOKEN
     -OrganizationId $YOUR_ORGANIZATION_ID
     -ProjectKey $YOUR_PROJECT_KEY
-    -SigningPolicyKey 'test-signing'
+    -SigningPolicyKey $YOUR_SIGNING_POLICY_KEY
     -InputArtifactPath $PATH_TO_INPUT_ARTIFACT
 
 # ... and download the signed artifact later.
@@ -51,7 +51,7 @@ Submit-SigningRequest
     -CIUserToken $CI_USER_TOKEN
     -OrganizationId $YOUR_ORGANIZATION_ID
     -ProjectKey $YOUR_PROJECT_KEY
-    -SigningPolicyKey 'test-signing'
+    -SigningPolicyKey $YOUR_SIGNING_POLICY_KEY
     -InputArtifactPath $PATH_TO_INPUT_ARTIFACT
     -OutputArtifactPath $PATH_TO_OUTPUT_ARTIFACT
     -WaitForCompletion
