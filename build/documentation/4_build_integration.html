@@ -50,7 +50,8 @@
 $signingRequestID = Submit-SigningRequest
     -CIUserToken $CI_USER_TOKEN
     -OrganizationId $YOUR_ORGANIZATION_ID
-    -SigningPolicyId $SIGNING_POLICY_ID
+    -ProjectKey $YOUR_PROJECT_KEY
+    -SigningPolicyKey $YOUR_SIGNING_POLICY_KEY
     -InputArtifactPath $PATH_TO_INPUT_ARTIFACT
 
 # ... and download the signed artifact later.
@@ -64,7 +65,8 @@ Get-SignedArtifact
 Submit-SigningRequest
     -CIUserToken $CI_USER_TOKEN
     -OrganizationId $YOUR_ORGANIZATION_ID
-    -SigningPolicyId $SIGNING_POLICY_ID
+    -ProjectKey $YOUR_PROJECT_KEY
+    -SigningPolicyKey $YOUR_SIGNING_POLICY_KEY
     -InputArtifactPath $PATH_TO_INPUT_ARTIFACT
     -OutputArtifactPath $PATH_TO_OUTPUT_ARTIFACT
     -WaitForCompletion
@@ -129,9 +131,10 @@ Submit-SigningRequest
 </table>
 <p><strong>Example:</strong></p>
 <pre><code class="language-bash">curl -H &quot;Authorization: Bearer $CI_USER_TOKEN&quot; \
-     -F &quot;SigningPolicyId=$SIGNING_POLICY_ID&quot; \
+     -F &quot;ProjectKey=$YOUR_PROJECT_KEY&quot; \
+     -F &quot;SigningPolicyKey=test-signing&quot; \
      -F &quot;Artifact=@$PATH_TO_ARTIFACT&quot; \
-     -F &quot;Description=$DESCRIPTION&quot; \  
+     -F &quot;Description=$DESCRIPTION&quot; \
      https://app.signpath.io/API/v1/$ORGANIZATION_ID/SigningRequests
 </code></pre>
 <p><strong>Success result:</strong> HTTP status code <code>201</code>. A HTTP <code>Location</code> response-header field is returned with the URL of the created entity.</p>
@@ -165,16 +168,21 @@ Submit-SigningRequest
 <p><strong>Success result:</strong> HTTP status code <code>200</code>. Status of the signing request in JSON format:</p>
 <pre><code class="language-json">{
   &quot;status&quot;:&quot;Completed&quot;,
-  &quot;description&quot;:&quot;called by curl&quot;,
-  &quot;projectId&quot;:&quot;edd545ef-e113-48ba-aba7-de2d59ea2f26&quot;,
-  &quot;projectName&quot;:&quot;SignPath Test Project&quot;,
-  &quot;signingPolicyId&quot;:&quot;9ebd30b0-ef6b-4e46-a248-103516bc36fc&quot;,
+  &quot;description&quot;:&quot;Called by curl&quot;,
+  &quot;projectId&quot;:&quot;c90eb2c7-d34e-49fc-9e90-c00235ecaf1a&quot;,
+  &quot;projectKey&quot;:&quot;test-project&quot;,
+  &quot;projectName&quot;:&quot;Test project&quot;,
+  &quot;artifactConfigurationId&quot;:&quot;24b767a6-092f-4104-869d-25f0da159576&quot;,
+  &quot;artifactConfigurationKey&quot;:&quot;Default&quot;,
+  &quot;artifactConfigurationName&quot;:&quot;Default&quot;,
+  &quot;signingPolicyId&quot;:&quot;137ada35-fc11-4719-a3a4-269983692197&quot;,
+  &quot;signingPolicyKey&quot;:&quot;test-signing&quot;,
   &quot;signingPolicyName&quot;:&quot;test-signing&quot;,
-  &quot;uploadedArtifactLink&quot;:&quot;https://app.signpath.io/API/v1/a05be341-8a85-4c06-828a-710459e325ab/SigningRequests/a15e4d4f-7e03-4b15-9e2e-f3d8daeeaa75/UploadedArtifact&quot;,
-  &quot;signedArtifactLink&quot;:&quot;https://app.signpath.io/API/v1/a05be341-8a85-4c06-828a-710459e325ab/SigningRequests/a15e4d4f-7e03-4b15-9e2e-f3d8daeeaa75/SignedArtifact&quot;
+  &quot;unsignedArtifactLink&quot;:&quot;https://app.signpath.io/API/v1/c2099ac1-b4b5-4b30-934e-3933c2d9922d/SigningRequests/a4559e13-9e95-480a-9567-5b8a3252bb27/UnsignedArtifact&quot;,
+  &quot;signedArtifactLink&quot;:&quot;https://app.signpath.io1/API/v1/c2099ac1-b4b5-4b30-934e-3933c2d9922d/SigningRequests/a4559e13-9e95-480a-9567-5b8a3252bb27/SignedArtifact&quot;
 }
 </code></pre>
-<p><strong>Possible <code>status</code> values:</strong> <code>WaitingForApproval</code>, <code>QueuedForProcessing</code>, <code>Processing</code>, <code>Completed</code>, <code>Failed</code>, <code>Denied</code>, <code>Canceled</code></p>
+<p><strong>Possible <code>status</code> values:</strong> <code>WaitingForApproval</code>, <code>QueuedForProcessing</code>, <code>Processing</code>, <code>Completed</code>, <code>Failed</code>, <code>Denied</code>, <code>Canceled</code>, <code>RetrievingArtifact</code>, <code>ArtifactRetrievalFailed</code></p>
 <h3 id="download-the-signed-artifact">Download the signed artifact</h3>
 <p>Once the signing request has been successfully completed, the status response contains a <code>signedArtifactLink</code> field with a link to the signed artifact file. It can easily be retrieved by issuing the following command:</p>
 <table>
@@ -274,17 +282,16 @@ Submit-SigningRequest
     <td colspan="2">Append this to your appveyor.yaml file:
 <pre><code class="language-yaml">deploy:
 - provider: Webhook
-  url: https://app.signpath.io/API/v1/&lt;ORGANIZATION_ID&gt;/Integrations/AppVeyor?SigningPolicyId=&lt;SIGNING_POLICY_ID&gt;
+  url: https://app.signpath.io/API/v1/&lt;ORGANIZATION_ID&gt;/Integrations/AppVeyor?ProjectKey=&lt;PROJECT_KEY&gt;&amp;SigningPolicyKey=&lt;SIGNING_POLICY_KEY&gt;
   authorization:
      secure: &lt;ENCRYPTED_ACCESS_TOKEN&gt;
 </code></pre>
 <p>Replace the parameters:</p>
 <ul>
-<li><code>&lt;ORGANIZATION_ID&gt;</code> and <code>&lt;SIGNING_POLICY_ID&gt;</code> values can be retrieved from the Signing policy page</li>
+<li><code>&lt;ORGANIZATION_ID&gt;</code>, <code>&lt;PROJECT_KEY&gt;</code> and <code>&lt;SIGNING_POLICY_KEY&gt;</code> values can be retrieved from the Signing policy page</li>
 <li><code>&lt;ENCRYPTED_ACCESS_TOKEN&gt;</code> is the value from the previous step</li>
 </ul>
 </td>
 </tr>
 </tbody>
-</table>
-</body></html>
+</table></body></html>
