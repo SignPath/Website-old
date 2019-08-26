@@ -245,3 +245,7 @@ Replace the parameters:
 </tr>
 </tbody>
 </table>
+
+## Azure DevOps
+
+For Azure DevOps, you can configure the calls to the PowerShell module using build pipeline tasks by installing the [official extension](https://marketplace.visualstudio.com/items?itemName=SignPath.signpath-tasks) from the Azure DevOps marketplace.
