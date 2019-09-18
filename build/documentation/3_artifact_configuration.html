@@ -50,7 +50,6 @@
 <li><a href="#signing-similar-directories-within-an-msi-file">Signing similar directories within an MSI file</a></li>
 </ul>
 </li>
-<li><a href="#extracting-artifact-packages">Extracting artifact packages</a></li>
 </ul>
 </p>
 <h2 id="abstract">Abstract</h2>
@@ -407,29 +406,4 @@
     resources/
       en.resource.dll
 </code></pre>
-<h2 id="extracting-artifact-packages">Extracting artifact packages</h2>
-<p>You can use the following tools in order to manually extract files from your artifacts. From the extracted file structure, you can then easily create a matching artifact configuration.</p>
-<p>We recommend that you apply these tools to all contained files recursively and create a very specific artifact configuration.</p>
-<table>
-<thead>
-<tr>
-<th>File type</th>
-<th>Recommended tools</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>.zip, .cab</td>
-<td>Extract using tools like WinZip or 7-Zip or Windows Explorer.</td>
-</tr>
-<tr>
-<td>.vsix, .nupkg</td>
-<td>These are just special ZIP archives. Either change the extension to .ZIP or use a tool like 7-Zip to directly extract their contents.</td>
-</tr>
-<tr>
-<td>.msi</td>
-<td>Use the Windows tool msiexec.exe to perform an administrative install. Note that this might execute parts of the MSI file, so only use this for trusted files.<br> <code>msiexec /a filename.msi TARGETDIR=c:\full-path</code></td>
-</tr>
-</tbody>
-</table>
 </body></html>

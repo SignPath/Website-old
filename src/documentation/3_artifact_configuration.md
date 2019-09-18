@@ -424,15 +424,3 @@ Example of a directory structure that would match this configuration:
         main.exe
         resources/
           en.resource.dll
-
-## Extracting artifact packages
-
-You can use the following tools in order to manually extract files from your artifacts. From the extracted file structure, you can then easily create a matching artifact configuration.
-
-We recommend that you apply these tools to all contained files recursively and create a very specific artifact configuration.
-
-| File type       | Recommended tools |
-| --------------- | ----------------- |
-| .zip, .cab      | Extract using tools like WinZip or 7-Zip or Windows Explorer.
-| .vsix, .nupkg   | These are just special ZIP archives. Either change the extension to .ZIP or use a tool like 7-Zip to directly extract their contents.
-| .msi            | Use the Windows tool msiexec.exe to perform an administrative install. Note that this might execute parts of the MSI file, so only use this for trusted files.<br> `msiexec /a filename.msi TARGETDIR=c:\full-path`
