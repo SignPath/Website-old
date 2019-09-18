@@ -8,6 +8,8 @@
 
 The artifact configuration describes the structure of the artifacts you want to sign. You can upload a sample artifact to be analyzed automatically or select a predefined configurations to get started quickly. Alternatively, you can also specify the structure of your artifact and provide signing directives using XML.
 
+![Artifact configuration XML](documentation_artifact-configuration.png)
+
 ## Deep signing
 
 In case you have more complex, nested artifacts, you might want to not only sign the container itself (for instance, an MSI installer package), but also all files that are shipped within the container (e.g. .exe and .dll files within the MSI installer). Therefore, every container format can contain multiple other file or directory elements to be signed. Each of those will be extracted, signed, and then put back into the container file during the signing process. In order for SignPath to find the right file, all inner elements need a path attribute.
@@ -422,15 +424,3 @@ Example of a directory structure that would match this configuration:
         main.exe
         resources/
           en.resource.dll
-
-## Extracting artifact packages
-
-You can use the following tools in order to manually extract files from your artifacts. From the extracted file structure, you can then easily create a matching artifact configuration.
-
-We recommend that you apply these tools to all contained files recursively and create a very specific artifact configuration.
-
-| File type       | Recommended tools |
-| --------------- | ----------------- |
-| .zip, .cab      | Extract using tools like WinZip or 7-Zip or Windows Explorer.
-| .vsix, .nupkg   | These are just special ZIP archives. Either change the extension to .ZIP or use a tool like 7-Zip to directly extract their contents.
-| .msi            | Use the Windows tool msiexec.exe to perform an administrative install. Note that this might execute parts of the MSI file, so only use this for trusted files.<br> `msiexec /a filename.msi TARGETDIR=c:\full-path`
