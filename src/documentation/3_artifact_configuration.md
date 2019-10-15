@@ -99,6 +99,13 @@ Deep signing is not yet supported.
     <td></td>
     <td>Directories within container files</td>
   </tr>
+  <tr>
+    <td><code>&lt;jar-file&gt;</code></td>
+    <td>Yes</td>
+    <td><code>&lt;jar-sign&gt;</code></td>
+    <td>.jar, .war, .ear</td>
+    <td>Java archives</td>
+  </tr>
 </tbody>
 </table>
 
