@@ -9,7 +9,10 @@
 ## Additional conditions for free OSS SignPath.io subscriptions
 
 * The project must use a OSI-approved Open Source license without commercial dual-licensing
+* The project may not contain or build upon any proprietary non open-source code (platform, programming languages and runtimes are excluded)
 * The project must be actively maintained
+* The project must be released
+* The project's functionality must be described on its download page or in the app store entry of the respective platform 
 
 If you bring your own certificate, that's it. If your certificate is issued by [SignPath Foundation], see the next section for additional constraints.
 
