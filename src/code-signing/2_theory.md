@@ -15,7 +15,7 @@ All common types of code signing are based on public-key cryptography.
 
 Here's a simplified overview of the interaction between all parties:
 
-![Overview](code-signing_overview.png)
+![Overview](../images/code-signing_overview.png)
 
 * **(1)** A software publisher selects a CA to buy a certificate from. Certificates have to be renewed every one to three years, depending on certificate validity.
 * **(2)** The CA requires the software publisher to identify using public registers, documents and/or direct contact. Methods vary between CAs and depending on certificate type (OV or EV).
@@ -126,7 +126,7 @@ It is recommended to store private keys only on secure hardware, such as HSMs.
 * If possible, use your public key to create a Certificate Signing Request (CSR). A CA can then issue a certificate based on this CSR. CAs do not need your private keys.
 * We recommend that you use DER-encoded formats exclusively, since they are guaranteed to not contain private keys.
 
-!!! warning ![Warning](warning.png) Private keys are not safe in PFX files
+!!! warning ![Warning](../images/warning.png) Private keys are not safe in PFX files
 
 While PFX files with private keys seem convenient, they should only be used if no secure storage or exchange mechanism is available.
 
@@ -160,7 +160,7 @@ A typical certificate is issued by an intermediate certificate. The intermediate
 
 A typical certificate chain looks like this:
 
-![certificate chain](code-signing_certificate-chains-abstract.png)
+![certificate chain](../images/code-signing_certificate-chains-abstract.png)
 
 Let’s examine this in detail:
 
@@ -175,11 +175,11 @@ Let’s examine this in detail:
 
 For instance, the actual certificate chain of Mozilla’s Firefox (firefox.exe) looks like this:
 
-![Firefox certificate chain sample](code-signing_certificate-chains-concrete.png)
+![Firefox certificate chain sample](../images/code-signing_certificate-chains-concrete.png)
 
 In order to verify the legitimacy of a signature, a client needs to know the entire certificate chain. Therefore, certificate files usually contain not only the certificate, but also every certificate in its chain of parents.
 
-!!! note ![Technical background](background.png) Intermediate certificates
+!!! note ![Technical background](../images/background.png) Intermediate certificates
 
 Root certificates cannot be revoked, if there is a security problem with any of them, they must be removed from every computer. Therefore, private keys for root certificates must not be stored in systems connected to networks. Issuing an intermediate certificate is a process that is rarely performed and requires physical access to the system that stores and protects the root certificate’s private key. On the other hand, common certificates are usually issued online. This only requires access to the intermediate certificate’s private key, a far less critical resource.
 !!!
@@ -192,7 +192,7 @@ Each revocation has an effective date, which is often back-dated. For instance, 
 
 Certificate revocation is an essential part of the certificate validation process. When a client encounters an unknown certificate, it must contact the certificate authority and check whether this certificate has been revoked. If a certificate has been revoked, the client will not accept signatures from past the revocation date.
 
-!!! note ![Technical background](background.png) Revocation protocols and reliability
+!!! note ![Technical background](../images/background.png) Revocation protocols and reliability
 
 The certificate contains the URL for this check, and depending on the mechanisms provided, the client can either download a full Certificate Revocation List (CRL) or check validity of an individual certificate through the OCSP protocol.
 
@@ -213,7 +213,7 @@ Note: While the latter occurs less often, it would indirectly create a security 
 
 Certificate authorities that issue code signing certificates must also offer free a time stamping service. However, they usually apply quotas to individual client IP addresses and do not guarantee service availability, which sometimes leads to problems in automated code signing scenarios.
 
-!!! warning ![Warning](warning.png) Always time-stamp your signatures
+!!! warning ![Warning](../images/warning.png) Always time-stamp your signatures
 If your code is signed without time stamp, all signatures will immediately become invalid if you have to revoke your certificate. This can cause considerable trouble, especially if you need to re-build and re-distribute older releases. Since this might even keep people from revoking compromised certificates, it is also a security risk.
 
 Note that the same is true for invalid time stamps as well as for weak time stamps that will eventually be rejected by client software, such as SHA-1.
@@ -228,7 +228,7 @@ The following constraints apply:
 * As far as the TSA can tell, the code signature might have been applied earlier than the time stamp, but that would not matter for the purposes presented here.
 * The validity of the primary signature is not confirmed by the TSA. In fact, the TSA never receives this information.
 
-!!! note ![Technical background](background.png) Counter-signatures and TSA certificates
+!!! note ![Technical background](../images/background.png) Counter-signatures and TSA certificates
 
 A time stamp is a counter-signature, i.e. the primary code signing signature is itself signed by the time stamp authority (TSA). A time stamp signature uses a TSA certificate, which in turn has a certificate chain that terminates at a trusted root certificate.
 !!!
@@ -296,7 +296,7 @@ Note that some platforms use additional mechanisms to verify the reliability of 
 
 A signature is supposed to be authoritative for entire files, but the actual signing algorithm usually only accepts a small digest for input.
 
-!!! note ![Technical background](background.png) Why do we need hash digests?
+!!! note ![Technical background](../images/background.png) Why do we need hash digests?
 
 * Input: The actual signing is supposed to take place within a secure system that owns (and protects) the private key, such as a hardware security module (HSM). Also, time stamp authorities (TSAs) must be called over the internet. Submitting large files to a HSM or TSA would not be a good use of resources.
 * Output: If the entire file is signed, the signature would be as large as the file itself. So either the file size would double, or the actual signed file would have to be reconstructed from the signature (which is essentially the encrypted input).
@@ -316,7 +316,7 @@ Acceptable hash algorithms:
 
 The most commonly used variant today is SHA-256, which is short for SHA-2 with a 256 bit digest.
 
-!!! warning ![Warning](warning.png) Always use SHA-2 Time Stamp Authorities
+!!! warning ![Warning](../images/warning.png) Always use SHA-2 Time Stamp Authorities
 
 Since time stamps are signatures too, they also need a hash algorithm. Many CAs provide SHA-1 and SHA-2, but SHA-1 is still the default in many scenarios.
 

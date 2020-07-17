@@ -1,0 +1,140 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TODO</title>
+</head>
+<body>
+<h1 id="code-signing-breaches-in-supply-chain-attacks">Code signing breaches in supply chain attacks</h1>
+<p><ul class="markdownIt-TOC">
+<li><a href="#winnti-umbrella">Winnti umbrella</a></li>
+<li><a href="#supply-chain-attacks">Supply chain attacks</a>
+<ul>
+<li><a href="#stuxnet">Stuxnet</a></li>
+<li><a href="#bit9-breach">Bit9 breach</a></li>
+<li><a href="#kingslayer-supply-chain-attack">Kingslayer supply chain attack</a></li>
+<li><a href="#shadowpad">ShadowPad</a></li>
+<li><a href="#ccleaner-supply-chain-attack">CCleaner supply chain attack</a></li>
+<li><a href="#shadowhammer">ShadowHammer</a></li>
+</ul>
+</li>
+<li><a href="#coverage-by-microsoft">Coverage by Microsoft</a>
+<ul>
+<li><a href="#microsoft-security-intelligence-report-2018">Microsoft Security Intelligence Report 2018</a></li>
+<li><a href="#supply-chain-attacks-video">Supply chain attacks video</a></li>
+</ul>
+</li>
+</ul>
+</p>
+<p>Recent attack reports and coverage by tech and mainstream media as well as research groups show the increasing role that <strong>supply-chain attacks</strong> using <strong>stolen code signing certificates</strong> (or more accurately, their private keys) play in targeted attacks.</p>
+<p>In short, while high-value targets often have their defenses up, the same is not always true for software vendors and contractors. So in order to compromise worthwhile targets, attackers will go out of their way to infiltrate them by attacking their suppliers first. With a valid signature from a known supplier, it is much easier to infiltrate the network of a hardened target.</p>
+<p>Major concepts include:</p>
+<ul>
+<li><strong>Advanced Persistent Threat (APT) groups</strong>: as <a href="https://www.fireeye.com/current-threats/apt-groups.html">FireEye</a> summarizes in their list of APT teams, they are often <strong>nation-sponsored</strong> and attack their targets over months or years.
+In the case of stealing code signing keys, there are even dedicated teams that perform key theft as a support function for other teams (see <a href="#winnti-umbrella">Winnti umbrella</a> below).</li>
+<li><strong>Code signing</strong>: the process of applying a cryptographic signature to software components. Properly signed software can be verified to be signed by a specific publisher (authentication) and unmodified (integrity). Code signatures are verified by many platforms and tools, including operating systems, Web browsers, update mechanisms and anti-malware tools. See <a href="../code-signing/1_introduction">code signing introduction</a> for more information.
+Since in theory, a well-functioning code signing infrastructure can be used to effectively prevent malware infections, the code signing ecosystem itself is subject to increasingly fierce attacks.</li>
+<li><strong>Supply chain attacks</strong>: High-level targets such as government organizations, defense companies or infrastructure providers, are often well-prepared for internet attacks. In order to circumvent their defenses, hackers will attack organizations that provide software to their targets and are less prepared for sophisticated attacks, such as software vendors or contractors. Since malware injection would be detected through code signing, attackers will try to steal the victims private keys and sign the infected software versions, or get the victim to do the signing.
+The signed and infected software will then be distributed to high-level attack targets. Once the infected code is executed within their network, attackers will try to steal data and passwords, and compromise further systems such as back-end servers.</li>
+<li><strong>Multi-layered attacks</strong>: a software product is infected not by direct attack of the vendor, but by attacking the producer, packager or distributor of a third party or Open Source component (see <a href="#pdf-editor-incident">PDF editor incident</a> below).</li>
+<li><strong>Multi stage attacks</strong>: an infected component is distributed to a wide audience to open a backdoor, but the actual malware is only distributed to selected high-value targets. These targets are either pre-defined in the first stage, or selected via <strong>Command and Control (C2) servers</strong>. All incidents described here follow this pattern.</li>
+</ul>
+<h2 id="winnti-umbrella">Winnti umbrella</h2>
+<p>Starting in 2013 and still active, Winnti umbrella is a collective of Chinese advanced persistent threat (APT) groups that attack software companies and game studios <strong>primarily in order to obtain code signing certificates</strong>. These certificates are then passed on to other APT groups that <strong>attack high-level political and economic targets</strong>.</p>
+<p>The original Winnti group was detected by <strong>Kaspersky</strong> and detailed in their 2013 APT report <a href="https://securelist.com/winnti-more-than-just-a-game/37029/">Winnti. More than just a game</a>. In 2018, <strong>401TRG</strong> published a report about the wider Winnti umbrella: <a href="https://401trg.com/burning-umbrella">Burning Umbrella: An Intelligence Report on the Winnti Umbrella and Associated State-Sponsored Attackers</a>.</p>
+<p>Media coverage includes <a href="https://www.infosecurity-magazine.com/news/chinese-spy-groups-linked-under/">Infosecurity Magazine (2018)</a> and <a href="https://www.zdnet.com/article/chinese-hacking-group-backdoors-products-from-three-asian-gaming-companies/">ZDNet (2019)</a>.</p>
+<p>Winnti umbrella is linked to several of the described below, including <a href="#shadowpad">ShadowPad</a> and <a href="#shadowhammer">ShadowHammer</a>.</p>
+<h2 id="supply-chain-attacks">Supply chain attacks</h2>
+<h3 id="stuxnet">Stuxnet</h3>
+<p>The most publicized incident dates back about a decade: When <strong>Stuxnet</strong> dealt a sustained setback to <strong>Iran's nuclear program</strong> through sabotage of their centrifuges in 2009/2010, it all started with a piece of malware transmitted to a PC via a USB flash drive. The malware was able to run and eventually infect the network because it was <strong>signed with certificates of JMicron and Realtek</strong>. Stuxnet has been attributed to the U.S. and Israel.</p>
+<p>The incident has been widely reported then and since. The <a href="https://en.wikipedia.org/wiki/Stuxnet">Stuxnet Wikipedia article</a> is a good starting point for media references.</p>
+<h3 id="bit9-breach">Bit9 breach</h3>
+<p>In 2012, hackers <strong>compromised code signing certificates</strong> from security software vendor Bit9 (later renamed to <a href="https://www.carbonblack.com/">Carbon Black</a>). These certificates were then used to sign malware in order to <strong>attack defense industry customers of Bit9</strong>.</p>
+<p>The attack was analyzed in detail by <strong><a href="https://www.sans.org/">SANS institute</a></strong> in their 2015 report <a href="https://uk.sans.org/reading-room/whitepapers/certificates/paper/36382">The Scary and Terrible Code Signing Problem You Don't Know You Have</a>. As a conclusion, this report also includes a list of <strong>recommendations for hardening code signing</strong> infrastructure.</p>
+<p>The attack started with a <strong>SQL injection</strong> attack on a public-facing web server by an <strong>Advanced Persistent Threat group</strong>. When an archived virtual machine for code signing was reactivated in 2013, it was taken over and the <strong>private key</strong> for an old code signing certificate was <strong>stolen</strong>.</p>
+<p>Bit9 was a pioneer in <strong>whitelisting-based endpoint protection</strong> software. Instead of blacklisting malware signatures, whitelisting allows only certain programs based on code signing and file hashes, which is far more effective. However, the archived virtual machine was not protected by the company's own software, Bit9 Parity, which allowed for this breach.</p>
+<p>Some interesting <strong>takeaways</strong> from this incident:</p>
+<ul>
+<li>The attack was sophisticated enough to <strong>exploit an operational oversight</strong>, the reactivation of a virtual machine that was not properly protected, <strong>when it happened</strong>.</li>
+<li>Even for a <strong>security software company</strong> building a product based on code signatures, their own code signing process was far enough <strong>removed from their core product and process</strong> to allow for such an oversight.</li>
+<li>Using <strong>cryptographic hardware</strong> for code signing would have prevented the private key theft (but attackers would still have been able to sign malware using the hacked server).</li>
+</ul>
+<p><strong><a href="https://krebsonsecurity.com">Krebs on Security</a></strong> has good coverage of this incident in the 2013 articles <a href="https://krebsonsecurity.com/2013/02/security-firm-bit9-hacked-used-to-spread-malware/">Security Firm Bit9 Hacked, Used to Spread Malware</a> and <a href="https://krebsonsecurity.com/2013/02/bit9-breach-began-in-july-2012/">Bit9 Breach Began in July 2012</a>.</p>
+<h3 id="kingslayer-supply-chain-attack">Kingslayer supply chain attack</h3>
+<p>From 2015 to 2017, the tool <strong><a href="http://www.eventid.net/">EvLog</a></strong> by cyber security vendor <strong>Altair Technologies</strong> was hijacked by hackers and used against high-profile targets.</p>
+<ul>
+<li>The vendor's <strong>code signing certificate key was stolen</strong></li>
+<li>A <strong>modified version</strong> of the tool was created with a <strong>backdoor Trojan</strong></li>
+<li><strong>MSI installers and executables</strong> for the modified tool were <strong>signed</strong> with the original vendor certificate</li>
+<li>The vendor's web servers were hacked to <strong>redirect download links</strong> to attacker-controlled servers</li>
+<li>These servers contained the modified, signed files</li>
+<li>The backdoored version downloaded <strong>additional payload for pre-determined attack targets</strong> from a Command and Control (C2) server (second stage attack)</li>
+</ul>
+<p>The <strong>eventual targets</strong> are unknown, as a eleven month period is missing from the monitoring data of researchers. However, the vendor's <strong>customers</strong> include major <strong>telecommunication</strong> providers, <strong>military</strong> organizations, Fortune 500 companies, <strong>defense</strong> contractors, <strong>IT product manufacturers</strong> and solution providers, western <strong>government</strong> organizations, <strong>banks and financial institutions</strong>, and higher educational institutions.</p>
+<p>RSA researchers point out that a supply chain attack of this grade will <strong>circumvent many security measures of even hardened organizations</strong>, since highly <strong>privileged network administrators</strong> are directly compromised. <strong>Antivirus tools fail</strong> to recognize this kind of malware, whether based on virus signatures or behavior analysis. RSA expects this attack to be <strong>a template for many to follow</strong>.</p>
+<p>In their conclusions, the researchers recommend that <strong>tool vendors pay special attention</strong> to their infrastructure and <strong>code signing</strong> mechanisms, including use of <strong>Hardware Security Modules</strong> (HSMs) and validated time stamping.</p>
+<p>The incident was originally analyzed and reported by <strong>RSA Research</strong> on their <a href="https://www.rsa.com/en-us/blog/2017-02/kingslayer-a-supply-chain-attack">blog</a> and in a detailed paper (<a href="https://www.rsa.com/content/dam/pdfs/2-2017/kingslayer-a-supply-chain-attack.pdf">PDF</a>), <em>&quot;Kingslayer - a supply chain attack&quot;</em>. Later, Canadian cyber security firm <em>Altair Technologies</em> was identified as the victim. <strong>Krebs on Security</strong> accused the firm of trying to conceal the incident in the 2017 article <a href="https://krebsonsecurity.com/2017/02/how-to-bury-a-major-breach-notification/">How to Bury a Major Breach Notification</a>, also <a href="https://www.scmagazineuk.com/vendor-hiding-supply-chain-cyber-attack-gets-uncovered-krebs/article/1475233">reported by <strong>SC Magazine</strong></a>. Also in 2017, <strong>Security Week</strong> reported a China connection in their article <a href="https://www.securityweek.com/serious-breach-linked-chinese-apts-comes-light">Serious Breach Linked to Chinese APTs Comes to Light</a>.</p>
+<h3 id="shadowpad">ShadowPad</h3>
+<p>In 2017, <strong>server management software</strong> by NetSarang was infected with a backdoor. The software was <strong>signed</strong> with a legit NetSarang certificate and subsequently <strong>distributed</strong> to customers.</p>
+<p>After installation, the software would keep contacting <strong>Command and Control servers</strong> based on dynamically generated DNS names. The backdoor was fully equipped to <strong>extract data</strong> and to <strong>load and execute further code</strong>.</p>
+<p>The attack was discovered by <strong>Kaspersky</strong> after being tipped off by a customer's security team. Kaspersky published the report <a href="https://www.kaspersky.com/about/press-releases/2017_shadowpad-how-attackers-hide-backdoor-in-software-used-by-hundreds-of-large-companies-around-the-world">ShadowPad: How Attackers hide Backdoor in Software used by Hundreds of Large Companies around the World</a> and a detailed analysis on their <a href="https://securelist.com/shadowpad-in-corporate-networks/81432/">SecureList</a> site.</p>
+<p>According to Kaspersky, this was one of the most significant supply-chain attacks at the time, <strong>potentially targeting &quot;hundreds of customers</strong> in industries like financial services, education, telecoms, manufacturing, energy, and transportation.&quot; The attack was detected soon, and NetSarang reacted quickly. While infected systems were only identified in Hong Kong, more infections could not be ruled out.</p>
+<p>As a Kaspersky researcher concluded:</p>
+<p><em>&quot;ShadowPad is an example of how dangerous and wide-scale a successful supply-chain attack can be. Given the opportunities for reach and data collection it gives to the attackers, most likely it will be reproduced again and again with some other widely used software component.</em>&quot;</p>
+<p>Media coverage was provided by <a href="https://www.theregister.co.uk/2017/08/15/netsarang_software_backdoor/">The Register</a> and <a href="https://www.theinquirer.net/inquirer/news/3015829/shadowpad-backdoor-uncovered-in-netsarang-server-management-software">The Inquirer</a> among others.</p>
+<h3 id="ccleaner-supply-chain-attack">CCleaner supply chain attack</h3>
+<p>Also in 2017, a backdoor was implanted in the popular Windows utility <strong>CCleaner</strong>. When Chinese hacker group Axiom/APT17 managed to compromise the vendor, the modified software was not only signed, but entered the regular distribution process too. This resulted in malware <strong>infection of more than 2 million users.</strong> The first attack stage only extracted non-sensitive data from infected machines. See the <a href="https://en.wikipedia.org/wiki/CCleaner#Trojan_in_distributed_program"><strong>Wikipedia</strong> article</a> for more information, including media references.</p>
+<p>Reporting by <a href="https://blog.talosintelligence.com/2017/09/avast-distributes-malware.html"><strong>Talos</strong></a> and <a href="https://blogs.cisco.com/security/talos/ccleaner-c2-concern"><strong>Cisco</strong></a> (2017) identified a <strong>second stage</strong> of targeted infections: &quot;Only about 40 PCs operated by <strong>high-tech and telecommunications companies were further infected</strong>&quot;. The target list included HTC, Samsung, Sony, VMware, Intel, Microsoft, Cisco, O2, Vodafone, Linksys, Epson Akamai, and DLink.</p>
+<p>In 2018, <a href="https://www.scmagazineuk.com/avast-ccleaner-hackers-planned-infect-victims-third-stage-chinese-hacking-tool/article/1473074"><strong>SC Magazine</strong> reported</a> that a <strong>third-stage</strong> attack of infected PCs had already been prepared. When this was detected, only a few machines at CCleaner producer Piriform had been infected. The <strong>malware was customized</strong> for Piriform, leading researchers to the conclusion that this was an <strong>elaborate supply chain attack</strong>: by infecting millions of users, the attackers were essentially casting a very wide net in order to compromise only a few select targets.</p>
+<p>Whether this was the final stage is unknown, compromising tech firms might have been just the setup for attacks on some of their customers.</p>
+<h3 id="shadowhammer">ShadowHammer</h3>
+<p>In 2019, a sophisticated <strong>supply chain attack</strong> on computer manufacturer <strong>ASUS</strong> was detected by <strong>Kaspersky</strong> and described in their APT report <a href="https://securelist.com/operation-shadowhammer/89992/">Operation ShadowHammer</a>.</p>
+<p>Once more, software from a legitimate vendor was <strong>modified, signed and distributed</strong> through the vendors official web site. The update was <strong>automatically downloaded and installed</strong> on many systems, since it had a <strong>valid code signature</strong> from ASUS.</p>
+<p>The modified version of <strong>ASUS Live Update</strong> included a list of target MAC addresses for the eventual targets of the attack. Any targeted PC would download a <strong>second stage malware</strong> from a Command and Control (C2) server. The actual targets have not yet been disclosed. As with most sophisticated, targeted attacks, <strong>nation state actors</strong> are assumed to be responsible.</p>
+<p>Kaspersky reports a <strong>victim distribution</strong> with a focus on the <strong>EU</strong> (50%), <strong>Russia</strong> (18%) and <strong>North America</strong> (7%).</p>
+<p>As an automatic update mechanism was abused to distribute malware, there is always a risk that some users come to the conclusion that it would increase their security to <strong>disable updates</strong>, a notion widely <strong>rejected by experts</strong>.</p>
+<p>As the <a href="https://www.nytimes.com/2019/03/27/opinion/asus-malware-hack.html">New York Times</a> writes:</p>
+<p><em>&quot;The main responsibility lies with the industry. Asus will no doubt be criticized for allowing its servers to be compromised and for failing to detect that it had been distributing malicious software to its customers. Other vendors should take note and harden their own systems.&quot;</em></p>
+<p>The incident was also reported by <a href="https://www.wired.com/story/asus-software-update-hack/">Wired</a>, <a href="https://motherboard.vice.com/en_us/article/pan9wn/hackers-hijacked-asus-software-updates-to-install-backdoors-on-thousands-of-computers">Motherboard</a>, <a href="https://www.scmagazine.com/home/security-news/cybercrime/a-threat-actor-hijacked-asuss-software-update-to-install-backdoors-on-thousands-of-computers-and-ultimately-push-malware-to-machines/">SC Magazine</a>, <a href="https://www.bleepingcomputer.com/news/security/asus-live-update-infected-with-backdoor-in-supply-chain-attack/">BleepingComputer</a>, <a href="https://www.wsj.com/articles/malware-attack-on-asus-computers-raises-concerns-11553638579">Wall Street Journal</a> and many others.</p>
+<h2 id="coverage-by-microsoft">Coverage by Microsoft</h2>
+<h3 id="microsoft-security-intelligence-report-2018">Microsoft Security Intelligence Report 2018</h3>
+<p>In <a href="https://www.microsoft.com/security/blog/2019/02/28/microsoft-security-intelligence-report-volume-24-is-now-available/">volume 24</a> of its regular report, Microsoft emphasizes that <strong>breaking chains of trust</strong> through <strong>supply chain attacks</strong> is becoming an increasing problem.</p>
+<p><em>&quot;The increased number of software supply chain attacks over the past few years has become an important topic in many cybersecurity conversations and is a primary source of concern in many IT departments.&quot;</em></p>
+<p>The reports lists the following incidents for 2017:</p>
+<ul>
+<li><a href="https://www.microsoft.com/security/blog/2017/06/27/new-ransomware-old-techniques-petya-adds-worm-capabilities/">Petya ransomware outbreak</a></li>
+<li><a href="https://www.microsoft.com/security/blog/2017/05/04/windows-defender-atp-thwarts-operation-wilysupply-software-supply-chain-cyberattack/">Operation WilySupply</a></li>
+<li><a href="https://www.kaspersky.com/about/press-releases/2017_shadowpad-how-attackers-hide-backdoor-in-software-used-by-hundreds-of-large-companies-around-the-world">ShadowPad</a> (Kaspersky)</li>
+<li><a href="https://www.rsaconference.com/events/us18/agenda/sessions/10593-ccleaner-apt-attack-a-technical-look-inside">CCleaner</a> (RSA Conference)</li>
+</ul>
+<p>For 2018, Microsoft mentions the following incidents:</p>
+<ul>
+<li><a href="https://www.microsoft.com/security/blog/2018/03/07/behavior-monitoring-combined-with-machine-learning-spoils-a-massive-dofoil-coin-mining-campaign/">Behavior monitoring combined with machine learning spoils a massive Dofoil coin mining campaign</a></li>
+<li><a href="https://blog.trendmicro.com/trendlabs-security-intelligence/compromised-auto-update-mechanism-affects-south-korean-users/">Compromised Auto-Update Mechanism Affects South Korean Users</a> (Trend Micro)</li>
+<li><a href="https://www.welivesecurity.com/2018/10/18/new-linux-chachaddos-malware-distributed-servers-vestacp-installed/">VestaCP compromised in a new supply-chain attack</a> (ESET)</li>
+</ul>
+<h4 id="pdf-editor-incident">PDF editor incident</h4>
+<ul>
+<li><a href="https://www.microsoft.com/security/blog/2018/07/26/attack-inception-compromised-supply-chain-within-a-supply-chain-poses-new-risks/">Attack inception: Compromised supply chain within a supply chain poses new risks</a>: Malware payload introduced in popular PDF editor</li>
+</ul>
+<p>This incident is highlighted for its <strong>multi-layered supply chain approach</strong>: A vendor of a PDF editor was tricked into downloading a <strong>compromised third party component</strong> from a slightly modified mirror source, custom-built for this attack. This mirror had a single modified MSI installer that was then distributed with the PDF editor. While the modified component was not signed, it still ended up in the official PDF editor distribution, signed by the vendor. The <strong>vendor didn't check for third-party signatures before signing</strong> their own package.</p>
+<p>The incident is further explained at <a href="https://www.youtube.com/watch?v=uXm2XNSavwo&amp;t=1m9s">1:09</a> in the video mentioned below.</p>
+<h3 id="supply-chain-attacks-video">Supply chain attacks video</h3>
+<p>Microsoft produced an <a href="https://www.youtube.com/watch?v=uXm2XNSavwo">educational video</a> about software supply chain attacks in 2018.</p>
+<p>Some of the <strong>supply chain media coverage</strong> Microsoft mentions in the video:</p>
+<ul>
+<li><a href="https://www.theregister.co.uk/2011/08/12/estsoft_korean_megahack/">Software maker fingered in Korean hackocalypse</a> (The Register, 2011)</li>
+<li><a href="https://thehackernews.com/2014/01/rogue-software-update-cause-malware_9.html">Rogue software update cause Malware attack on Japanese Nuclear Power Plant</a> (The Hacker News, 2014)</li>
+<li><a href="https://www.nytimes.com/2014/07/01/technology/energy-sector-faces-attacks-from-hackers-in-russia.html">Russian Hackers Targeting Oil and Gas Companies
+</a> (New York Times, 2014): &quot;The manner in which the <strong>Russian hackers</strong> are targeting the companies also gives them the opportunity to <strong>seize control of industrial control systems</strong> from afar, in much <strong>the same way</strong> the United States and Israel were able to use the <strong>Stuxnet computer worm</strong> in 2009 to take control of an Iranian nuclear facility’s computer systems and destroy a fifth of the country’s uranium supply, [private cyber security] researchers said.&quot;</li>
+<li><a href="https://arstechnica.com/information-technology/2015/01/how-installing-league-of-legends-and-path-of-exile-left-some-with-a-rat/">How installing League of Legends and Path of Exile left some with a RAT</a> (Ars Technica, 2015)</li>
+<li><a href="https://www.rsa.com/en-us/blog/2017-02/kingslayer-a-supply-chain-attack">Kingslayer: a supply chain attack</a> (RSA Security, 2017)</li>
+<li><a href="https://www.scmagazine.com/home/security-news/cybercrime/ask-partner-network-compromised-second-time-in-two-months/">Ask Partner Network compromised second time in two months</a> (SCMagazine, 2017)</li>
+<li><a href="https://www.wsj.com/articles/hackers-program-bank-atms-to-spew-cash-1479683814">Hackers Program Bank ATMs to Spew Cash</a> (Wall Street Journal, 2016)</li>
+<li><a href="https://www.theregister.co.uk/2017/05/05/malware_attacking_payment_systems/">Microsoft says: Lock down your software supply chain before the malware scum get in</a> (The Register, 2017)</li>
+<li><a href="https://www.zdnet.com/article/microsoft-petya-ransomware-attacks-were-spread-by-hacked-software-updater/">Microsoft: Petya ransomware attacks were spread by hacked software updater</a> (ZDNet, 2017)</li>
+<li><a href="https://www.microsoft.com/security/blog/2018/03/13/poisoned-peer-to-peer-app-kicked-off-dofoil-coin-miner-outbreak/">Poisoned peer-to-peer app kicked off Dofoil coin miner outbreak</a> (Microsoft, 2018)</li>
+</ul>
+</body></html>

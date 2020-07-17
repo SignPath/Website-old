@@ -75,8 +75,8 @@ SignPath provides a simple model that meets the requirements of all parties incl
 
 **Automatic verification**
 
-* Verification of certificates, signatures, time stamps and manifest identities ensures that code signing has the intended effects for your users. No surprises at installation time. ![TODO](..\todo.png)
-* Warning if artifacts contain unsigned files. ![TODO](..\todo.png)
+* Verification of certificates, signatures, time stamps and manifest identities ensures that code signing has the intended effects for your users. No surprises at installation time. ![TODO](../images/todo.png)
+* Warning if artifacts contain unsigned files. ![TODO](../images/todo.png)
 
 </td></tr><tr><td>
 
@@ -108,7 +108,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 
 * For each project, specify artifact contents and signing policies once, then automate signing.
 * Evolve artifact configurations as your project changes.
-* When branches start to drift apart, simply match your branching model in SignPath. ![TODO](..\todo.png)
+* When branches start to drift apart, simply match your branching model in SignPath. ![TODO](../images/todo.png)
 
 </td></tr><tr><td>
 
@@ -147,7 +147,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 **Deep signing**
 
 * With SignPath deep signing, development teams and contractors can easily sign all files in a package.
-* For packages with incomplete signing, use SignPath to deep-sign packages based on their own signature. ![TODO](..\todo.png)
+* For packages with incomplete signing, use SignPath to deep-sign packages based on their own signature. ![TODO](../images/todo.png)
 
 </td></tr>
 <tr><td>
@@ -164,7 +164,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 * Easily create Certificate Signing Requests (CSRs) for secure certificate purchase or in-house issuance.
 * Import existing certificates.
 * Create self-signed certificates for test-signing.
-* Get notified before certificates expire. ![TODO](..\todo.png)
+* Get notified before certificates expire. ![TODO](../images/todo.png)
 * Renew certificates.
 
 </td></tr>
@@ -182,7 +182,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 
 * SignPath.io uses SafeNet Luna Network HSMs [validated][luna fips] for FIPS 140-1 and FIPS 140-2 Level 3, and certified for Common Criteria (ISO/IEC15408).
 * SignPath always creates HSM-based keys as *non-exportable*, they cannot be read or copied from HSM storage even with physical administrative access.
-* Access to HSMs is limited to dedicated servers. These servers are several tiers from the Web server farm and do not participate in synchronous transactions. ![TODO](..\todo.png) <!-- currently access is required in order to read certain HSM key properties -->
+* Access to HSMs is limited to dedicated servers. These servers are several tiers from the Web server farm and do not participate in synchronous transactions. ![TODO](../images/todo.png) <!-- currently access is required in order to read certain HSM key properties -->
 * Only authorized (and approved) signing requests will be processed by servers with access to HSMs.
 
 </td></tr>
@@ -203,7 +203,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 
 **Reliable time stamp authority**
 
-* No more depending on free but unreliable public time stamp servers - SignPath.io uses a paid time stamp authority. ![TODO](..\todo.png)
+* No more depending on free but unreliable public time stamp servers - SignPath.io uses a paid time stamp authority. ![TODO](../images/todo.png)
 * SignPath signatures are always time stamped, regardless of methods and certificates.
 
 </td></tr>
@@ -219,7 +219,7 @@ SignPath provides a simple model that meets the requirements of all parties incl
 
 * Signing requests are restricted to the content specified in the project's artifact configuration.
 * Unexpected files are not signed.
-* If containers (e.g. installation packages) contain unexpected executable files, signing will be denied or approvers will be warned (depending on configuration). ![TODO](../todo.png)
+* If containers (e.g. installation packages) contain unexpected executable files, signing will be denied or approvers will be warned (depending on configuration). ![TODO](../images/todo.png)
 
 </td></tr>
 <tr><td>
@@ -257,8 +257,8 @@ SignPath provides a simple model that meets the requirements of all parties incl
 **Mulit-level logging and correlation**
 
 * Audit logs are maintained on HSM and application levels.
-* Audit logs can be downloaded for routine or random sample inspections, and for forensic evaluation. ![TODO](..\todo.png)
-* Tooling for log correlation allows to verify that every private key usage can be accounted for by an authorized signing request. ![TODO](..\todo.png)
+* Audit logs can be downloaded for routine or random sample inspections, and for forensic evaluation. ![TODO](../images/todo.png)
+* Tooling for log correlation allows to verify that every private key usage can be accounted for by an authorized signing request. ![TODO](../images/todo.png)
 * Single-request deep signing ensures that multiple key usages can be traced to a single signing request (build, release, approval).
 
 </td></tr>

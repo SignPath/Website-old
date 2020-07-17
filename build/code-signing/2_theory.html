@@ -52,7 +52,7 @@
 <li><em>Certificate authorities</em> (CAs) validate publishers’ identities and issue X.509 certificates</li>
 </ul>
 <p>Here's a simplified overview of the interaction between all parties:</p>
-<p><img src="https://about.signpath.io/wp-content/uploads/code-signing_overview.png" alt="Overview"></p>
+<p><img src="https://about.signpath.io/wp-content/uploads/../images/code-signing_overview.png" alt="Overview"></p>
 <ul>
 <li><strong>(1)</strong> A software publisher selects a CA to buy a certificate from. Certificates have to be renewed every one to three years, depending on certificate validity.</li>
 <li><strong>(2)</strong> The CA requires the software publisher to identify using public registers, documents and/or direct contact. Methods vary between CAs and depending on certificate type (OV or EV).</li>
@@ -73,8 +73,8 @@
 <li>The receiver, Bob, knows Alice’s public key.</li>
 <li>When Bob receives a file signed by Alice, he can use Alice's public key to verify that the file was signed by Alice, and that it has not been modified since.</li>
 </ul>
-<p>Key distribution seems easy now: The private key <em>must not</em> be distributed, and the public key needs no protection. However, this creates a new problem: How to ensure that a certain public key actually belongs to a specific entity?</p>
-<p>Public keys are linked to identities via certificates by a public key infrastructure (PKI). The most common type of PKI used today in general (and by most code signing platforms) is based on certificate authorities and the X.509 system of certificates.</p>
+<p>Key distribution seems easy now: The private key <em>must not</em> be shared with anybody, and the public key needs no protection at all. However, this creates a new problem: How to ensure that a certain public key actually belongs to a specific entity?</p>
+<p>The solution to this is called a public key infrastructure (PKI). PKIs issue certificates that each contain a public key and the owner's identity. The most common type of PKI used today in general (and by all major signing platforms) is based on certificate authorities and the X.509 system of certificates.</p>
 <h2 id="certificates">Certificates</h2>
 <p>Public-key certificates are the corner stones of any public-key infrastructure. A certificate binds the identity of the private key's owner to the public key. It is signed by a Certificate Authority in order to allow verification of this binding.</p>
 <p>The most used certificate type is X.509, a certificate standard that is used for HTTPS (SSL/TLS client and server certificates), code signing, and other uses such as email (S/MIME) and PDF signing.</p>
@@ -103,7 +103,7 @@
 <li><strong>Subject alternative name:</strong> Used to list additional domain names for multi-domain HTTPS certificates.</li>
 <li><strong>CRL distribution points</strong> and <strong>authority information access:</strong> Used to provide information about revocation services (CRL and/or OCSP).</li>
 </ul>
-<p>Note that many of these fields use dot-separated numbers called <em>Object Identifiers</em> (OIDs). A reference can be found at  <a href="http://oid-info.com/">oid-info.com</a> or <a href="http://oidref.com/">oidref.com</a>.</p>
+<p>Note that many of these fields use dot-separated numbers called <em>Object Identifiers</em> (OIDs). A reference can be found at <a href="http://oid-info.com/">oid-info.com</a> or <a href="http://oidref.com/">oidref.com</a>.</p>
 <h3 id="certificate-types">Certificate types</h3>
 <p>X.509 certificates come in three flavors:</p>
 <ul>
@@ -132,13 +132,19 @@
 <h3 id="certificate-files">Certificate files</h3>
 <p>There are several file formats for storing certificates:</p>
 <ul>
-<li><strong>DER encoded:</strong> binary or Base64 encoded certificates
+<li><strong>DER encoded:</strong> binary encoded ASN.1 certificates and keys
 <ul>
-<li>.pem (Base64 only)</li>
-<li>.cer, .crt, .der</li>
+<li>.der</li>
+<li>.cer, .crt (rarely used)</li>
 </ul>
 </li>
-<li><strong>PKCS#12:</strong> contain certificates and optionally password-protected private keys too
+<li><strong>PEM:</strong> Base64 encoded DER files and/or private keys
+<ul>
+<li>.pem</li>
+<li>.cer, .crt</li>
+</ul>
+</li>
+<li><strong>PKCS#12:</strong> contain certificates and optionally private keys
 <ul>
 <li>.p12</li>
 <li>.pfx (named after the legacy PFX format, but usually contain PKCS#12 data)</li>
@@ -150,16 +156,23 @@
 </ul>
 </li>
 </ul>
-<p>The prevalence of PFX files with private keys leads some people to think certificates contain private keys. This is not the case.</p>
+<p>Certificate files can contain a single certificate or an entire certificate chain up to the root certificate. Some formats can also contain private keys protected with a password or passphrase.</p>
+<p>The prevalence of files containing both certificates <em>and</em> private keys leads some people to think certificates contain private keys. This is not the case.</p>
 <p>It is recommended to store private keys only on secure hardware, such as HSMs.</p>
 <ul>
 <li>If possible, use your public key to create a Certificate Signing Request (CSR). A CA can then issue a certificate based on this CSR. CAs do not need your private keys.</li>
 <li>We recommend that you use DER-encoded formats exclusively, since they are guaranteed to not contain private keys.</li>
 </ul>
 <div class="admonition warning">
-<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/warning.png" alt="Warning"> Private keys are not safe in PFX files</p>
-<p>While PFX files with private keys seem convenient, they should only be used if no secure storage or exchange mechanism is available. While strong passwords are possible, PFX password protection cannot be relied upon implicitly.</p>
-<p>If you stumble across PFX files with private keys, especially in emails or on unprotected storage, you might need to question the security of the contained keys. If they could have been compromised, the certificate should be revoked by the issuing CA.</p>
+<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/../images/warning.png" alt="Warning"> Private keys are not safe in PFX files</p>
+<p>While PFX files with private keys seem convenient, they should only be used if no secure storage or exchange mechanism is available.</p>
+<p>A brute force attack on password might successfully retrieve your private key. There are several risks:</p>
+<ul>
+<li>The entropy of your password may be too low.</li>
+<li>PEM and PFX are container formats. They do <em>not</em> prescribe a specific cipher.</li>
+<li>Some files use a weak cipher for the container and a strong cipher for the private key with the same encryption key. A brute force attack on the weak cipher will also reveal the encryption key for the private key.</li>
+</ul>
+<p>If you come across PEM or PFX files with private keys, especially in emails or on unprotected storage, you might need to question the security of the contained keys. If they could have been compromised, the certificate should be revoked by the issuing CA.</p>
 </div>
 <h2 id="certificate-authorities-cas">Certificate Authorities (CAs)</h2>
 <p>An issuer of certificates is called a Certificate Authority (CA). There are two common types of CAs:</p>
@@ -174,7 +187,7 @@
 <h2 id="certificate-chains">Certificate chains</h2>
 <p>A typical certificate is issued by an intermediate certificate. The intermediate certificate is in turn issued by the root certificate. The sum of all these certificates is called a certificate chain.</p>
 <p>A typical certificate chain looks like this:</p>
-<p><img src="https://about.signpath.io/wp-content/uploads/code-signing_certificate-chains-abstract.png" alt="certificate chain"></p>
+<p><img src="https://about.signpath.io/wp-content/uploads/../images/code-signing_certificate-chains-abstract.png" alt="certificate chain"></p>
 <p>Let’s examine this in detail:</p>
 <ul>
 <li>The <em>CA root certificate</em> is self-signed.
@@ -196,10 +209,10 @@
 </li>
 </ul>
 <p>For instance, the actual certificate chain of Mozilla’s Firefox (firefox.exe) looks like this:</p>
-<p><img src="https://about.signpath.io/wp-content/uploads/code-signing_certificate-chains-concrete.png" alt="Firefox certificate chain sample"></p>
+<p><img src="https://about.signpath.io/wp-content/uploads/../images/code-signing_certificate-chains-concrete.png" alt="Firefox certificate chain sample"></p>
 <p>In order to verify the legitimacy of a signature, a client needs to know the entire certificate chain. Therefore, certificate files usually contain not only the certificate, but also every certificate in its chain of parents.</p>
 <div class="admonition note">
-<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/background.png" alt="Technical background"> Intermediate certificates</p>
+<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/../images/background.png" alt="Technical background"> Intermediate certificates</p>
 <p>Root certificates cannot be revoked, if there is a security problem with any of them, they must be removed from every computer. Therefore, private keys for root certificates must not be stored in systems connected to networks. Issuing an intermediate certificate is a process that is rarely performed and requires physical access to the system that stores and protects the root certificate’s private key. On the other hand, common certificates are usually issued online. This only requires access to the intermediate certificate’s private key, a far less critical resource.</p>
 </div>
 <h2 id="certificate-revocation">Certificate revocation</h2>
@@ -207,7 +220,7 @@
 <p>Each revocation has an effective date, which is often back-dated. For instance, if a publisher finds out that a certificate’s private key has been stolen two months ago, it will inform the CA, which in turn will issue a revocation effective two months ago. Signatures that were applied before this date will still be considered valid if the signature is time-stamped (see below).</p>
 <p>Certificate revocation is an essential part of the certificate validation process. When a client encounters an unknown certificate, it must contact the certificate authority and check whether this certificate has been revoked. If a certificate has been revoked, the client will not accept signatures from past the revocation date.</p>
 <div class="admonition note">
-<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/background.png" alt="Technical background"> Revocation protocols and reliability</p>
+<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/../images/background.png" alt="Technical background"> Revocation protocols and reliability</p>
 <p>The certificate contains the URL for this check, and depending on the mechanisms provided, the client can either download a full Certificate Revocation List (CRL) or check validity of an individual certificate through the OCSP protocol.</p>
 <p>Certificate revocation for code signing is considered more reliable than revocation for HTTPS certificates. The main weakness for HTTPS certificate revocation is that an attacker who is able to mount an HTTPS attack is often already in the position to intercept network traffic to revocation servers too. This is generally not true for code distribution attacks.</p>
 <p>However, note that Windows uses a soft revocation check policy. If the revocation server cannot be reached, certificates are accepted by default.</p>
@@ -219,7 +232,7 @@
 <p>Note: While the latter occurs less often, it would indirectly create a security problem: having a large number of legitimately signed binaries without time stamps would strongly discourage revocation of compromised certificates.</p>
 <p>Certificate authorities that issue code signing certificates must also offer free a time stamping service. However, they usually apply quotas to individual client IP addresses and do not guarantee service availability, which sometimes leads to problems in automated code signing scenarios.</p>
 <div class="admonition warning">
-<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/warning.png" alt="Warning"> Always time-stamp your signatures</p>
+<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/../images/warning.png" alt="Warning"> Always time-stamp your signatures</p>
 <p>If your code is signed without time stamp, all signatures will immediately become invalid if you have to revoke your certificate. This can cause considerable trouble, especially if you need to re-build and re-distribute older releases. Since this might even keep people from revoking compromised certificates, it is also a security risk.</p>
 <p>Note that the same is true for invalid time stamps as well as for weak time stamps that will eventually be rejected by client software, such as SHA-1.</p>
 </div>
@@ -231,7 +244,7 @@
 <li>The validity of the primary signature is not confirmed by the TSA. In fact, the TSA never receives this information.</li>
 </ul>
 <div class="admonition note">
-<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/background.png" alt="Technical background"> Counter-signatures and TSA certificates</p>
+<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/../images/background.png" alt="Technical background"> Counter-signatures and TSA certificates</p>
 <p>A time stamp is a counter-signature, i.e. the primary code signing signature is itself signed by the time stamp authority (TSA). A time stamp signature uses a TSA certificate, which in turn has a certificate chain that terminates at a trusted root certificate.</p>
 </div>
 <h2 id="signatures">Signatures</h2>
@@ -283,7 +296,7 @@
 <h2 id="hash-digests">Hash digests</h2>
 <p>A signature is supposed to be authoritative for entire files, but the actual signing algorithm usually only accepts a small digest for input.</p>
 <div class="admonition note">
-<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/background.png" alt="Technical background"> Why do we need hash digests?</p>
+<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/../images/background.png" alt="Technical background"> Why do we need hash digests?</p>
 <ul>
 <li>Input: The actual signing is supposed to take place within a secure system that owns (and protects) the private key, such as a hardware security module (HSM). Also, time stamp authorities (TSAs) must be called over the internet. Submitting large files to a HSM or TSA would not be a good use of resources.</li>
 <li>Output: If the entire file is signed, the signature would be as large as the file itself. So either the file size would double, or the actual signed file would have to be reconstructed from the signature (which is essentially the encrypted input).</li>
@@ -299,7 +312,7 @@
 </ul>
 <p>The most commonly used variant today is SHA-256, which is short for SHA-2 with a 256 bit digest.</p>
 <div class="admonition warning">
-<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/warning.png" alt="Warning"> Always use SHA-2 Time Stamp Authorities</p>
+<p class="admonition-title"><img src="https://about.signpath.io/wp-content/uploads/../images/warning.png" alt="Warning"> Always use SHA-2 Time Stamp Authorities</p>
 <p>Since time stamps are signatures too, they also need a hash algorithm. Many CAs provide SHA-1 and SHA-2, but SHA-1 is still the default in many scenarios.</p>
 <p>Since time stamps are valid for many years, it's all the more important to use SHA-2 TSAs. Consult your CA's documentation for the correct SHA-2 URLs.</p>
 </div>

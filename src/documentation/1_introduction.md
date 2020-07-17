@@ -30,7 +30,7 @@ See also: [Distribution of roles](#distribution-of-roles)
       <td>Administrator</td>
       <td>
 
-Register for a free trial or paid subscriptions ![TODO](todo.png)
+Register for a free trial or paid subscriptions ![TODO](../images/todo.png)
 
 </td></tr>
     <tr>

@@ -14,7 +14,7 @@ Each **project** consists of
 When an artifact needs to be signed, a **signing request** for a specific **project** and **signing policy** is created.
 
 This UML class diagram shows the fundamental relationships:
-![Key concepts UML](documentation_key-concepts.png)
+![Key concepts UML](../images/documentation_key-concepts.png)
 
 ## Projects
 
@@ -22,7 +22,7 @@ Define a project for each artifact, or for each set of artifacts that should be 
 
 Typically, there is one set of artifacts per software product, development team or project. If you use continuous integration (CI) tools, the artifacts will be the output of a single build configuration, or a subset of that output. Or maybe you have several build configurations that create different versions of structurally identical artifacts – those can still be represented by a single SignPath project.
 
-!!! info ![Information](info.png) Use build automation
+!!! info ![Information](../images/info.png) Use build automation
 If you don’t use a CI system or some other kind of build automation, we highly recommend starting now. A reproducible build process is a most basic ingredient for safe code signing.
 !!!
 
