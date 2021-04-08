@@ -112,7 +112,7 @@ SignPath Foundation cannot except any liability for damages resulting from softw
   * Signed software must not be able to execute on computers of end users, e.g. by implementing plugin/add-in/extension interfaces of other applications.
   * If you want to build add-ins for other applications, you need to apply for a full OSS subscription.
 
-[file attribute restrictions]:../documentation/3_artifact_configuration#file-attribute-restrictions
+[file attribute restrictions]:https://about.signpath.io/documentation/artifact-configuration#file-attribute-restrictions
 
 [SignPath Foundation]:https://signpath.org
 [SignPath.io]:https://signpath.io
