@@ -61,7 +61,7 @@ SignPath Foundation cannot except any liability for damages resulting from softw
   You must accept all technical constraints in place for SignPath.io OSS subscription and not try to work around them. Noteworthy constraints include:
   * Binary artifacts must be built from source code in a verifiable way
   * Every release needs manual approval for signing
-  * All team members must use multi-factor authentication
+  * All team members working on SignPath.io must use multi-factor authentication
   * All signed binaries must have metadata attributes set enforced using [file attribute restrictions]
     * Set all *product name* attributes to your project's name
     * Set all *product version* attributes to the same value in each build
