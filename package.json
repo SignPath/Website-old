@@ -31,7 +31,7 @@
     "gulp-replace-image-src": "^1.0.1",
     "gulp-tap": "^1.0.1",
     "gulp-util": "^3.0.8",
-    "markdown-it": "^8.4.2",
+    "markdown-it": "^12.3.2",
     "markdown-it-admonition": "^1.0.4",
     "markdown-it-imsize": "^2.0.1",
     "markdown-it-toc-and-anchor": "^4.2.0"
