@@ -78,7 +78,7 @@ SignPath Foundation cannot accept any liability for damages resulting from softw
   * **Authors**: people who are trusted to modify the source code in the project’s version control system without additional reviews
   * **Reviewers**: each change proposed by people who are not committers (e.g. pull requests) must be reviewed by a team member
   * **Approvers**: each signing request must be approved by a team member trusted by the entire team to decide if a certain release can be code signed 
-* **Home page requirements:** By default, SignPath refers to the project's repository. For many projects, this is also the official home page (e.g. via a Markdown readme file). If your project rahter wants to specify a custom home page
+* **Home page requirements:** By default, SignPath refers to the project's repository. For many projects, this is also the official home page (e.g. via a Markdown readme file). If your project rather wants to specify a custom home page
   * The repository readme file must prominently reference this custom home page
   * The custom home page must prominently reference the repository (directly or from a prominently linked sub page such as "contribute" or "development")
 * **Specify a code signing policy:** A code signing policy must be specified on the project’s home page
